@@ -8,6 +8,7 @@ export interface FinancialTarget {
 }
 
 export interface Offer {
+  id?: string; // Optional for initial data, required for state
   title: string;
   type: 'New' | 'Hero' | 'Retention' | 'Flash' | 'Event' | 'Student' | 'Corporate' | 'Lapsed';
   description: string;
@@ -15,6 +16,7 @@ export interface Offer {
   savings?: string;
   whyItWorks: string;
   targetUnits?: number | string;
+  cancelled?: boolean;
 }
 
 export interface OperationalTask {
