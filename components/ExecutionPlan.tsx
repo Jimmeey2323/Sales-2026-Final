@@ -192,39 +192,39 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
       </div>
 
       {/* Revenue Breakdown by Offer */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md">
-        <div className="bg-gradient-to-r from-brand-500 to-brand-600 px-6 py-4">
-          <h4 className="text-lg font-bold text-white flex items-center gap-2">
-            <Package className="w-5 h-5" />
+      <div className="bg-white rounded-xl border-2 border-indigo-200 overflow-hidden shadow-sm">
+        <div className="bg-white px-6 py-4 border-b-2 border-indigo-200">
+          <h4 className="text-lg font-bold text-indigo-700 flex items-center gap-2">
+            <Package className="w-5 h-5 text-indigo-600" />
             Revenue Breakdown by Offer
           </h4>
-          <p className="text-xs text-brand-50 mt-1">Projected revenue calculations based on target units sold</p>
+          <p className="text-xs text-gray-600 mt-1">Projected revenue calculations based on target units sold</p>
         </div>
         
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-brand-50 border-b-2 border-brand-200">
+            <thead className="bg-white border-b-2 border-indigo-200">
               <tr>
-                <th className="px-5 py-4 text-left text-xs font-bold text-brand-900 uppercase tracking-wider">Offer</th>
-                <th className="px-5 py-4 text-left text-xs font-bold text-brand-900 uppercase tracking-wider">Type</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Units</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Mumbai Price</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Bengaluru Price</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Mumbai Revenue</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Bengaluru Revenue</th>
-                <th className="px-5 py-4 text-right text-xs font-bold text-brand-900 uppercase tracking-wider">Total Revenue</th>
+                <th className="px-5 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Offer</th>
+                <th className="px-5 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Type</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Units</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Mumbai Price</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Bengaluru Price</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Mumbai Revenue</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Bengaluru Revenue</th>
+                <th className="px-5 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Total Revenue</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 bg-white">
               {offerRevenues.map(({ offer, revenue }) => {
                 const targetUnits = typeof offer.targetUnits === 'number' ? offer.targetUnits : parseInt(offer.targetUnits as string) || 0;
                 const mumbaiPrice = offer.finalPriceMumbai || offer.priceMumbai || 0;
                 const bengaluruPrice = offer.finalPriceBengaluru || offer.priceBengaluru || 0;
                 
                 return (
-                  <tr key={offer.id} className="hover:bg-brand-50 transition-all duration-150">
+                  <tr key={offer.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-4">
-                      <div className="font-bold text-gray-900 text-sm">{offer.title}</div>
+                      <div className="font-semibold text-gray-900 text-sm">{offer.title}</div>
                       {offer.promoteOnAds && (
                         <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
                           <Megaphone className="w-3 h-3" />
@@ -233,30 +233,30 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                       )}
                     </td>
                     <td className="px-5 py-4">
-                      <span className="inline-flex px-2.5 py-1 rounded-md text-xs font-semibold bg-brand-100 text-brand-800">
+                      <span className="inline-flex px-2.5 py-1 rounded-md text-xs font-semibold bg-gray-100 text-gray-700">
                         {offer.type}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-right font-bold text-gray-900 text-base">{targetUnits}</td>
+                    <td className="px-5 py-4 text-right font-semibold text-gray-900 text-sm">{targetUnits}</td>
                     <td className="px-5 py-4 text-right text-sm font-medium text-gray-700">₹{mumbaiPrice.toLocaleString('en-IN')}</td>
                     <td className="px-5 py-4 text-right text-sm font-medium text-gray-700">₹{bengaluruPrice.toLocaleString('en-IN')}</td>
-                    <td className="px-5 py-4 text-right font-bold text-brand-700 text-sm">₹{revenue.mumbai.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                    <td className="px-5 py-4 text-right font-bold text-brand-700 text-sm">₹{revenue.bengaluru.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                    <td className="px-5 py-4 text-right font-bold text-brand-900 text-base">₹{revenue.total.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                    <td className="px-5 py-4 text-right font-semibold text-gray-900 text-sm">₹{revenue.mumbai.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                    <td className="px-5 py-4 text-right font-semibold text-gray-900 text-sm">₹{revenue.bengaluru.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                    <td className="px-5 py-4 text-right font-bold text-gray-900 text-base">₹{revenue.total.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
                   </tr>
                 );
               })}
               
               {/* Totals Row */}
-              <tr className="bg-brand-100 font-bold border-t-2 border-brand-400">
-                <td className="px-5 py-5 text-brand-900 text-sm" colSpan={2}>TOTAL PROJECTED REVENUE</td>
-                <td className="px-5 py-5 text-right text-brand-900 text-base">
+              <tr className="bg-indigo-50 font-bold border-t-2 border-indigo-200">
+                <td className="px-5 py-5 text-indigo-900 text-sm" colSpan={2}>TOTAL PROJECTED REVENUE</td>
+                <td className="px-5 py-5 text-right text-indigo-900 text-sm">
                   {activeOffers.reduce((sum, o) => sum + (typeof o.targetUnits === 'number' ? o.targetUnits : parseInt(o.targetUnits as string) || 0), 0)}
                 </td>
                 <td className="px-5 py-5" colSpan={2}></td>
-                <td className="px-5 py-5 text-right text-brand-900 text-sm">₹{totalMumbaiRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                <td className="px-5 py-5 text-right text-brand-900 text-sm">₹{totalBengaluruRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                <td className="px-5 py-5 text-right text-brand-900 text-lg font-black">₹{totalProjectedRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                <td className="px-5 py-5 text-right text-indigo-900 text-sm">₹{totalMumbaiRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                <td className="px-5 py-5 text-right text-indigo-900 text-sm">₹{totalBengaluruRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                <td className="px-5 py-5 text-right text-indigo-900 text-lg font-black">₹{totalProjectedRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
               </tr>
             </tbody>
           </table>
