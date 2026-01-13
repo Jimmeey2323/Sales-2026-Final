@@ -3,6 +3,7 @@ import { MonthData } from '../types';
 import { OfferCard } from './OfferCard';
 import { FinancialTable } from './FinancialTable';
 import { OfferForm } from './OfferForm';
+import { ExecutionPlan } from './ExecutionPlan';
 import { useSalesData } from '../context/SalesContext';
 import { motion } from 'framer-motion';
 import { CalendarDays, ListTodo, Plus, Target } from 'lucide-react';
@@ -91,17 +92,22 @@ export const MonthDetail: React.FC<MonthDetailProps> = ({ data }) => {
         </div>
       </motion.section>
 
+      {/* Sales Execution Plan */}
+      <motion.section variants={item}>
+        <ExecutionPlan month={data} />
+      </motion.section>
+
       {/* Two Column Layout: Financials & Operations */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Financials (Spans 2 cols) */}
-        <motion.div variants={item} className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Financials */}
+        <motion.div variants={item} className="space-y-6">
           <h2 className="text-2xl font-serif font-bold text-gray-900">Financial Targets</h2>
           <FinancialTable targets={data.financialTargets} totalRevenue={data.revenueTargetTotal} />
         </motion.div>
 
-        {/* Operations (Spans 1 col) */}
+        {/* Reference Operations Timeline */}
         <motion.div variants={item} className="space-y-6">
-          <h2 className="text-2xl font-serif font-bold text-gray-900">Execution Plan</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900">Operations Overview</h2>
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm h-full">
             <div className="space-y-8 relative">
               {/* Timeline Line */}

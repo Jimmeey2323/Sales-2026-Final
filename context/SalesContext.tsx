@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { MonthData, Offer } from '../types';
 import { MONTHS_DATA } from '../constants';
+import { initializeDatabase, loadSalesData, saveSalesData } from '../lib/neon';
 
 interface SalesContextType {
   data: MonthData[];
@@ -9,6 +10,7 @@ interface SalesContextType {
   deleteOffer: (monthId: string, offerId: string) => void;
   toggleCancelled: (monthId: string, offerId: string) => void;
   resetData: () => void;
+  isLoading: boolean;
 }
 
 const SalesContext = createContext<SalesContextType | undefined>(undefined);
@@ -19,32 +21,83 @@ const STORAGE_KEY = 'physique57_sales_plan_v1';
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<MonthData[]>(() => {
-    // Try to load from local storage
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+  const [data, setData] = useState<MonthData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initialize database and load data on mount
+  useEffect(() => {
+    async function loadData() {
       try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse saved data", e);
+        // Initialize database schema
+        await initializeDatabase();
+        
+        // Try to load from Neon database first
+        const neonData = await loadSalesData();
+        
+        if (neonData && Array.isArray(neonData)) {
+          setData(neonData);
+        } else {
+          // Fallback to localStorage
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            try {
+              const parsedData = JSON.parse(saved);
+              setData(parsedData);
+              // Sync to Neon
+              await saveSalesData(parsedData);
+            } catch (e) {
+              console.error("Failed to parse saved data", e);
+              initializeDefaultData();
+            }
+          } else {
+            initializeDefaultData();
+          }
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+        // Fallback to localStorage if Neon fails
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try {
+            setData(JSON.parse(saved));
+          } catch (e) {
+            initializeDefaultData();
+          }
+        } else {
+          initializeDefaultData();
+        }
+      } finally {
+        setIsLoading(false);
       }
     }
-    
-    // Initialize with IDs if missing
-    return MONTHS_DATA.map(month => ({
-      ...month,
-      offers: month.offers.map(offer => ({
-        ...offer,
-        id: offer.id || generateId(),
-        cancelled: offer.cancelled || false
-      }))
-    }));
-  });
 
-  // Save to local storage whenever data changes
+    function initializeDefaultData() {
+      const defaultData = MONTHS_DATA.map(month => ({
+        ...month,
+        offers: month.offers.map(offer => ({
+          ...offer,
+          id: offer.id || generateId(),
+          cancelled: offer.cancelled || false
+        }))
+      }));
+      setData(defaultData);
+      // Save to Neon
+      saveSalesData(defaultData).catch(console.error);
+    }
+
+    loadData();
+  }, []);
+
+  // Save to both local storage and Neon whenever data changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [data]);
+    if (!isLoading && data.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      // Async save to Neon (non-blocking)
+      saveSalesData(data).catch(err => {
+        console.error('Failed to save to Neon:', err);
+      });
+    }
+  }, [data, isLoading]);
 
   const addOffer = (monthId: string, offer: Omit<Offer, 'id'>) => {
     setData(prev => prev.map(month => {
@@ -94,18 +147,21 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const resetData = () => {
     if (!window.confirm("This will factory reset all data. Are you sure?")) return;
     localStorage.removeItem(STORAGE_KEY);
-    setData(MONTHS_DATA.map(month => ({
+    const resetData = MONTHS_DATA.map(month => ({
       ...month,
       offers: month.offers.map(offer => ({
         ...offer,
         id: generateId(),
         cancelled: false
       }))
-    })));
+    }));
+    setData(resetData);
+    // Save reset data to Neon
+    saveSalesData(resetData).catch(console.error);
   };
 
   return (
-    <SalesContext.Provider value={{ data, addOffer, updateOffer, deleteOffer, toggleCancelled, resetData }}>
+    <SalesContext.Provider value={{ data, addOffer, updateOffer, deleteOffer, toggleCancelled, resetData, isLoading }}>
       {children}
     </SalesContext.Provider>
   );

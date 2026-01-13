@@ -13,16 +13,33 @@ export interface Offer {
   type: 'New' | 'Hero' | 'Retention' | 'Flash' | 'Event' | 'Student' | 'Corporate' | 'Lapsed';
   description: string;
   pricing: string;
+  priceMumbai?: number;
+  priceBengaluru?: number;
+  discountPercent?: number;
+  finalPriceMumbai?: number;
+  finalPriceBengaluru?: number;
   savings?: string;
   whyItWorks: string;
   targetUnits?: number | string;
   cancelled?: boolean;
+  promoteOnAds?: boolean; // Toggle for Meta/Google ads promotion
+  marketingCollateral?: string; // Email, WhatsApp, in-studio promotions
+  operationalSupport?: string; // Freebies, challenges, events
 }
 
 export interface OperationalTask {
   week: string;
   focus: string;
   details: string;
+}
+
+export interface ExecutionWeek {
+  week: string;
+  focus: string;
+  offers: string[]; // List of offer IDs to be promoted this week
+  salesActivities: string[];
+  marketingCollateral?: string;
+  operationalSupport?: string;
 }
 
 export interface MonthData {
@@ -34,5 +51,6 @@ export interface MonthData {
   financialTargets: FinancialTarget[];
   offers: Offer[];
   operations: OperationalTask[];
+  executionPlan?: ExecutionWeek[]; // Sales-focused execution plan
   engagement?: { name: string; type: string; description: string }[];
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MonthDetail } from './components/MonthDetail';
+import { YearOverview } from './components/YearOverview';
 import { SalesProvider, useSalesData } from './context/SalesContext';
 import { 
   ChevronRight, 
@@ -12,9 +13,15 @@ import {
   Check, 
   Filter,
   Layers,
-  Settings
+  Settings,
+  CalendarDays,
+  FileText,
+  Image,
+  Mail
 } from 'lucide-react';
 import { MonthData } from './types';
+import { exportToPDF, exportToWord, exportToImage, copyEmailToClipboard } from './lib/exports';
+import { clearSalesData } from './lib/neon';
 
 // Advanced Export Modal Component
 const ExportModal: React.FC<{
@@ -25,70 +32,96 @@ const ExportModal: React.FC<{
 }> = ({ isOpen, onClose, data, selectedMonthId }) => {
   const [scope, setScope] = useState<'current' | 'all'>('all');
   const [includeCancelled, setIncludeCancelled] = useState(false);
-  const [format, setFormat] = useState<'json' | 'csv' | 'clipboard'>('json');
+  const [format, setFormat] = useState<'json' | 'csv' | 'clipboard' | 'pdf' | 'word' | 'image' | 'email'>('pdf');
   const [copied, setCopied] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   if (!isOpen) return null;
 
   const selectedMonth = data.find(m => m.id === selectedMonthId);
 
-  const handleExport = () => {
-    // 1. Filter Scope
-    let exportData = scope === 'current' ? (selectedMonth ? [selectedMonth] : []) : data;
+  const handleExport = async () => {
+    setIsExporting(true);
+    
+    try {
+      // 1. Filter Scope
+      let exportData = scope === 'current' ? (selectedMonth ? [selectedMonth] : []) : data;
 
-    // 2. Filter Cancelled
-    if (!includeCancelled) {
-      exportData = exportData.map(m => ({
-        ...m,
-        offers: m.offers.filter(o => !o.cancelled)
-      }));
-    }
+      // 2. Filter Cancelled
+      if (!includeCancelled) {
+        exportData = exportData.map(m => ({
+          ...m,
+          offers: m.offers.filter(o => !o.cancelled)
+        }));
+      }
 
-    // 3. Handle Formats
-    if (format === 'json') {
-      const dataStr = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `sales_plan_${scope}_${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      onClose();
-    } else if (format === 'csv') {
-       const headers = ['Month', 'Offer Title', 'Type', 'Pricing', 'Target Units', 'Status', 'Description', 'Strategy'];
-       const rows = exportData.flatMap(month => 
-        month.offers.map(offer => [
-          month.name,
-          `"${offer.title.replace(/"/g, '""')}"`,
-          offer.type,
-          `"${offer.pricing}"`,
-          offer.targetUnits || '',
-          offer.cancelled ? 'Cancelled' : 'Active',
-          `"${offer.description.replace(/"/g, '""')}"`,
-          `"${offer.whyItWorks.replace(/"/g, '""')}"`
-        ])
-      );
-      const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `sales_offers_${scope}_${new Date().toISOString().split('T')[0]}.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      onClose();
-    } else if (format === 'clipboard') {
-       const text = JSON.stringify(exportData, null, 2);
-       navigator.clipboard.writeText(text).then(() => {
+      // 3. Handle Formats
+      if (format === 'pdf') {
+        await exportToPDF(exportData, scope, selectedMonth);
+        setTimeout(() => onClose(), 500);
+      } else if (format === 'word') {
+        await exportToWord(exportData, scope, selectedMonth);
+        setTimeout(() => onClose(), 500);
+      } else if (format === 'image') {
+        await exportToImage(exportData, scope, selectedMonth);
+        setTimeout(() => onClose(), 500);
+      } else if (format === 'email') {
+        await copyEmailToClipboard(exportData, scope, selectedMonth);
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+          onClose();
+        }, 1500);
+      } else if (format === 'json') {
+      } else if (format === 'json') {
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `sales_plan_${scope}_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => onClose(), 500);
+      } else if (format === 'csv') {
+         const headers = ['Month', 'Offer Title', 'Type', 'Pricing', 'Target Units', 'Status', 'Description', 'Strategy'];
+         const rows = exportData.flatMap(month => 
+          month.offers.map(offer => [
+            month.name,
+            `"${offer.title.replace(/"/g, '""')}"`,
+            offer.type,
+            `"${offer.pricing}"`,
+            offer.targetUnits || '',
+            offer.cancelled ? 'Cancelled' : 'Active',
+            `"${offer.description.replace(/"/g, '""')}"`,
+            `"${offer.whyItWorks.replace(/"/g, '""')}"`
+          ])
+        );
+        const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `sales_offers_${scope}_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => onClose(), 500);
+      } else if (format === 'clipboard') {
+         const text = JSON.stringify(exportData, null, 2);
+         await navigator.clipboard.writeText(text);
          setCopied(true);
          setTimeout(() => {
            setCopied(false);
            onClose();
          }, 1000);
-       });
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Export failed. Please try again.');
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -156,25 +189,34 @@ const ExportModal: React.FC<{
           {/* Format Selection */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
-              <FileJson className="w-4 h-4" /> Format
+              <FileJson className="w-4 h-4" /> Export Format
             </label>
-            <div className="grid grid-cols-3 gap-3">
-              {['json', 'csv', 'clipboard'].map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFormat(f as any)}
-                  className={`flex flex-col items-center justify-center p-3 rounded-lg border text-xs font-medium transition-all gap-1.5 uppercase tracking-wide ${
-                    format === f
-                      ? 'border-brand-500 bg-brand-50 text-brand-700 ring-1 ring-brand-200 shadow-sm'
-                      : 'border-gray-200 hover:bg-gray-50 text-gray-600'
-                  }`}
-                >
-                  {f === 'json' && <FileJson className="w-5 h-5" />}
-                  {f === 'csv' && <FileSpreadsheet className="w-5 h-5" />}
-                  {f === 'clipboard' && <Clipboard className="w-5 h-5" />}
-                  {f}
-                </button>
-              ))}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { value: 'pdf', label: 'PDF', icon: FileText },
+                { value: 'word', label: 'Word', icon: FileText },
+                { value: 'image', label: 'Image', icon: Image },
+                { value: 'email', label: 'Email', icon: Mail },
+                { value: 'json', label: 'JSON', icon: FileJson },
+                { value: 'csv', label: 'CSV', icon: FileSpreadsheet },
+                { value: 'clipboard', label: 'Copy', icon: Clipboard }
+              ].map((f) => {
+                const Icon = f.icon;
+                return (
+                  <button
+                    key={f.value}
+                    onClick={() => setFormat(f.value as any)}
+                    className={`flex flex-col items-center justify-center p-3 rounded-lg border text-xs font-medium transition-all gap-1.5 uppercase tracking-wide ${
+                      format === f.value
+                        ? 'border-brand-500 bg-brand-50 text-brand-700 ring-1 ring-brand-200 shadow-sm'
+                        : 'border-gray-200 hover:bg-gray-50 text-gray-600'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {f.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -182,18 +224,34 @@ const ExportModal: React.FC<{
         <div className="p-4 bg-gray-50 border-t border-gray-100 flex gap-3">
            <button 
              onClick={onClose}
-             className="flex-1 px-4 py-2.5 text-gray-700 font-medium hover:bg-gray-200 rounded-lg transition-colors text-sm"
+             disabled={isExporting}
+             className="flex-1 px-4 py-2.5 text-gray-700 font-medium hover:bg-gray-200 rounded-lg transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
            >
              Cancel
            </button>
            <button 
              onClick={handleExport}
-             className={`flex-1 px-4 py-2.5 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-sm ${
+             disabled={isExporting}
+             className={`flex-1 px-4 py-2.5 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-50 disabled:cursor-not-allowed ${
                copied ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-600 hover:bg-brand-700'
              }`}
            >
-             {copied ? <Check className="w-4 h-4" /> : <Download className="w-4 h-4" />}
-             {copied ? 'Copied to Clipboard!' : 'Export Now'}
+             {isExporting ? (
+               <>
+                 <RefreshCcw className="w-4 h-4 animate-spin" />
+                 Exporting...
+               </>
+             ) : copied ? (
+               <>
+                 <Check className="w-4 h-4" />
+                 Copied!
+               </>
+             ) : (
+               <>
+                 <Download className="w-4 h-4" />
+                 Export Now
+               </>
+             )}
            </button>
         </div>
       </div>
@@ -202,11 +260,24 @@ const ExportModal: React.FC<{
 };
 
 const DashboardContent: React.FC = () => {
-  const { data, resetData } = useSalesData();
+  const { data, resetData, isLoading } = useSalesData();
   const [selectedMonthId, setSelectedMonthId] = useState<string>('jan');
   const [showExportModal, setShowExportModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'monthly' | 'yearly'>('monthly');
   
   const selectedMonth = data.find(m => m.id === selectedMonthId) || data[0];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCcw className="w-12 h-12 text-brand-600 animate-spin mx-auto mb-4" />
+          <p className="text-lg text-gray-600 font-medium">Loading Sales Data...</p>
+          <p className="text-sm text-gray-400 mt-2">Syncing with Neon Database</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row font-sans text-slate-900">
@@ -223,8 +294,37 @@ const DashboardContent: React.FC = () => {
           <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold pl-10">India • 2026 Masterplan</p>
         </div>
 
+        {/* Tab Navigation */}
+        <div className="px-3 pt-4 pb-2">
+          <div className="grid grid-cols-2 gap-2 bg-gray-100 p-1 rounded-lg">
+            <button
+              onClick={() => setActiveTab('monthly')}
+              className={`px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all ${
+                activeTab === 'monthly'
+                  ? 'bg-white text-brand-600 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('yearly');
+              }}
+              className={`px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-1 ${
+                activeTab === 'yearly'
+                  ? 'bg-white text-brand-600 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <CalendarDays className="w-3 h-3" />
+              Year View
+            </button>
+          </div>
+        </div>
+
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
-          {data.map((month) => (
+          {activeTab === 'monthly' && data.map((month) => (
             <button
               key={month.id}
               onClick={() => setSelectedMonthId(month.id)}
@@ -245,6 +345,14 @@ const DashboardContent: React.FC = () => {
               )}
             </button>
           ))}
+          
+          {activeTab === 'yearly' && (
+            <div className="text-center py-8 text-sm text-gray-500">
+              <CalendarDays className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+              <p className="font-medium">Viewing Full Year</p>
+              <p className="text-xs mt-1">All 12 months overview</p>
+            </div>
+          )}
         </nav>
 
         <div className="p-4 border-t border-gray-100 space-y-3 bg-gray-50/50">
@@ -257,18 +365,37 @@ const DashboardContent: React.FC = () => {
           </button>
 
           <button 
-            onClick={resetData}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            onClick={async () => {
+              if (confirm('⚠️ This will clear ALL cached data (localStorage + database) and reload from constants.ts with updated pricing. Continue?')) {
+                try {
+                  // Clear localStorage
+                  localStorage.clear();
+                  // Clear Neon database
+                  await clearSalesData();
+                  // Force reload
+                  window.location.reload();
+                } catch (error) {
+                  console.error('Error clearing data:', error);
+                  // Still reload even if database clear fails
+                  window.location.reload();
+                }
+              }
+            }}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-orange-50 border border-orange-200 rounded-lg text-sm font-semibold text-orange-700 hover:bg-orange-100 hover:border-orange-300 transition-all shadow-sm"
           >
-            <RefreshCcw className="w-3 h-3" />
-            Reset Data
+            <RefreshCcw className="w-4 h-4" />
+            Clear Cache & Reload
           </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto h-screen bg-slate-50/50">
-        <MonthDetail data={selectedMonth} />
+        {activeTab === 'monthly' ? (
+          <MonthDetail data={selectedMonth} />
+        ) : (
+          <YearOverview data={data} />
+        )}
         
         <footer className="max-w-7xl mx-auto px-6 py-8 text-center">
           <p className="text-sm text-gray-400">

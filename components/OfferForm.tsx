@@ -18,9 +18,15 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
     type: 'New',
     description: '',
     pricing: '',
+    priceMumbai: undefined,
+    priceBengaluru: undefined,
+    finalPriceMumbai: undefined,
+    finalPriceBengaluru: undefined,
     savings: '',
     whyItWorks: '',
-    targetUnits: ''
+    targetUnits: '',
+    marketingCollateral: '',
+    operationalSupport: ''
   });
 
   useEffect(() => {
@@ -32,9 +38,15 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
         type: 'New',
         description: '',
         pricing: '',
+        priceMumbai: undefined,
+        priceBengaluru: undefined,
+        finalPriceMumbai: undefined,
+        finalPriceBengaluru: undefined,
         savings: '',
         whyItWorks: '',
-        targetUnits: ''
+        targetUnits: '',
+        marketingCollateral: '',
+        operationalSupport: ''
       });
     }
   }, [initialData, isOpen]);
@@ -107,28 +119,103 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          {/* Mumbai Pricing */}
+          <div className="border-t border-gray-100 pt-4">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">Mumbai Pricing</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Standard Price</label>
+                <input
+                  type="number"
+                  value={formData.priceMumbai || ''}
+                  onChange={e => setFormData({...formData, priceMumbai: e.target.value ? parseFloat(e.target.value) : undefined})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                  placeholder="e.g. 18638"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Offer Price</label>
+                <input
+                  type="number"
+                  value={formData.finalPriceMumbai || ''}
+                  onChange={e => setFormData({...formData, finalPriceMumbai: e.target.value ? parseFloat(e.target.value) : undefined})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                  placeholder="e.g. 11999"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Bengaluru Pricing */}
+          <div className="border-t border-gray-100 pt-4">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">Bengaluru Pricing</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Standard Price</label>
+                <input
+                  type="number"
+                  value={formData.priceBengaluru || ''}
+                  onChange={e => setFormData({...formData, priceBengaluru: e.target.value ? parseFloat(e.target.value) : undefined})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                  placeholder="e.g. 14595"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Offer Price</label>
+                <input
+                  type="number"
+                  value={formData.finalPriceBengaluru || ''}
+                  onChange={e => setFormData({...formData, finalPriceBengaluru: e.target.value ? parseFloat(e.target.value) : undefined})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                  placeholder="e.g. 11999"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Pricing</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Pricing Display</label>
               <input
-                required
                 type="text"
                 value={formData.pricing}
                 onChange={e => setFormData({...formData, pricing: e.target.value})}
                 className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
-                placeholder="e.g. ₹12,599"
+                placeholder="e.g. Starting at ₹11,999"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Savings</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Savings Text</label>
               <input
                 type="text"
                 value={formData.savings}
                 onChange={e => setFormData({...formData, savings: e.target.value})}
                 className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
-                placeholder="e.g. 20% Off"
+                placeholder="Optional"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Marketing Collateral</label>
+            <textarea
+              rows={2}
+              value={formData.marketingCollateral}
+              onChange={e => setFormData({...formData, marketingCollateral: e.target.value})}
+              className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+              placeholder="e.g. Email campaign, WhatsApp blasts, Instagram stories"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Operational Support</label>
+            <textarea
+              rows={2}
+              value={formData.operationalSupport}
+              onChange={e => setFormData({...formData, operationalSupport: e.target.value})}
+              className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+              placeholder="e.g. Welcome kit with branded water bottle"
+            />
           </div>
 
           <div>

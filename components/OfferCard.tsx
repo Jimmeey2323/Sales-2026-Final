@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Offer } from '../types';
-import { Tag, TrendingUp, Users, Zap, Award, Briefcase, GraduationCap, History, MoreVertical, Edit2, Trash2, Ban } from 'lucide-react';
+import { Tag, TrendingUp, Users, Zap, Award, Briefcase, GraduationCap, History, MoreVertical, Edit2, Trash2, Ban, Megaphone } from 'lucide-react';
 import { useSalesData } from '../context/SalesContext';
 import { OfferForm } from './OfferForm';
 
@@ -13,6 +13,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
   const { updateOffer, deleteOffer, toggleCancelled } = useSalesData();
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [activeLocationTab, setActiveLocationTab] = useState<'mumbai' | 'bengaluru'>('mumbai');
 
   const getIcon = () => {
     switch (offer.type) {
@@ -42,6 +43,12 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
   const handleUpdate = (updatedData: Omit<Offer, 'id'>) => {
     if (offer.id) {
       updateOffer(monthId, offer.id, updatedData);
+    }
+  };
+
+  const handleAdToggle = () => {
+    if (offer.id) {
+      updateOffer(monthId, offer.id, { promoteOnAds: !offer.promoteOnAds });
     }
   };
 
@@ -98,15 +105,158 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
         </p>
 
         <div className={`mt-auto space-y-3 ${offer.cancelled ? 'opacity-50' : ''}`}>
-          <div className="flex items-baseline justify-between pt-4 border-t border-gray-50">
-            <div className="text-sm text-gray-500">Price</div>
-            <div className={`font-semibold ${offer.cancelled ? 'text-gray-500' : 'text-gray-900'}`}>{offer.pricing}</div>
-          </div>
-          
-          {offer.savings && (
-            <div className="flex items-baseline justify-between">
-              <div className="text-sm text-gray-500">Savings</div>
-              <div className={`font-semibold ${offer.cancelled ? 'text-gray-500' : 'text-green-600'}`}>{offer.savings}</div>
+          {/* Location Tabs */}
+          {(offer.priceMumbai || offer.priceBengaluru) ? (
+            <div className="space-y-3">
+              {/* Tab Navigation */}
+              <div className="flex rounded-lg bg-gray-100 p-1">
+                <button
+                  onClick={() => setActiveLocationTab('mumbai')}
+                  className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all ${
+                    activeLocationTab === 'mumbai'
+                      ? 'bg-white text-brand-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Mumbai
+                </button>
+                <button
+                  onClick={() => setActiveLocationTab('bengaluru')}
+                  className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all ${
+                    activeLocationTab === 'bengaluru'
+                      ? 'bg-white text-brand-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Bengaluru
+                </button>
+              </div>
+
+              {/* Tab Content */}
+              <div className="pt-3 border-t border-gray-50">
+                {activeLocationTab === 'mumbai' && offer.priceMumbai && (
+                  <div className="space-y-3">
+                    <div className="flex items-baseline justify-between">
+                      <div className="text-xs text-gray-600 font-medium">Standard Price</div>
+                      <span className="text-sm text-gray-400 line-through">₹{offer.priceMumbai.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-baseline justify-between">
+                      <div className="text-xs text-gray-600 font-medium">Offer Price</div>
+                      <div className="flex items-center gap-2">
+                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
+                          ₹{(offer.finalPriceMumbai || offer.priceMumbai).toLocaleString()}
+                        </span>
+                        {offer.finalPriceMumbai && offer.finalPriceMumbai < offer.priceMumbai && (
+                          <span className="text-xs font-medium text-green-700 bg-green-50 px-1.5 py-0.5 rounded">
+                            {Math.round(((offer.priceMumbai - offer.finalPriceMumbai) / offer.priceMumbai) * 100)}% off
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {offer.finalPriceMumbai && offer.finalPriceMumbai < offer.priceMumbai && (
+                      <div className="flex items-baseline justify-between">
+                        <div className="text-xs text-gray-600 font-medium">Total Savings</div>
+                        <span className="text-sm font-semibold text-gray-900">
+                          ₹{(offer.priceMumbai - offer.finalPriceMumbai).toLocaleString()}
+                        </span>
+                      </div>
+                    )}
+                    {offer.targetUnits && (
+                      <div className="flex items-baseline justify-between pt-2 border-t border-gray-100">
+                        <div className="text-xs text-gray-600 font-medium">Target Units</div>
+                        <span className="text-sm font-bold text-gray-900">{offer.targetUnits}</span>
+                      </div>
+                    )}
+                    {offer.targetUnits && (offer.finalPriceMumbai || offer.priceMumbai) && (
+                      <div className="flex items-baseline justify-between">
+                        <div className="text-xs text-gray-600 font-medium">Projected Revenue</div>
+                        <span className="text-sm font-bold text-gray-900">
+                          ₹{((offer.finalPriceMumbai || offer.priceMumbai) * (typeof offer.targetUnits === 'number' ? offer.targetUnits : parseInt(offer.targetUnits as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {activeLocationTab === 'bengaluru' && offer.priceBengaluru && (
+                  <div className="space-y-3">
+                    <div className="flex items-baseline justify-between">
+                      <div className="text-xs text-gray-600 font-medium">Standard Price</div>
+                      <span className="text-sm text-gray-400 line-through">₹{offer.priceBengaluru.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-baseline justify-between">
+                      <div className="text-xs text-gray-600 font-medium">Offer Price</div>
+                      <div className="flex items-center gap-2">
+                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
+                          ₹{(offer.finalPriceBengaluru || offer.priceBengaluru).toLocaleString()}
+                        </span>
+                        {offer.finalPriceBengaluru && offer.finalPriceBengaluru < offer.priceBengaluru && (
+                          <span className="text-xs font-medium text-green-700 bg-green-50 px-1.5 py-0.5 rounded">
+                            {Math.round(((offer.priceBengaluru - offer.finalPriceBengaluru) / offer.priceBengaluru) * 100)}% off
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {offer.finalPriceBengaluru && offer.finalPriceBengaluru < offer.priceBengaluru && (
+                      <div className="flex items-baseline justify-between">
+                        <div className="text-xs text-gray-600 font-medium">Total Savings</div>
+                        <span className="text-sm font-semibold text-gray-900">
+                          ₹{(offer.priceBengaluru - offer.finalPriceBengaluru).toLocaleString()}
+                        </span>
+                      </div>
+                    )}
+                    {offer.targetUnits && (
+                      <div className="flex items-baseline justify-between pt-2 border-t border-gray-100">
+                        <div className="text-xs text-gray-600 font-medium">Target Units</div>
+                        <span className="text-sm font-bold text-gray-900">{offer.targetUnits}</span>
+                      </div>
+                    )}
+                    {offer.targetUnits && (offer.finalPriceBengaluru || offer.priceBengaluru) && (
+                      <div className="flex items-baseline justify-between">
+                        <div className="text-xs text-gray-600 font-medium">Projected Revenue</div>
+                        <span className="text-sm font-bold text-gray-900">
+                          ₹{((offer.finalPriceBengaluru || offer.priceBengaluru) * (typeof offer.targetUnits === 'number' ? offer.targetUnits : parseInt(offer.targetUnits as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Fallback for missing pricing */}
+                {((activeLocationTab === 'mumbai' && !offer.priceMumbai) || 
+                  (activeLocationTab === 'bengaluru' && !offer.priceBengaluru)) && (
+                  <div className="text-center py-4 text-gray-400">
+                    <p className="text-xs">No pricing available for this location</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-baseline justify-between pt-4 border-t border-gray-50">
+              <div className="text-sm text-gray-500">Price</div>
+              <div className={`font-semibold ${offer.cancelled ? 'text-gray-500' : 'text-gray-900'}`}>{offer.pricing}</div>
+            </div>
+          )}
+
+          {/* Ad Promotion Toggle */}
+          {!offer.cancelled && (
+            <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2">
+                <Megaphone className="w-4 h-4 text-gray-400" />
+                <span className="text-xs font-medium text-gray-600">Promote on Ads</span>
+              </div>
+              <button
+                onClick={handleAdToggle}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
+                  offer.promoteOnAds ? 'bg-brand-600' : 'bg-gray-200'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    offer.promoteOnAds ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
             </div>
           )}
 
