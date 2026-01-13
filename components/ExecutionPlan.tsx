@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MonthData, Offer, MarketingCollateral, CRMTimeline } from '../types';
-import { Target, TrendingUp, Users, DollarSign, Package, Megaphone, ListTodo, Edit2, Save, X } from 'lucide-react';
+import { Target, TrendingUp, Users, DollarSign, Package, Megaphone, ListTodo, Edit2, Save, X, Trash2, Plus, Calendar } from 'lucide-react';
 import { useSalesData } from '../context/SalesContext';
 
 // Indian currency formatter
@@ -20,11 +20,15 @@ interface ExecutionPlanProps {
 }
 
 export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
-  const { updateMarketingCollateral, updateCRMTimeline, setMonthMarketingCollateral, setMonthCRMTimeline } = useSalesData();
+  const { updateMarketingCollateral, updateCRMTimeline, setMonthMarketingCollateral, setMonthCRMTimeline, addMarketingCollateral, deleteMarketingCollateral, addCRMTimeline, deleteCRMTimeline } = useSalesData();
   const [editingMarketing, setEditingMarketing] = useState<string | null>(null);
   const [editingCRM, setEditingCRM] = useState<string | null>(null);
   const [tempMarketing, setTempMarketing] = useState<Partial<MarketingCollateral>>({});
   const [tempCRM, setTempCRM] = useState<Partial<CRMTimeline>>({});
+  const [showNewMarketing, setShowNewMarketing] = useState(false);
+  const [showNewCRM, setShowNewCRM] = useState(false);
+  const [newMarketing, setNewMarketing] = useState<Partial<MarketingCollateral>>({});
+  const [newCRM, setNewCRM] = useState<Partial<CRMTimeline>>({});
   
   // Filter out cancelled offers
   const activeOffers = month.offers.filter(o => !o.cancelled);
@@ -73,6 +77,15 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
   const targetRevenue = parseRevenue(month.revenueTargetTotal);
   const revenueGap = targetRevenue - totalProjectedRevenue;
   const achievementPercent = targetRevenue > 0 ? Math.round((totalProjectedRevenue / targetRevenue) * 100) : 0;
+
+  // Helper function to parse dates like "Jan 15, 2026"
+  const parseDate = (dateStr: string): number => {
+    try {
+      return new Date(dateStr).getTime();
+    } catch {
+      return 0;
+    }
+  };
 
   // Use stored marketing collateral or generate from offers
   const marketingCollateral: MarketingCollateral[] = month.marketingCollateral && month.marketingCollateral.length > 0 
@@ -375,57 +388,192 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
       </div>
 
       {/* Marketing Collateral Requirements */}
-      {marketingCollateral.length > 0 && (
-        <div className="bg-white rounded-xl border-2 border-indigo-200 overflow-hidden shadow-sm">
-          <div className="bg-white px-6 py-4 border-b-2 border-indigo-200">
+      <div className="bg-white rounded-xl border-2 border-indigo-200 overflow-hidden shadow-sm">
+        <div className="bg-white px-6 py-4 border-b-2 border-indigo-200 flex items-center justify-between">
+          <div>
             <h4 className="text-lg font-bold text-indigo-700 flex items-center gap-2">
               <Megaphone className="w-5 h-5 text-indigo-600" />
               Design Team Collateral Requests
             </h4>
             <p className="text-xs text-gray-600 mt-1">Creative requirements for design team with specific deadlines and promotional channels (click to edit)</p>
           </div>
+          <button
+            onClick={() => {
+              setShowNewMarketing(true);
+              setNewMarketing({
+                offer: activeOffers[0]?.title || '',
+                type: 'Email Campaign',
+                collateralNeeded: '',
+                medium: 'Email Marketing',
+                dueDate: '',
+                messaging: '',
+                notes: ''
+              });
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Add New
+          </button>
+        </div>
           
-          <div className="p-6 bg-gray-50">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {marketingCollateral.map((item, index) => {
+        <div className="p-6 bg-gray-50">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            {showNewMarketing && (
+              <div className="bg-white border-2 border-indigo-400 rounded-xl p-5 shadow-md relative">
+                <button
+                  onClick={() => {
+                    setShowNewMarketing(false);
+                    setNewMarketing({});
+                  }}
+                  className="absolute top-3 right-3 p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  <X className="w-4 h-4 text-red-600" />
+                </button>
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
+                  <input
+                    type="text"
+                    value={newMarketing.offer || ''}
+                    onChange={(e) => setNewMarketing({...newMarketing, offer: e.target.value})}
+                    className="px-3 py-1.5 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-lg border border-indigo-300 focus:border-indigo-500 outline-none"
+                    placeholder="Offer name"
+                  />
+                  <input
+                    type="text"
+                    value={newMarketing.type || ''}
+                    onChange={(e) => setNewMarketing({...newMarketing, type: e.target.value})}
+                    className="px-2.5 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-md border border-gray-300 focus:border-indigo-500 outline-none"
+                    placeholder="Type"
+                  />
+                </div>
+                <div className="space-y-3.5">
+                  <div>
+                    <div className="text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">Creative Requirements</div>
+                    <input
+                      type="text"
+                      value={newMarketing.collateralNeeded || ''}
+                      onChange={(e) => setNewMarketing({...newMarketing, collateralNeeded: e.target.value})}
+                      className="w-full text-sm font-semibold text-gray-900 border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none"
+                      placeholder="e.g., Email Template, WhatsApp Graphic..."
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <div className="text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">Promotional Channel</div>
+                      <input
+                        type="text"
+                        value={newMarketing.medium || ''}
+                        onChange={(e) => setNewMarketing({...newMarketing, medium: e.target.value})}
+                        className="w-full text-sm font-medium text-gray-800 border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none"
+                        placeholder="WhatsApp, Email, etc."
+                      />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">Delivery Deadline</div>
+                      <input
+                        type="text"
+                        value={newMarketing.dueDate || ''}
+                        onChange={(e) => setNewMarketing({...newMarketing, dueDate: e.target.value})}
+                        className="w-full text-sm font-bold text-indigo-700 border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none"
+                        placeholder="e.g., Jan 10, 2026"
+                      />
+                    </div>
+                  </div>
+                  <div className="bg-indigo-50 rounded-lg p-3">
+                    <div className="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-1.5">Design Instructions</div>
+                    <textarea
+                      value={newMarketing.messaging || ''}
+                      onChange={(e) => setNewMarketing({...newMarketing, messaging: e.target.value})}
+                      className="w-full text-xs leading-relaxed text-gray-700 border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none bg-white"
+                      rows={3}
+                      placeholder="Detailed creative brief for design team..."
+                    />
+                  </div>
+                  <div className="border-t border-gray-200 pt-3">
+                    <div className="text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">Additional Notes</div>
+                    <textarea
+                      value={newMarketing.notes || ''}
+                      onChange={(e) => setNewMarketing({...newMarketing, notes: e.target.value})}
+                      className="w-full text-xs text-gray-600 italic leading-relaxed border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none"
+                      rows={2}
+                      placeholder="Special requirements, file formats, etc."
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (newMarketing.offer && newMarketing.collateralNeeded) {
+                        addMarketingCollateral(month.id, {
+                          id: Math.random().toString(36).substr(2, 9),
+                          offer: newMarketing.offer,
+                          type: newMarketing.type || 'Mixed Media',
+                          collateralNeeded: newMarketing.collateralNeeded,
+                          medium: newMarketing.medium || 'Multi-channel',
+                          dueDate: newMarketing.dueDate || '',
+                          messaging: newMarketing.messaging || '',
+                          notes: newMarketing.notes || ''
+                        });
+                        setShowNewMarketing(false);
+                        setNewMarketing({});
+                      }
+                    }}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save Collateral Request
+                  </button>
+                </div>
+              </div>
+            )}
+            {marketingCollateral.map((item, index) => {
                 const isEditing = editingMarketing === item.id;
                 const displayItem = isEditing ? { ...item, ...tempMarketing } : item;
                 
                 return (
                   <div key={item.id || index} className="bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-indigo-300 hover:shadow-md transition-all relative">
-                    <button
-                      onClick={() => {
-                        if (isEditing) {
-                          if (item.id) {
-                            updateMarketingCollateral(month.id, item.id, tempMarketing);
-                          }
-                          setEditingMarketing(null);
-                          setTempMarketing({});
-                        } else {
-                          setEditingMarketing(item.id || null);
-                          setTempMarketing(item);
-                        }
-                      }}
-                      className="absolute top-3 right-3 p-1.5 hover:bg-indigo-50 rounded-lg transition-colors"
-                    >
-                      {isEditing ? (
-                        <Save className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <Edit2 className="w-4 h-4 text-gray-400" />
-                      )}
-                    </button>
-                    
-                    {isEditing && (
+                    <div className="absolute top-3 right-3 flex gap-2">
                       <button
                         onClick={() => {
-                          setEditingMarketing(null);
-                          setTempMarketing({});
+                          if (item.id && confirm('Delete this marketing collateral request?')) {
+                            deleteMarketingCollateral(month.id, item.id);
+                          }
                         }}
-                        className="absolute top-3 right-12 p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                        className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
                       >
-                        <X className="w-4 h-4 text-red-600" />
+                        <Trash2 className="w-4 h-4 text-red-600" />
                       </button>
-                    )}
+                      <button
+                        onClick={() => {
+                          if (isEditing) {
+                            if (item.id) {
+                              updateMarketingCollateral(month.id, item.id, tempMarketing);
+                          }
+                            setEditingMarketing(null);
+                            setTempMarketing({});
+                          } else {
+                            setEditingMarketing(item.id || null);
+                            setTempMarketing(item);
+                          }
+                        }}
+                        className="p-1.5 hover:bg-indigo-50 rounded-lg transition-colors"
+                      >
+                        {isEditing ? (
+                          <Save className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Edit2 className="w-4 h-4 text-gray-400" />
+                        )}
+                      </button>
+                      {isEditing && (
+                        <button
+                          onClick={() => {
+                            setEditingMarketing(null);
+                            setTempMarketing({});
+                          }}
+                          className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                        >
+                          <X className="w-4 h-4 text-red-600" />
+                        </button>
+                      )}
+                    </div>
                     
                     <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
                       <span className="px-3 py-1.5 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-lg">
@@ -527,69 +675,192 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                   </div>
                 );
               })}
-            </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* CRM & Campaign Timeline */}
-      {crmTimeline.length > 0 && (
-        <div className="bg-white rounded-xl border-2 border-indigo-200 overflow-hidden shadow-sm">
-          <div className="bg-white px-6 py-4 border-b-2 border-indigo-200">
+      <div className="bg-white rounded-xl border-2 border-indigo-200 overflow-hidden shadow-sm">
+        <div className="bg-white px-6 py-4 border-b-2 border-indigo-200 flex items-center justify-between">
+          <div>
             <h4 className="text-lg font-bold text-indigo-700 flex items-center gap-2">
-              <Megaphone className="w-5 h-5 text-indigo-600" />
+              <Calendar className="w-5 h-5 text-indigo-600" />
               CRM & Campaign Timeline
             </h4>
             <p className="text-xs text-gray-600 mt-1">Creative send dates, social media ads schedule & messaging (click to edit)</p>
           </div>
-          
-          <div className="p-6 bg-gray-50">
+          <button
+            onClick={() => {
+              setShowNewCRM(true);
+              setNewCRM({
+                offer: activeOffers[0]?.title || '',
+                content: '',
+                sendDate: '',
+                adsStartDate: '',
+                adsEndDate: ''
+              });
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Add New
+          </button>
+        </div>
+        
+        <div className="p-6 bg-gray-50">
+          <div className="relative">
+            {/* Timeline vertical line */}
+            <div className="absolute left-[29px] top-0 bottom-0 w-0.5 bg-indigo-200"></div>
             <div className="space-y-4">
-              {crmTimeline.map((item, index) => {
+              {showNewCRM && (
+                <div className="bg-white border-2 border-indigo-400 rounded-xl p-5 shadow-md relative ml-16">
+                  <button
+                    onClick={() => {
+                      setShowNewCRM(false);
+                      setNewCRM({});
+                    }}
+                    className="absolute top-3 right-3 p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <X className="w-4 h-4 text-red-600" />
+                  </button>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Calendar className="w-5 h-5 text-indigo-600" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-3 pb-3 border-b border-gray-200">
+                        <input
+                          type="text"
+                          value={newCRM.offer || ''}
+                          onChange={(e) => setNewCRM({...newCRM, offer: e.target.value})}
+                          className="px-3 py-1.5 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-lg border border-indigo-300 focus:border-indigo-500 outline-none"
+                          placeholder="Offer name"
+                        />
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 rounded-md">
+                          <span className="text-xs font-medium text-gray-600">Send:</span>
+                          <input
+                            type="text"
+                            value={newCRM.sendDate || ''}
+                            onChange={(e) => setNewCRM({...newCRM, sendDate: e.target.value})}
+                            className="text-xs font-bold text-blue-700 border border-gray-300 rounded px-1 py-0.5 w-24 focus:border-indigo-500 outline-none bg-white"
+                            placeholder="Jan 15, 2026"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 mb-3 pb-3 border-b border-gray-200">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 rounded-md">
+                          <span className="text-xs font-medium text-gray-600">Ads Start:</span>
+                          <input
+                            type="text"
+                            value={newCRM.adsStartDate || ''}
+                            onChange={(e) => setNewCRM({...newCRM, adsStartDate: e.target.value})}
+                            className="text-xs font-bold text-green-700 border border-gray-300 rounded px-1 py-0.5 w-24 focus:border-indigo-500 outline-none bg-white"
+                            placeholder="Optional"
+                          />
+                        </div>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-50 rounded-md">
+                          <span className="text-xs font-medium text-gray-600">Ads End:</span>
+                          <input
+                            type="text"
+                            value={newCRM.adsEndDate || ''}
+                            onChange={(e) => setNewCRM({...newCRM, adsEndDate: e.target.value})}
+                            className="text-xs font-bold text-red-700 border border-gray-300 rounded px-1 py-0.5 w-24 focus:border-indigo-500 outline-none bg-white"
+                            placeholder="Optional"
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-3 mb-3">
+                        <textarea
+                          value={newCRM.content || ''}
+                          onChange={(e) => setNewCRM({...newCRM, content: e.target.value})}
+                          className="w-full text-sm text-gray-800 leading-relaxed font-medium border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 outline-none bg-white"
+                          rows={3}
+                          placeholder="Campaign content and messaging..."
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (newCRM.offer && newCRM.content && newCRM.sendDate) {
+                            addCRMTimeline(month.id, {
+                              id: Math.random().toString(36).substr(2, 9),
+                              offer: newCRM.offer,
+                              content: newCRM.content,
+                              sendDate: newCRM.sendDate,
+                              adsStartDate: newCRM.adsStartDate || undefined,
+                              adsEndDate: newCRM.adsEndDate || undefined
+                            });
+                            setShowNewCRM(false);
+                            setNewCRM({});
+                          }
+                        }}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                      >
+                        <Save className="w-4 h-4" />
+                        Save CRM Event
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {[...crmTimeline].sort((a, b) => parseDate(a.sendDate) - parseDate(b.sendDate)).map((item, index) => {
                 const isEditing = editingCRM === item.id;
                 const displayItem = isEditing ? { ...item, ...tempCRM } : item;
                 
                 return (
-                  <div key={item.id || index} className="bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-indigo-300 hover:shadow-md transition-all relative">
-                    <button
-                      onClick={() => {
-                        if (isEditing) {
-                          if (item.id) {
-                            updateCRMTimeline(month.id, item.id, tempCRM);
+                  <div key={item.id || index} className="relative">
+                    {/* Timeline dot */}
+                    <div className="absolute left-[25px] top-5 w-3 h-3 bg-indigo-600 rounded-full border-2 border-white shadow-md z-10"></div>
+                    <div className="bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-indigo-300 hover:shadow-md transition-all relative ml-16">
+                      <div className="absolute top-3 right-3 flex gap-2 z-10">
+                        <button
+                          onClick={() => {
+                            if (item.id && confirm('Delete this CRM timeline event?')) {
+                              deleteCRMTimeline(month.id, item.id);
+                            }
+                          }}
+                          className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4 text-red-600" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (isEditing) {
+                              if (item.id) {
+                                updateCRMTimeline(month.id, item.id, tempCRM);
                           }
-                          setEditingCRM(null);
-                          setTempCRM({});
-                        } else {
-                          setEditingCRM(item.id || null);
-                          setTempCRM(item);
-                        }
-                      }}
-                      className="absolute top-3 right-3 p-1.5 hover:bg-indigo-50 rounded-lg transition-colors z-10"
-                    >
-                      {isEditing ? (
-                        <Save className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <Edit2 className="w-4 h-4 text-gray-400" />
-                      )}
-                    </button>
-                    
-                    {isEditing && (
-                      <button
-                        onClick={() => {
-                          setEditingCRM(null);
-                          setTempCRM({});
-                        }}
-                        className="absolute top-3 right-12 p-1.5 hover:bg-red-50 rounded-lg transition-colors z-10"
-                      >
-                        <X className="w-4 h-4 text-red-600" />
-                      </button>
-                    )}
-                    
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Megaphone className="w-5 h-5 text-indigo-600" />
+                              setEditingCRM(null);
+                              setTempCRM({});
+                            } else {
+                              setEditingCRM(item.id || null);
+                              setTempCRM(item);
+                            }
+                          }}
+                          className="p-1.5 hover:bg-indigo-50 rounded-lg transition-colors"
+                        >
+                          {isEditing ? (
+                            <Save className="w-4 h-4 text-green-600" />
+                          ) : (
+                            <Edit2 className="w-4 h-4 text-gray-400" />
+                          )}
+                        </button>
+                        {isEditing && (
+                          <button
+                            onClick={() => {
+                              setEditingCRM(null);
+                              setTempCRM({});
+                            }}
+                            className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                          >
+                            <X className="w-4 h-4 text-red-600" />
+                          </button>
+                        )}
                       </div>
-                      <div className="flex-1 min-w-0">
+                    
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <Calendar className="w-5 h-5 text-indigo-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-3 pb-3 border-b border-gray-200">
                           <span className="px-3 py-1.5 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-lg">
                             {displayItem.offer}
@@ -658,6 +929,7 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                             <p className="text-sm text-gray-800 leading-relaxed font-medium">{displayItem.content}</p>
                           )}
                         </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -666,7 +938,7 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -13,6 +13,10 @@ interface SalesContextType {
   updateCRMTimeline: (monthId: string, id: string, updates: Partial<CRMTimeline>) => void;
   setMonthMarketingCollateral: (monthId: string, items: MarketingCollateral[]) => void;
   setMonthCRMTimeline: (monthId: string, items: CRMTimeline[]) => void;
+  addMarketingCollateral: (monthId: string, item: Omit<MarketingCollateral, 'id'>) => void;
+  deleteMarketingCollateral: (monthId: string, id: string) => void;
+  addCRMTimeline: (monthId: string, item: Omit<CRMTimeline, 'id'>) => void;
+  deleteCRMTimeline: (monthId: string, id: string) => void;
   resetData: () => void;
   isLoading: boolean;
 }
@@ -192,6 +196,48 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }));
   };
 
+  const addMarketingCollateral = (monthId: string, item: Omit<MarketingCollateral, 'id'>) => {
+    setData(prev => prev.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        marketingCollateral: [...(month.marketingCollateral || []), { ...item, id: generateId() }]
+      };
+    }));
+  };
+
+  const deleteMarketingCollateral = (monthId: string, id: string) => {
+    if (!window.confirm("Are you sure you want to delete this marketing collateral?")) return;
+    setData(prev => prev.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        marketingCollateral: (month.marketingCollateral || []).filter(item => item.id !== id)
+      };
+    }));
+  };
+
+  const addCRMTimeline = (monthId: string, item: Omit<CRMTimeline, 'id'>) => {
+    setData(prev => prev.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        crmTimeline: [...(month.crmTimeline || []), { ...item, id: generateId() }]
+      };
+    }));
+  };
+
+  const deleteCRMTimeline = (monthId: string, id: string) => {
+    if (!window.confirm("Are you sure you want to delete this CRM event?")) return;
+    setData(prev => prev.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        crmTimeline: (month.crmTimeline || []).filter(item => item.id !== id)
+      };
+    }));
+  };
+
   const resetData = () => {
     if (!window.confirm("This will factory reset all data. Are you sure?")) return;
     localStorage.removeItem(STORAGE_KEY);
@@ -209,7 +255,7 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   return (
-    <SalesContext.Provider value={{ data, addOffer, updateOffer, deleteOffer, toggleCancelled, updateMarketingCollateral, updateCRMTimeline, setMonthMarketingCollateral, setMonthCRMTimeline, resetData, isLoading }}>
+    <SalesContext.Provider value={{ data, addOffer, updateOffer, deleteOffer, toggleCancelled, updateMarketingCollateral, updateCRMTimeline, setMonthMarketingCollateral, setMonthCRMTimeline, addMarketingCollateral, deleteMarketingCollateral, addCRMTimeline, deleteCRMTimeline, resetData, isLoading }}>
       {children}
     </SalesContext.Provider>
   );
