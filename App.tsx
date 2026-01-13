@@ -264,6 +264,7 @@ const DashboardContent: React.FC = () => {
   const [selectedMonthId, setSelectedMonthId] = useState<string>('jan');
   const [showExportModal, setShowExportModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'monthly' | 'yearly'>('monthly');
+  const [hideCancelled, setHideCancelled] = useState(false);
   
   const selectedMonth = data.find(m => m.id === selectedMonthId) || data[0];
 
@@ -357,6 +358,27 @@ const DashboardContent: React.FC = () => {
 
         <div className="p-4 border-t border-gray-100 space-y-3 bg-gray-50/50">
           <button 
+            onClick={() => setHideCancelled(!hideCancelled)}
+            className={`w-full flex items-center justify-between gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all shadow-sm ${
+              hideCancelled 
+                ? 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100' 
+                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4" />
+              Hide Cancelled
+            </div>
+            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+              hideCancelled 
+                ? 'bg-indigo-600 border-indigo-600' 
+                : 'border-gray-300'
+            }`}>
+              {hideCancelled && <Check className="w-3 h-3 text-white" />}
+            </div>
+          </button>
+          
+          <button 
             onClick={() => setShowExportModal(true)}
             className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all shadow-sm"
           >
@@ -392,9 +414,9 @@ const DashboardContent: React.FC = () => {
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto h-screen bg-slate-50/50">
         {activeTab === 'monthly' ? (
-          <MonthDetail data={selectedMonth} />
+          <MonthDetail data={selectedMonth} hideCancelled={hideCancelled} />
         ) : (
-          <YearOverview data={data} />
+          <YearOverview data={data} hideCancelled={hideCancelled} />
         )}
         
         <footer className="max-w-7xl mx-auto px-6 py-8 text-center">

@@ -5,9 +5,10 @@ import { Calendar, TrendingUp, DollarSign, Package } from 'lucide-react';
 
 interface YearOverviewProps {
   data: MonthData[];
+  hideCancelled?: boolean;
 }
 
-export const YearOverview: React.FC<YearOverviewProps> = ({ data }) => {
+export const YearOverview: React.FC<YearOverviewProps> = ({ data, hideCancelled = false }) => {
   const container = {
     hidden: { opacity: 0 },
     show: {

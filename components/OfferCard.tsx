@@ -89,9 +89,9 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
             {!offer.cancelled && getIcon()}
             {offer.cancelled ? 'Cancelled' : `${offer.type} Offer`}
           </span>
-          {offer.targetUnits && (
+          {(offer.targetUnitsMumbai || offer.targetUnitsBengaluru || offer.targetUnits) && (
             <span className={`text-xs font-medium ${offer.cancelled ? 'text-gray-300' : 'text-gray-400'}`}>
-              Goal: {offer.targetUnits} units
+              Goal: {offer.targetUnitsMumbai || offer.targetUnitsBengaluru || offer.targetUnits} units
             </span>
           )}
         </div>
@@ -143,14 +143,14 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
                     <div className="flex items-baseline justify-between">
                       <div className="text-xs text-gray-600 font-medium">Offer Price</div>
                       <div className="flex items-center gap-2">
-                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
-                          ₹{(offer.finalPriceMumbai || offer.priceMumbai).toLocaleString()}
-                        </span>
                         {offer.finalPriceMumbai && offer.finalPriceMumbai < offer.priceMumbai && (
-                          <span className="text-xs font-medium text-green-700 bg-green-50 px-1.5 py-0.5 rounded">
+                          <span className="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">
                             {Math.round(((offer.priceMumbai - offer.finalPriceMumbai) / offer.priceMumbai) * 100)}% off
                           </span>
                         )}
+                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
+                          ₹{(offer.finalPriceMumbai || offer.priceMumbai).toLocaleString()}
+                        </span>
                       </div>
                     </div>
                     {offer.finalPriceMumbai && offer.finalPriceMumbai < offer.priceMumbai && (
@@ -161,17 +161,17 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
                         </span>
                       </div>
                     )}
-                    {offer.targetUnits && (
+                    {(offer.targetUnitsMumbai || offer.targetUnits) && (
                       <div className="flex items-baseline justify-between pt-2 border-t border-gray-100">
                         <div className="text-xs text-gray-600 font-medium">Target Units</div>
-                        <span className="text-sm font-bold text-gray-900">{offer.targetUnits}</span>
+                        <span className="text-sm font-bold text-gray-900">{offer.targetUnitsMumbai || offer.targetUnits}</span>
                       </div>
                     )}
-                    {offer.targetUnits && (offer.finalPriceMumbai || offer.priceMumbai) && (
+                    {(offer.targetUnitsMumbai || offer.targetUnits) && (offer.finalPriceMumbai || offer.priceMumbai) && (
                       <div className="flex items-baseline justify-between">
                         <div className="text-xs text-gray-600 font-medium">Projected Revenue</div>
                         <span className="text-sm font-bold text-gray-900">
-                          ₹{((offer.finalPriceMumbai || offer.priceMumbai) * (typeof offer.targetUnits === 'number' ? offer.targetUnits : parseInt(offer.targetUnits as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                          ₹{((offer.finalPriceMumbai || offer.priceMumbai) * (typeof (offer.targetUnitsMumbai || offer.targetUnits) === 'number' ? (offer.targetUnitsMumbai || offer.targetUnits) : parseInt((offer.targetUnitsMumbai || offer.targetUnits) as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                         </span>
                       </div>
                     )}
@@ -187,14 +187,14 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
                     <div className="flex items-baseline justify-between">
                       <div className="text-xs text-gray-600 font-medium">Offer Price</div>
                       <div className="flex items-center gap-2">
-                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
-                          ₹{(offer.finalPriceBengaluru || offer.priceBengaluru).toLocaleString()}
-                        </span>
                         {offer.finalPriceBengaluru && offer.finalPriceBengaluru < offer.priceBengaluru && (
-                          <span className="text-xs font-medium text-green-700 bg-green-50 px-1.5 py-0.5 rounded">
+                          <span className="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">
                             {Math.round(((offer.priceBengaluru - offer.finalPriceBengaluru) / offer.priceBengaluru) * 100)}% off
                           </span>
                         )}
+                        <span className={`font-bold text-lg ${offer.cancelled ? 'text-gray-400' : 'text-gray-900'}`}>
+                          ₹{(offer.finalPriceBengaluru || offer.priceBengaluru).toLocaleString()}
+                        </span>
                       </div>
                     </div>
                     {offer.finalPriceBengaluru && offer.finalPriceBengaluru < offer.priceBengaluru && (
@@ -205,17 +205,17 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
                         </span>
                       </div>
                     )}
-                    {offer.targetUnits && (
+                    {(offer.targetUnitsBengaluru || offer.targetUnits) && (
                       <div className="flex items-baseline justify-between pt-2 border-t border-gray-100">
                         <div className="text-xs text-gray-600 font-medium">Target Units</div>
-                        <span className="text-sm font-bold text-gray-900">{offer.targetUnits}</span>
+                        <span className="text-sm font-bold text-gray-900">{offer.targetUnitsBengaluru || offer.targetUnits}</span>
                       </div>
                     )}
-                    {offer.targetUnits && (offer.finalPriceBengaluru || offer.priceBengaluru) && (
+                    {(offer.targetUnitsBengaluru || offer.targetUnits) && (offer.finalPriceBengaluru || offer.priceBengaluru) && (
                       <div className="flex items-baseline justify-between">
                         <div className="text-xs text-gray-600 font-medium">Projected Revenue</div>
                         <span className="text-sm font-bold text-gray-900">
-                          ₹{((offer.finalPriceBengaluru || offer.priceBengaluru) * (typeof offer.targetUnits === 'number' ? offer.targetUnits : parseInt(offer.targetUnits as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                          ₹{((offer.finalPriceBengaluru || offer.priceBengaluru) * (typeof (offer.targetUnitsBengaluru || offer.targetUnits) === 'number' ? (offer.targetUnitsBengaluru || offer.targetUnits) : parseInt((offer.targetUnitsBengaluru || offer.targetUnits) as string) || 0)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                         </span>
                       </div>
                     )}

@@ -6,11 +6,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'January',
     theme: 'The Resolution Reset',
     summary: 'Critical acquisition month focusing on aggressive newcomer conversion and maximizing "Cash Upfront" via annual lock-ins. Targeting 35% YoY growth.',
-    revenueTargetTotal: '₹1,59,56,805',
+    revenueTargetTotal: '₹54,30,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 175, estTicketSize: 'Blended', revenueTarget: '₹60,98,935', logic: 'Aggressive acquisition + High-ticket LTV' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 155, estTicketSize: 'Blended', revenueTarget: '₹54,92,945', logic: 'Focus on retention & upselling' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 165, estTicketSize: 'Blended', revenueTarget: '₹43,64,925', logic: 'Volume-led revenue growth' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 175, estTicketSize: 'Blended', revenueTarget: '₹25.2 L', logic: 'Aggressive acquisition + High-ticket LTV' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 155, estTicketSize: 'Blended', revenueTarget: '₹18.3 L', logic: 'Focus on retention & upselling' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 165, estTicketSize: 'Blended', revenueTarget: '₹10.8 L', logic: 'Volume-led revenue growth' }
     ],
     offers: [
       {
@@ -131,10 +131,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'February',
     theme: 'Heart-Health & Self Love',
     summary: 'Transitioning January trialists into long-term members while utilizing Valentine\'s Day as a high-conversion window. Goal: 33% YoY.',
-    revenueTargetTotal: '₹50,00,000+',
+    revenueTargetTotal: '₹50,70,000',
     financialTargets: [
-      { location: 'Mumbai Combined', category: 'Total', targetUnits: 85, estTicketSize: '₹14,500', revenueTarget: '₹41.4 L', logic: 'Valentine Hero Revenue focus' },
-      { location: 'Bengaluru', category: 'Total', targetUnits: 35, estTicketSize: '₹11,200', revenueTarget: '₹8.6 L', logic: 'Retention of Jan influx' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹23.6 L', logic: 'Valentine Hero Revenue focus' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹17.7 L', logic: 'Focus on retention & upselling' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹9.4 L', logic: 'Retention of Jan influx' }
     ],
     offers: [
       {
@@ -200,10 +201,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'March',
     theme: 'The Power of Her',
     summary: 'Bridging Q1 to Q2. Converting momentum from Feb into long-term commitment. Focus on International Women\'s Day.',
-    revenueTargetTotal: '₹47,00,000',
+    revenueTargetTotal: '₹56,30,000',
     financialTargets: [
-      { location: 'Mumbai Combined', category: 'Total', targetUnits: 0, estTicketSize: 'N/A', revenueTarget: '₹40.0 L', logic: '18% Lead-to-Member Goal' },
-      { location: 'Bengaluru', category: 'Total', targetUnits: 0, estTicketSize: 'N/A', revenueTarget: '₹7.0 L', logic: '15% Lead-to-Member Goal' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹25.2 L', logic: '18% Lead-to-Member Goal' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹21.1 L', logic: 'Focus on retention & upselling' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹10.0 L', logic: '15% Lead-to-Member Goal' }
     ],
     offers: [
       {
@@ -270,9 +272,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'April',
     theme: 'Infinite Strength (8th Anniversary)',
     summary: 'Grand 8th Anniversary Jubilee. High-impact "Event" offers. Gold, Glamour, and Legacy vibe.',
-    revenueTargetTotal: 'High Impact Event Month',
+    revenueTargetTotal: '₹67,60,000',
     financialTargets: [
-        { location: 'All Locations', category: 'Event', targetUnits: 8, estTicketSize: '₹88,000', revenueTarget: 'Cash Injection', logic: 'Scarcity Strategy' }
+      { location: 'MUM: Kwality House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹31.1 L', logic: 'Scarcity Strategy' },
+      { location: 'MUM: Supreme HQ', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹26.2 L', logic: '8th Anniversary Push' },
+      { location: 'BLR: Kenkere House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹10.3 L', logic: 'Cash Injection' }
     ],
     offers: [
       {
@@ -339,11 +343,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'May',
     theme: 'The Summer Sprint',
     summary: 'High-liquidity month capitalizing on "Summer Holiday Prep" and Student demographic. Target 33% YoY jump.',
-    revenueTargetTotal: '₹75,92,500',
+    revenueTargetTotal: '₹71,40,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 140, estTicketSize: 'High', revenueTarget: '₹29,22,500', logic: 'High AOV focus' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 130, estTicketSize: 'Med', revenueTarget: '₹27,20,000', logic: 'Retention & Upselling' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 140, estTicketSize: 'Low', revenueTarget: '₹19,50,000', logic: 'Volume-led growth' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 140, estTicketSize: 'High', revenueTarget: '₹34.0 L', logic: 'High AOV focus' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 130, estTicketSize: 'Med', revenueTarget: '₹27.1 L', logic: 'Retention & Upselling' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 140, estTicketSize: 'Low', revenueTarget: '₹10.3 L', logic: 'Volume-led growth' }
     ],
     offers: [
       {
@@ -410,11 +414,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'June',
     theme: 'The Monsoon Motivation',
     summary: 'Pivoting to "Indoor Comfort" and "Reactive Marketing" to combat low attendance due to rains.',
-    revenueTargetTotal: '₹56,55,500',
+    revenueTargetTotal: '₹71,60,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'Med', revenueTarget: '₹21,43,000', logic: 'Global Wellness Week' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'Med', revenueTarget: '₹20,15,000', logic: 'Rainy Day Discounts' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 115, estTicketSize: 'Low', revenueTarget: '₹14,97,500', logic: 'Virtual cross-sells' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'Med', revenueTarget: '₹31.9 L', logic: 'Global Wellness Week' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'Med', revenueTarget: '₹28.5 L', logic: 'Rainy Day Discounts' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 115, estTicketSize: 'Low', revenueTarget: '₹11.2 L', logic: 'Virtual cross-sells' }
     ],
     offers: [
       {
@@ -481,11 +485,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'July',
     theme: 'The Storm Breaker',
     summary: 'Focus on "Logistical Relief" and "Social Proof" during peak monsoon. Removing travel barriers.',
-    revenueTargetTotal: '₹63,39,000',
+    revenueTargetTotal: '₹77,20,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'High', revenueTarget: '₹23,99,000', logic: 'Uber Credit Bundles' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'High', revenueTarget: '₹22,60,000', logic: 'Referral Density' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 122, estTicketSize: 'Med', revenueTarget: '₹16,80,000', logic: 'Volume Retention' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'High', revenueTarget: '₹36.0 L', logic: 'Uber Credit Bundles' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'High', revenueTarget: '₹28.5 L', logic: 'Referral Density' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 122, estTicketSize: 'Med', revenueTarget: '₹12.7 L', logic: 'Volume Retention' }
     ],
     offers: [
       {
@@ -555,8 +559,8 @@ export const MONTHS_DATA: MonthData[] = [
     revenueTargetTotal: '₹72,40,000',
     financialTargets: [
       { location: 'MUM: Kwality House', category: 'Total', targetUnits: 238, estTicketSize: 'Mixed', revenueTarget: '₹33.3 L', logic: 'High Repeat Volume' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 215, estTicketSize: 'Mixed', revenueTarget: '₹28.6 L', logic: 'Friendship Push' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 135, estTicketSize: 'Mixed', revenueTarget: '₹10.5 L', logic: 'New Acquisition' }
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 215, estTicketSize: 'Mixed', revenueTarget: '₹28.5 L', logic: 'Friendship Push' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 135, estTicketSize: 'Mixed', revenueTarget: '₹10.6 L', logic: 'New Acquisition' }
     ],
     offers: [
       {
@@ -623,11 +627,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'September',
     theme: 'Professional\'s Peak',
     summary: 'Honoring expertise through Trainer-led acquisition, team competition, and high-performance results.',
-    revenueTargetTotal: '₹83,40,000',
+    revenueTargetTotal: '₹73,10,000',
     financialTargets: [
       { location: 'MUM: Kwality House', category: 'Total', targetUnits: 295, estTicketSize: 'High', revenueTarget: '₹39.5 L', logic: 'Trainer Led' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 250, estTicketSize: 'High', revenueTarget: '₹31.4 L', logic: 'Team Challenge' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 165, estTicketSize: 'Med', revenueTarget: '₹12.5 L', logic: 'Technical Focus' }
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 250, estTicketSize: 'High', revenueTarget: '₹23.0 L', logic: 'Team Challenge' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 165, estTicketSize: 'Med', revenueTarget: '₹10.6 L', logic: 'Technical Focus' }
     ],
     offers: [
       {
@@ -694,11 +698,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'October',
     theme: 'Pre-Festive Glow',
     summary: 'Aesthetic results, high-velocity toning, and premium gifting ahead of the social season.',
-    revenueTargetTotal: '₹85,50,000',
+    revenueTargetTotal: '₹59,80,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 320, estTicketSize: 'Med', revenueTarget: '₹41.2 L', logic: 'LBD Project' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 260, estTicketSize: 'Med', revenueTarget: '₹31.5 L', logic: 'Flash Packs' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 175, estTicketSize: 'Low', revenueTarget: '₹12.8 L', logic: 'Volume' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 320, estTicketSize: 'Med', revenueTarget: '₹31.4 L', logic: 'LBD Project' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 260, estTicketSize: 'Med', revenueTarget: '₹19.2 L', logic: 'Flash Packs' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 175, estTicketSize: 'Low', revenueTarget: '₹9.2 L', logic: 'Volume' }
     ],
     offers: [
       {
@@ -765,10 +769,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'November',
     theme: 'Detox & Deal',
     summary: 'Combat post-festive slump by gamifying detox. Black Friday revenue injection.',
-    revenueTargetTotal: '₹63,30,000',
+    revenueTargetTotal: '₹62,70,000',
     financialTargets: [
-      { location: 'Mumbai Combined', category: 'Total', targetUnits: 450, estTicketSize: 'Mixed', revenueTarget: '₹48.5 L', logic: 'Black Friday Vault' },
-      { location: 'Bengaluru', category: 'Total', targetUnits: 200, estTicketSize: 'Mixed', revenueTarget: '₹14.8 L', logic: 'Detox Challenge' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹31.1 L', logic: 'Black Friday Vault' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹21.0 L', logic: 'Black Friday Push' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹10.6 L', logic: 'Detox Challenge' }
     ],
     offers: [
       {
@@ -835,10 +840,11 @@ export const MONTHS_DATA: MonthData[] = [
     name: 'December',
     theme: 'Finish Strong',
     summary: 'Pre-Resolution Capture & Gifting. Lock in 2027 revenue before January rush.',
-    revenueTargetTotal: '₹41,50,000',
+    revenueTargetTotal: '₹52,50,000',
     financialTargets: [
-      { location: 'Mumbai Combined', category: 'Total', targetUnits: 300, estTicketSize: 'Mixed', revenueTarget: '₹32.0 L', logic: 'Pre-Sale Lock-in' },
-      { location: 'Bengaluru', category: 'Total', targetUnits: 150, estTicketSize: 'Mixed', revenueTarget: '₹9.5 L', logic: 'Gifting' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹31.1 L', logic: 'Pre-Sale Lock-in' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹14.6 L', logic: 'Holiday Push' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Mixed', revenueTarget: '₹6.8 L', logic: 'Gifting' }
     ],
     offers: [
       {

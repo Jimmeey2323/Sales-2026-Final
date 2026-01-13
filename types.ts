@@ -21,6 +21,8 @@ export interface Offer {
   savings?: string;
   whyItWorks: string;
   targetUnits?: number | string;
+  targetUnitsMumbai?: number | string;
+  targetUnitsBengaluru?: number | string;
   cancelled?: boolean;
   promoteOnAds?: boolean; // Toggle for Meta/Google ads promotion
   marketingCollateral?: string; // Email, WhatsApp, in-studio promotions
@@ -42,6 +44,26 @@ export interface ExecutionWeek {
   operationalSupport?: string;
 }
 
+export interface MarketingCollateral {
+  id?: string;
+  offer: string;
+  collateralNeeded: string;
+  type: string;
+  medium: string;
+  messaging: string;
+  dueDate: string;
+  notes?: string;
+}
+
+export interface CRMTimeline {
+  id?: string;
+  offer: string;
+  content: string;
+  sendDate?: string;
+  adsStartDate?: string;
+  adsEndDate?: string;
+}
+
 export interface MonthData {
   id: string;
   name: string;
@@ -53,4 +75,6 @@ export interface MonthData {
   operations: OperationalTask[];
   executionPlan?: ExecutionWeek[]; // Sales-focused execution plan
   engagement?: { name: string; type: string; description: string }[];
+  marketingCollateral?: MarketingCollateral[];
+  crmTimeline?: CRMTimeline[];
 }

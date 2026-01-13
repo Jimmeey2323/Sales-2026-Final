@@ -25,6 +25,8 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
     savings: '',
     whyItWorks: '',
     targetUnits: '',
+    targetUnitsMumbai: '',
+    targetUnitsBengaluru: '',
     marketingCollateral: '',
     operationalSupport: ''
   });
@@ -45,6 +47,8 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
         savings: '',
         whyItWorks: '',
         targetUnits: '',
+        targetUnitsMumbai: '',
+        targetUnitsBengaluru: '',
         marketingCollateral: '',
         operationalSupport: ''
       });
@@ -119,10 +123,9 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
             />
           </div>
 
-          {/* Mumbai Pricing */}
           <div className="border-t border-gray-100 pt-4">
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Mumbai Pricing</h4>
-            <div className="grid grid-cols-2 gap-4">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">Mumbai Pricing & Target</h4>
+            <div className="grid grid-cols-2 gap-4 mb-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Standard Price</label>
                 <input
@@ -144,12 +147,22 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
                 />
               </div>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Target Units (Mumbai)</label>
+              <input
+                type="text"
+                value={formData.targetUnitsMumbai || ''}
+                onChange={e => setFormData({...formData, targetUnitsMumbai: e.target.value})}
+                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                placeholder="e.g. 30"
+              />
+            </div>
           </div>
 
           {/* Bengaluru Pricing */}
           <div className="border-t border-gray-100 pt-4">
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Bengaluru Pricing</h4>
-            <div className="grid grid-cols-2 gap-4">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">Bengaluru Pricing & Target</h4>
+            <div className="grid grid-cols-2 gap-4 mb-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Standard Price</label>
                 <input
@@ -170,8 +183,16 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
                   placeholder="e.g. 11999"
                 />
               </div>
-            </div>
-          </div>
+            </div>            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Target Units (Bengaluru)</label>
+              <input
+                type="text"
+                value={formData.targetUnitsBengaluru || ''}
+                onChange={e => setFormData({...formData, targetUnitsBengaluru: e.target.value})}
+                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
+                placeholder="e.g. 20"
+              />
+            </div>          </div>
 
           <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4">
             <div>

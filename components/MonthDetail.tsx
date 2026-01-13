@@ -10,11 +10,17 @@ import { CalendarDays, ListTodo, Plus, Target } from 'lucide-react';
 
 interface MonthDetailProps {
   data: MonthData;
+  hideCancelled?: boolean;
 }
 
-export const MonthDetail: React.FC<MonthDetailProps> = ({ data }) => {
+export const MonthDetail: React.FC<MonthDetailProps> = ({ data, hideCancelled = false }) => {
   const { addOffer } = useSalesData();
   const [isAdding, setIsAdding] = useState(false);
+  
+  // Filter offers based on hideCancelled
+  const displayOffers = hideCancelled 
+    ? data.offers.filter(offer => !offer.cancelled)
+    : data.offers;
 
   const container = {
     hidden: { opacity: 0 },
@@ -63,7 +69,7 @@ export const MonthDetail: React.FC<MonthDetailProps> = ({ data }) => {
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-serif font-bold text-gray-900">Strategic Offers</h2>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-              {data.offers.filter(o => !o.cancelled).length} Active
+              {displayOffers.length} {hideCancelled ? 'Active' : 'Total'}
             </span>
           </div>
           <button 
@@ -75,7 +81,7 @@ export const MonthDetail: React.FC<MonthDetailProps> = ({ data }) => {
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.offers.map((offer) => (
+          {displayOffers.map((offer) => (
             <OfferCard key={offer.id} offer={offer} monthId={data.id} />
           ))}
           
