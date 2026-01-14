@@ -28,7 +28,25 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
     targetUnitsMumbai: '',
     targetUnitsBengaluru: '',
     marketingCollateral: '',
-    operationalSupport: ''
+    operationalSupport: '',
+    collateralChannels: {
+      email: true,
+      whatsapp: true,
+      inStudio: true,
+      website: false,
+      socialMedia: false,
+      metaAds: false
+    },
+    collateralTypes: {
+      imageCreative: true,
+      tentCards: true,
+      videoCreative: false,
+      easelStandee: false,
+      emailTemplate: false,
+      landingPage: false,
+      socialPosts: false,
+      storyTemplate: false
+    }
   });
 
   useEffect(() => {
@@ -50,7 +68,25 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
         targetUnitsMumbai: '',
         targetUnitsBengaluru: '',
         marketingCollateral: '',
-        operationalSupport: ''
+        operationalSupport: '',
+        collateralChannels: {
+          email: true,
+          whatsapp: true,
+          inStudio: true,
+          website: false,
+          socialMedia: false,
+          metaAds: false
+        },
+        collateralTypes: {
+          imageCreative: true,
+          tentCards: true,
+          videoCreative: false,
+          easelStandee: false,
+          emailTemplate: false,
+          landingPage: false,
+          socialPosts: false,
+          storyTemplate: false
+        }
       });
     }
   }, [initialData, isOpen]);
@@ -226,6 +262,77 @@ export const OfferForm: React.FC<OfferFormProps> = ({ initialData, isOpen, onClo
               className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none"
               placeholder="e.g. Email campaign, WhatsApp blasts, Instagram stories"
             />
+          </div>
+
+          {/* Collateral Selection Checkboxes */}
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h4 className="text-sm font-semibold text-blue-900 mb-3">Marketing Collateral Selection</h4>
+            
+            <div className="space-y-4">
+              {/* Channels */}
+              <div>
+                <div className="text-xs font-medium text-blue-800 mb-2">Channels</div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { key: 'whatsapp', label: 'WhatsApp' },
+                    { key: 'email', label: 'Email' },
+                    { key: 'inStudio', label: 'In-Studio' },
+                    { key: 'website', label: 'Website' },
+                    { key: 'socialMedia', label: 'Social Media' },
+                    { key: 'metaAds', label: 'Meta Ads' }
+                  ].map(channel => (
+                    <label key={channel.key} className="flex items-center gap-2 text-xs">
+                      <input
+                        type="checkbox"
+                        checked={formData.collateralChannels?.[channel.key as keyof typeof formData.collateralChannels] || false}
+                        onChange={(e) => {
+                          const updatedChannels = {
+                            ...formData.collateralChannels,
+                            [channel.key]: e.target.checked
+                          };
+                          setFormData({...formData, collateralChannels: updatedChannels});
+                        }}
+                        className="w-3 h-3 text-blue-600"
+                      />
+                      <span className="text-blue-700">{channel.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Types */}
+              <div>
+                <div className="text-xs font-medium text-blue-800 mb-2">Collateral Types</div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { key: 'tentCards', label: 'Tent Cards' },
+                    { key: 'imageCreative', label: 'Image Creative' },
+                    { key: 'videoCreative', label: 'Video Creative' },
+                    { key: 'easelStandee', label: 'Easel Standee' },
+                    { key: 'emailTemplate', label: 'Email Template' },
+                    { key: 'landingPage', label: 'Landing Page' },
+                    { key: 'socialPosts', label: 'Social Posts' },
+                    { key: 'storyTemplate', label: 'Story Template' }
+                  ].map(type => (
+                    <label key={type.key} className="flex items-center gap-2 text-xs">
+                      <input
+                        type="checkbox"
+                        checked={formData.collateralTypes?.[type.key as keyof typeof formData.collateralTypes] || false}
+                        onChange={(e) => {
+                          const updatedTypes = {
+                            ...formData.collateralTypes,
+                            [type.key]: e.target.checked
+                          };
+                          setFormData({...formData, collateralTypes: updatedTypes});
+                        }}
+                        className="w-3 h-3 text-blue-600"
+                      />
+                      <span className="text-blue-700">{type.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div>

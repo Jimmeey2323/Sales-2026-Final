@@ -1,8 +1,15 @@
 import { neon } from '@neondatabase/serverless';
 
-// Neon database connection
-const DATABASE_URL = 'postgresql://neondb_owner:npg_adL9B0uIREhP@ep-dry-sound-a15m8a9a-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require';
+// Neon database connection - using environment variable
+const DATABASE_URL = import.meta.env.VITE_DATABASE_URL || 'postgresql://neondb_owner:npg_adL9B0uIREhP@ep-dry-sound-a15m8a9a-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require';
+
+if (!DATABASE_URL) {
+  console.error('⚠️ VITE_DATABASE_URL environment variable is not set!');
+}
+
 const sql = neon(DATABASE_URL);
+
+console.log('🔌 Neon database connection initialized');
 
 // Initialize database schema
 export async function initializeDatabase() {
@@ -16,9 +23,11 @@ export async function initializeDatabase() {
       )
     `;
     
-    console.log('Database initialized successfully');
+    console.log('✅ Database initialized successfully');
+    return { success: true };
   } catch (error) {
-    console.error('Error initializing database:', error);
+    console.error('❌ Error initializing database:', error);
+    return { success: false, error };
   }
 }
 
@@ -36,17 +45,19 @@ export async function saveSalesData(data: any) {
             updated_at = CURRENT_TIMESTAMP 
         WHERE id = ${existing[0].id}
       `;
+      console.log('💾 Data updated in Neon database');
     } else {
       // Insert new data
       await sql`
         INSERT INTO sales_data (data) 
         VALUES (${JSON.stringify(data)})
       `;
+      console.log('💾 Data saved to Neon database (first time)');
     }
     
     return { success: true };
   } catch (error) {
-    console.error('Error saving to database:', error);
+    console.error('❌ Error saving to database:', error);
     return { success: false, error };
   }
 }
@@ -61,12 +72,14 @@ export async function loadSalesData() {
     `;
     
     if (result.length > 0) {
+      console.log('📥 Data loaded from Neon database');
       return result[0].data;
     }
     
+    console.log('ℹ️ No data found in Neon database');
     return null;
   } catch (error) {
-    console.error('Error loading from database:', error);
+    console.error('❌ Error loading from database:', error);
     return null;
   }
 }
@@ -75,10 +88,10 @@ export async function loadSalesData() {
 export async function clearSalesData() {
   try {
     await sql`DELETE FROM sales_data`;
-    console.log('Database cleared successfully');
+    console.log('🗑️ Database cleared successfully');
     return { success: true };
   } catch (error) {
-    console.error('Error clearing database:', error);
+    console.error('❌ Error clearing database:', error);
     return { success: false, error };
   }
 }

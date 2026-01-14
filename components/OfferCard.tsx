@@ -14,6 +14,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [activeLocationTab, setActiveLocationTab] = useState<'mumbai' | 'bengaluru'>('mumbai');
+  const [showCollateralSection, setShowCollateralSection] = useState(false);
 
   const getIcon = () => {
     switch (offer.type) {
@@ -95,6 +96,96 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
             </span>
           )}
         </div>
+
+        {/* Collateral Selection Section */}
+        {!offer.cancelled && (
+          <div className="bg-blue-50 rounded-lg p-4 mb-4">
+            <div 
+              className="flex items-center justify-between cursor-pointer"
+              onClick={() => setShowCollateralSection(!showCollateralSection)}
+            >
+              <h4 className="text-sm font-semibold text-blue-900 flex items-center gap-2">
+                <Megaphone className="w-4 h-4" />
+                Marketing Collateral Required
+              </h4>
+              <div className="text-blue-600">
+                {showCollateralSection ? '−' : '+'}
+              </div>
+            </div>
+            
+            {showCollateralSection && (
+              <div className="space-y-3 mt-3">
+                {/* Channels */}
+                <div>
+                  <div className="text-xs font-medium text-blue-800 mb-2">Channels</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { key: 'whatsapp', label: 'WhatsApp' },
+                      { key: 'email', label: 'Email' },
+                      { key: 'inStudio', label: 'In-Studio' },
+                      { key: 'website', label: 'Website' },
+                      { key: 'socialMedia', label: 'Social Media' },
+                      { key: 'metaAds', label: 'Meta Ads' }
+                    ].map(channel => (
+                      <label key={channel.key} className="flex items-center gap-2 text-xs">
+                        <input
+                          type="checkbox"
+                          checked={offer.collateralChannels?.[channel.key as keyof typeof offer.collateralChannels] || false}
+                          onChange={(e) => {
+                            const updatedChannels = {
+                              ...offer.collateralChannels,
+                              [channel.key]: e.target.checked
+                            };
+                            updateOffer(monthId, offer.id!, { 
+                              collateralChannels: updatedChannels 
+                            });
+                          }}
+                          className="w-3 h-3 text-blue-600"
+                        />
+                        <span className="text-blue-700">{channel.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Types */}
+                <div>
+                  <div className="text-xs font-medium text-blue-800 mb-2">Collateral Types</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { key: 'tentCards', label: 'Tent Cards' },
+                      { key: 'imageCreative', label: 'Image Creative' },
+                      { key: 'videoCreative', label: 'Video Creative' },
+                      { key: 'easelStandee', label: 'Easel Standee' },
+                      { key: 'emailTemplate', label: 'Email Template' },
+                      { key: 'landingPage', label: 'Landing Page' },
+                      { key: 'socialPosts', label: 'Social Posts' },
+                      { key: 'storyTemplate', label: 'Story Template' }
+                    ].map(type => (
+                      <label key={type.key} className="flex items-center gap-2 text-xs">
+                        <input
+                          type="checkbox"
+                          checked={offer.collateralTypes?.[type.key as keyof typeof offer.collateralTypes] || false}
+                          onChange={(e) => {
+                            const updatedTypes = {
+                              ...offer.collateralTypes,
+                              [type.key]: e.target.checked
+                            };
+                            updateOffer(monthId, offer.id!, { 
+                              collateralTypes: updatedTypes 
+                            });
+                          }}
+                          className="w-3 h-3 text-blue-600"
+                        />
+                        <span className="text-blue-700">{type.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <h3 className={`text-xl font-serif font-semibold mb-2 leading-tight ${offer.cancelled ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
           {offer.title}

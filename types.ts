@@ -27,6 +27,25 @@ export interface Offer {
   promoteOnAds?: boolean; // Toggle for Meta/Google ads promotion
   marketingCollateral?: string; // Email, WhatsApp, in-studio promotions
   operationalSupport?: string; // Freebies, challenges, events
+  // New collateral selection fields
+  collateralChannels?: {
+    whatsapp?: boolean;
+    email?: boolean;
+    inStudio?: boolean;
+    website?: boolean;
+    socialMedia?: boolean;
+    metaAds?: boolean;
+  };
+  collateralTypes?: {
+    tentCards?: boolean;
+    imageCreative?: boolean;
+    videoCreative?: boolean;
+    easelStandee?: boolean;
+    emailTemplate?: boolean;
+    landingPage?: boolean;
+    socialPosts?: boolean;
+    storyTemplate?: boolean;
+  };
 }
 
 export interface OperationalTask {
@@ -53,6 +72,7 @@ export interface MarketingCollateral {
   messaging: string;
   dueDate: string;
   notes?: string;
+  ctaLinks?: string;
 }
 
 export interface CRMTimeline {
@@ -77,4 +97,5 @@ export interface MonthData {
   engagement?: { name: string; type: string; description: string }[];
   marketingCollateral?: MarketingCollateral[];
   crmTimeline?: CRMTimeline[];
+  customSections?: { [key: string]: any[] }; // Support for custom sections
 }

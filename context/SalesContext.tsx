@@ -17,6 +17,12 @@ interface SalesContextType {
   deleteMarketingCollateral: (monthId: string, id: string) => void;
   addCRMTimeline: (monthId: string, item: Omit<CRMTimeline, 'id'>) => void;
   deleteCRMTimeline: (monthId: string, id: string) => void;
+  deleteAllMarketingCollateral: (monthId: string) => void;
+  deleteAllCRMTimeline: (monthId: string) => void;
+  addCustomSection: (monthId: string, sectionName: string, items: any[]) => void;
+  updateCustomSection: (monthId: string, sectionName: string, items: any[]) => void;
+  deleteCustomSection: (monthId: string, sectionName: string) => void;
+  removeDuplicateCRMEvents: (monthId: string) => void;
   resetData: () => void;
   isLoading: boolean;
 }
@@ -36,37 +42,48 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     async function loadData() {
       try {
+        console.log('🔄 Initializing database...');
         // Initialize database schema
-        await initializeDatabase();
+        const initResult = await initializeDatabase();
+        
+        if (!initResult.success) {
+          console.warn('⚠️ Database initialization failed, using localStorage fallback');
+        }
         
         // Try to load from Neon database first
+        console.log('📥 Loading data from Neon...');
         const neonData = await loadSalesData();
         
         if (neonData && Array.isArray(neonData)) {
+          console.log('✅ Loaded data from Neon database');
           setData(neonData);
         } else {
+          console.log('ℹ️ No Neon data found, checking localStorage...');
           // Fallback to localStorage
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved) {
             try {
               const parsedData = JSON.parse(saved);
+              console.log('✅ Loaded data from localStorage, syncing to Neon...');
               setData(parsedData);
               // Sync to Neon
               await saveSalesData(parsedData);
             } catch (e) {
-              console.error("Failed to parse saved data", e);
+              console.error("❌ Failed to parse saved data", e);
               initializeDefaultData();
             }
           } else {
+            console.log('ℹ️ No localStorage data, loading from constants.ts...');
             initializeDefaultData();
           }
         }
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('❌ Error loading data:', error);
         // Fallback to localStorage if Neon fails
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           try {
+            console.log('⚠️ Using localStorage fallback');
             setData(JSON.parse(saved));
           } catch (e) {
             initializeDefaultData();
@@ -80,6 +97,7 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 
     function initializeDefaultData() {
+      console.log('🆕 Initializing default data from constants.ts...');
       const defaultData = MONTHS_DATA.map(month => ({
         ...month,
         offers: month.offers.map(offer => ({
@@ -90,7 +108,10 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }));
       setData(defaultData);
       // Save to Neon
-      saveSalesData(defaultData).catch(console.error);
+      console.log('💾 Saving default data to Neon...');
+      saveSalesData(defaultData).catch(err => {
+        console.error('❌ Failed to save default data to Neon:', err);
+      });
     }
 
     loadData();
@@ -100,6 +121,7 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     if (!isLoading && data.length > 0) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      console.log('💾 Saved to localStorage');
       // Async save to Neon (non-blocking)
       saveSalesData(data).catch(err => {
         console.error('Failed to save to Neon:', err);
@@ -108,17 +130,20 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [data, isLoading]);
 
   const addOffer = (monthId: string, offer: Omit<Offer, 'id'>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         offers: [...month.offers, { ...offer, id: generateId(), cancelled: false }]
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const updateOffer = (monthId: string, offerId: string, updates: Partial<Offer>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
@@ -126,22 +151,28 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           offer.id === offerId ? { ...offer, ...updates } : offer
         )
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const deleteOffer = (monthId: string, offerId: string) => {
     if (!window.confirm("Are you sure you want to delete this offer?")) return;
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         offers: month.offers.filter(offer => offer.id !== offerId)
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const toggleCancelled = (monthId: string, offerId: string) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
@@ -149,11 +180,14 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           offer.id === offerId ? { ...offer, cancelled: !offer.cancelled } : offer
         )
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const updateMarketingCollateral = (monthId: string, id: string, updates: Partial<MarketingCollateral>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
@@ -161,11 +195,14 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           item.id === id ? { ...item, ...updates } : item
         )
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const updateCRMTimeline = (monthId: string, id: string, updates: Partial<CRMTimeline>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
@@ -173,69 +210,193 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           item.id === id ? { ...item, ...updates } : item
         )
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const setMonthMarketingCollateral = (monthId: string, items: MarketingCollateral[]) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         marketingCollateral: items
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const setMonthCRMTimeline = (monthId: string, items: CRMTimeline[]) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         crmTimeline: items
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const addMarketingCollateral = (monthId: string, item: Omit<MarketingCollateral, 'id'>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         marketingCollateral: [...(month.marketingCollateral || []), { ...item, id: generateId() }]
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const deleteMarketingCollateral = (monthId: string, id: string) => {
     if (!window.confirm("Are you sure you want to delete this marketing collateral?")) return;
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         marketingCollateral: (month.marketingCollateral || []).filter(item => item.id !== id)
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const deleteAllMarketingCollateral = (monthId: string) => {
+    if (!window.confirm("Are you sure you want to delete ALL marketing collateral for this month?")) return;
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        marketingCollateral: []
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const addCRMTimeline = (monthId: string, item: Omit<CRMTimeline, 'id'>) => {
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         crmTimeline: [...(month.crmTimeline || []), { ...item, id: generateId() }]
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const deleteCRMTimeline = (monthId: string, id: string) => {
     if (!window.confirm("Are you sure you want to delete this CRM event?")) return;
-    setData(prev => prev.map(month => {
+    const newData = data.map(month => {
       if (month.id !== monthId) return month;
       return {
         ...month,
         crmTimeline: (month.crmTimeline || []).filter(item => item.id !== id)
       };
-    }));
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const deleteAllCRMTimeline = (monthId: string) => {
+    if (!window.confirm("Are you sure you want to delete ALL CRM timeline events for this month?")) return;
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        crmTimeline: []
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const addCustomSection = (monthId: string, sectionName: string, items: any[]) => {
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        customSections: {
+          ...((month as any).customSections || {}),
+          [sectionName]: items
+        }
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const updateCustomSection = (monthId: string, sectionName: string, items: any[]) => {
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        customSections: {
+          ...((month as any).customSections || {}),
+          [sectionName]: items
+        }
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const deleteCustomSection = (monthId: string, sectionName: string) => {
+    if (!window.confirm(`Are you sure you want to delete the entire "${sectionName}" section?`)) return;
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      const { [sectionName]: _, ...remainingCustomSections } = (month as any).customSections || {};
+      return {
+        ...month,
+        customSections: remainingCustomSections
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
+  const removeDuplicateCRMEvents = (monthId: string) => {
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      
+      const seen = new Map<string, CRMTimeline>();
+      
+      (month.crmTimeline || []).forEach(event => {
+        // Create a comprehensive key for duplicate detection
+        const key = `${event.offer?.trim().toLowerCase()}-${event.sendDate?.trim()}-${event.content?.substring(0, 50).trim().toLowerCase()}`;
+        
+        // Keep the first occurrence of each unique event
+        if (!seen.has(key)) {
+          seen.set(key, event);
+        }
+      });
+      
+      const uniqueEvents = Array.from(seen.values());
+      console.log(`Removed ${(month.crmTimeline || []).length - uniqueEvents.length} duplicate CRM events for ${month.name}`);      
+      return {
+        ...month,
+        crmTimeline: uniqueEvents
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
   };
 
   const resetData = () => {
@@ -255,7 +416,29 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   return (
-    <SalesContext.Provider value={{ data, addOffer, updateOffer, deleteOffer, toggleCancelled, updateMarketingCollateral, updateCRMTimeline, setMonthMarketingCollateral, setMonthCRMTimeline, addMarketingCollateral, deleteMarketingCollateral, addCRMTimeline, deleteCRMTimeline, resetData, isLoading }}>
+    <SalesContext.Provider value={{ 
+      data, 
+      addOffer, 
+      updateOffer, 
+      deleteOffer, 
+      toggleCancelled, 
+      updateMarketingCollateral, 
+      updateCRMTimeline, 
+      setMonthMarketingCollateral, 
+      setMonthCRMTimeline, 
+      addMarketingCollateral, 
+      deleteMarketingCollateral, 
+      addCRMTimeline, 
+      deleteCRMTimeline, 
+      deleteAllMarketingCollateral, 
+      deleteAllCRMTimeline, 
+      addCustomSection, 
+      updateCustomSection, 
+      deleteCustomSection, 
+      removeDuplicateCRMEvents,
+      resetData, 
+      isLoading 
+    }}>
       {children}
     </SalesContext.Provider>
   );

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { MonthDetail } from './components/MonthDetail';
 import { YearOverview } from './components/YearOverview';
 import { SalesProvider, useSalesData } from './context/SalesContext';
+import { AdminProvider } from './context/AdminContext';
+import { AdminLoginModal } from './components/AdminLoginModal';
+import { AdminStatusBar } from './components/AdminStatusBar';
 import { 
   ChevronRight, 
   Download, 
@@ -72,7 +75,6 @@ const ExportModal: React.FC<{
           setCopied(false);
           onClose();
         }, 1500);
-      } else if (format === 'json') {
       } else if (format === 'json') {
         const dataStr = JSON.stringify(exportData, null, 2);
         const blob = new Blob([dataStr], { type: 'application/json' });
@@ -440,9 +442,13 @@ const DashboardContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <SalesProvider>
-      <DashboardContent />
-    </SalesProvider>
+    <AdminProvider>
+      <SalesProvider>
+        <AdminStatusBar />
+        <AdminLoginModal />
+        <DashboardContent />
+      </SalesProvider>
+    </AdminProvider>
   );
 };
 

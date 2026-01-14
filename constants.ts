@@ -130,12 +130,12 @@ export const MONTHS_DATA: MonthData[] = [
     id: 'feb',
     name: 'February',
     theme: 'Heart-Health & Self Love',
-    summary: 'Transitioning January trialists into long-term members while utilizing Valentine\'s Day as a high-conversion window. Goal: 33% YoY.',
-    revenueTargetTotal: '₹50,70,000',
+    summary: 'Transitioning January trialists into long-term members while utilizing Valentine\'s Day as a high-conversion window. Anti-Valentine\'s offers included.',
+    revenueTargetTotal: '₹1,12,29,860',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹23.6 L', logic: 'Valentine Hero Revenue focus' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹17.7 L', logic: 'Focus on retention & upselling' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹9.4 L', logic: 'Retention of Jan influx' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹51.3 L', logic: 'Valentine + Anti-Valentine revenue focus' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹42.8 L', logic: 'Self-love premium packages + retention' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹18.2 L', logic: 'Breakup package + new member influx' }
     ],
     offers: [
       {
@@ -187,6 +187,40 @@ export const MONTHS_DATA: MonthData[] = [
         promoteOnAds: false,
         marketingCollateral: 'Social media event teasers, private invitations',
         operationalSupport: 'Mimosa bar setup, party decorations, photographer'
+      },
+      {
+        title: 'The Breakup Package',
+        type: 'Flash',
+        description: '6-Week Unlimited (42 days) + 2 Private Sessions + "Revenge Body" tank.',
+        pricing: '6 Weeks',
+        priceMumbai: 24957, // ~1.5 Month value (18,638 × 1.5) + 2 Privates (2 × 5,250)
+        priceBengaluru: 19584, // ~1.5 Month value (14,595 × 1.5) + 2 Privates (2 × 4,121)
+        finalPriceMumbai: 16999,
+        finalPriceBengaluru: 16999,
+        discountPercent: 32,
+        savings: '₹7,958 (Mumbai) / ₹2,585 (Bengaluru)',
+        whyItWorks: 'Counter-programming anti-Valentine\'s. 6 weeks = habit-forming window. Savage marketing angle.',
+        targetUnits: 80,
+        promoteOnAds: true,
+        marketingCollateral: 'Anti-Valentine\'s social campaign, "Revenge Body" content series',
+        operationalSupport: 'Custom revenge body tanks, empowerment playlist curation'
+      },
+      {
+        title: 'Self-Love Isn\'t Selfish',
+        type: 'Hero',
+        description: '4-Month Unlimited + 4 Private Sessions (one per month) + ₹2,000 retail credit.',
+        pricing: '4-Month Premium',
+        priceMumbai: 95552, // 3-Month (53,288) + 1-Month (18,638) + 4 Privates (21,000) + retail credit value
+        priceBengaluru: 74822, // 3-Month (42,210) + 1-Month (14,595) + 4 Privates (16,484) + retail credit value
+        finalPriceMumbai: 44999,
+        finalPriceBengaluru: 44999,
+        discountPercent: 53,
+        savings: '₹50,553 (Mumbai) / ₹29,823 (Bengaluru)',
+        whyItWorks: 'Single-person premium offer. ₹11,250/month effective rate. Takes you through summer. Appeals to "treat yourself" crowd.',
+        targetUnits: 60,
+        promoteOnAds: true,
+        marketingCollateral: 'Self-love campaign, solo empowerment messaging, Instagram self-care series',
+        operationalSupport: '₹2,000 retail credit vouchers, personalized wellness plans'
       }
     ],
     operations: [
@@ -200,12 +234,12 @@ export const MONTHS_DATA: MonthData[] = [
     id: 'mar',
     name: 'March',
     theme: 'The Power of Her',
-    summary: 'Bridging Q1 to Q2. Converting momentum from Feb into long-term commitment. Focus on International Women\'s Day.',
-    revenueTargetTotal: '₹56,30,000',
+    summary: 'Bridging Q1 to Q2. Converting momentum from Feb into long-term commitment. Focus on International Women\'s Day with flash sale activation.',
+    revenueTargetTotal: '₹69,63,200',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹25.2 L', logic: '18% Lead-to-Member Goal' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹21.1 L', logic: 'Focus on retention & upselling' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹10.0 L', logic: '15% Lead-to-Member Goal' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹31.8 L', logic: 'Women\'s Day flash sale + lapsed reactivation' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹26.7 L', logic: 'Power Hour high volume + retention focus' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹11.2 L', logic: 'Entry-level flash conversions' }
     ],
     offers: [
       {
@@ -258,6 +292,40 @@ export const MONTHS_DATA: MonthData[] = [
         promoteOnAds: false,
         marketingCollateral: 'Corporate partnership emails, LinkedIn outreach',
         operationalSupport: 'Corporate onboarding kits with branded merch'
+      },
+      {
+        title: 'BIG BITCH ENERGY WEEK',
+        type: 'Flash',
+        description: '15% off all memberships + ₹1,000 gift voucher',
+        pricing: 'All Memberships',
+        priceMumbai: 53288, // 3 Month Unlimited as base
+        priceBengaluru: 42210, // 3 Month Unlimited as base
+        finalPriceMumbai: 44295, // 15% off + ₹1,000 voucher value
+        finalPriceBengaluru: 34879, // 15% off + ₹1,000 voucher value
+        discountPercent: 15,
+        savings: '₹7,993 (Mumbai) / ₹6,331 (Bengaluru) + ₹1,000 voucher',
+        whyItWorks: 'Because confidence deserves perks.',
+        targetUnits: 30,
+        promoteOnAds: true,
+        marketingCollateral: 'Bold, empowering social media campaign',
+        operationalSupport: 'Gift voucher distribution at front desk'
+      },
+      {
+        title: 'Power Hour Reset',
+        type: 'Flash',
+        description: '8-Class Pack (valid 45 days) + 1 Private Session + Free grip socks. MARCH 8 ONLY (Women\'s Day).',
+        pricing: '₹8,888',
+        priceMumbai: 20054, // 8-Class estimate (₹15,750 for 10-pack prorated) + 1 Private (5,250)
+        priceBengaluru: 15539, // 8-Class estimate (₹12,600 for 10-pack prorated) + 1 Private (4,121)
+        finalPriceMumbai: 8888,
+        finalPriceBengaluru: 8888,
+        discountPercent: 56,
+        savings: '₹11,166 (Mumbai) / ₹6,651 (Bengaluru)',
+        whyItWorks: 'Entry-level commitment gets new members in door. One-day flash creates urgency. High volume play (150 units). Gateway to longer memberships.',
+        targetUnits: 150,
+        promoteOnAds: true,
+        marketingCollateral: 'Women\'s Day flash campaign, 24-hour countdown, empowerment messaging',
+        operationalSupport: 'Grip socks inventory (150+ pairs), Women\'s Day celebration activities'
       }
     ],
     operations: [
@@ -271,71 +339,109 @@ export const MONTHS_DATA: MonthData[] = [
     id: 'apr',
     name: 'April',
     theme: 'Infinite Strength (8th Anniversary)',
-    summary: 'Grand 8th Anniversary Jubilee. High-impact "Event" offers. Gold, Glamour, and Legacy vibe.',
-    revenueTargetTotal: '₹67,60,000',
+    summary: 'Grand 8th Anniversary Jubilee with gamified offers. Interactive experiences including Jackpot Wheel, Double or Nothing Challenge, and Comeback Claw Machine.',
+    revenueTargetTotal: '₹2,12,27,800',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹31.1 L', logic: 'Scarcity Strategy' },
-      { location: 'MUM: Supreme HQ', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹26.2 L', logic: '8th Anniversary Push' },
-      { location: 'BLR: Kenkere House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹10.3 L', logic: 'Cash Injection' }
+      { location: 'MUM: Kwality House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹96.9 L', logic: 'Anniversary activation with gamification' },
+      { location: 'MUM: Supreme HQ', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹81.4 L', logic: 'Flash sale + wheel spinning events' },
+      { location: 'BLR: Kenkere House', category: 'Event', targetUnits: 0, estTicketSize: 'Blended', revenueTarget: '₹33.9 L', logic: 'Lapsed reactivation + lucky dip' }
     ],
     offers: [
       {
-        title: 'The Infinity Plan',
-        type: 'Hero',
-        description: '8 Months Unlimited + 8 Privates + 8 Guest Passes + Gold Socks. Limited to 8 people.',
-        pricing: 'Limited Anniversary Edition',
-        priceMumbai: 189926, // 6 Month (104,738) + 2 Month (37,276) + 8 Privates (42,000) + 5,912 extras estimate
-        priceBengaluru: 153885, // 6 Month (82,215) + 2 Month (29,190) + 8 Privates (32,968) + 9,512 extras estimate
+        title: 'The Jackpot Wheel',
+        type: 'Event',
+        description: 'Spin the wheel (April 15-30) for 8-12 months unlimited + privates + prizes. Active clients get 1 FREE spin!',
+        pricing: '₹88,000 (New) | FREE (Active)',
+        priceMumbai: 120000, // Average value: 10-Month + 8 Privates + prizes
+        priceBengaluru: 95000,
         finalPriceMumbai: 88000,
         finalPriceBengaluru: 88000,
-        discountPercent: 54, // Mumbai: (189,926-88,000)/189,926 = 54%, Bengaluru: (153,885-88,000)/153,885 = 43%
-        savings: '₹1,01,926 (Mumbai) / ₹65,885 (Bengaluru)',
-        whyItWorks: 'Marvel reference + endless commitment. Sounds epic and heroic',
-        targetUnits: 8,
+        discountPercent: 27,
+        savings: '₹32,000+ value (everyone wins!) Active members: FREE spin worth ₹88K+',
+        whyItWorks: 'Higher price = higher revenue. Active member free spin = retention tool. Extended packages (8-12 months) = better LTV. Creates FOMO and viral social content.',
+        targetUnits: 150,
+        targetUnitsMumbai: '100 paid + 50 active free spins',
+        targetUnitsBengaluru: '50 paid + 30 active free spins',
         promoteOnAds: true,
-        marketingCollateral: '8th Anniversary campaign, countdown emails',
-        operationalSupport: 'Limited edition gold socks, VIP anniversary package'
+        marketingCollateral: 'Social media wheel spinning videos, Instagram stories of winners, active member VIP messaging',
+        operationalSupport: 'Physical wheel setup with upgraded prizes, daily spin sessions, active member verification, winner announcements'
       },
       {
-        title: 'Til Death Do Us Squat',
-        type: 'Retention',
-        description: 'Price Rollback: 10-Class Pack at 2018 prices. 48 Hours Only.',
-        pricing: 'Flash Rollback',
-        priceMumbai: 15750, // Current 10-Class Pack
-        priceBengaluru: 12600, // Current 10-Class Pack
-        finalPriceMumbai: 12000, // Rollback price
-        finalPriceBengaluru: 9500, // Rollback price
-        discountPercent: 24, // Mumbai: (15,750-12,000)/15,750 = 24%, Bengaluru: (12,600-9,500)/12,600 = 25%
-        savings: '₹3,750 (Mumbai) / ₹3,100 (Bengaluru)',
-        whyItWorks: 'Wedding vow parody = ultimate commitment joke. Memorable and shareable',
-        targetUnits: 50,
+        title: 'Double or Nothing Challenge',
+        type: 'Flash',
+        description: 'Complete 16 classes in 16 days (April 10-25) to unlock 6 months total. Fail = keep your 3 months.',
+        pricing: '3-Month Unlimited',
+        priceMumbai: 99750, // 6-Month value if successful
+        priceBengaluru: 78300,
+        finalPriceMumbai: 50750, // 3-Month price paid
+        finalPriceBengaluru: 40200,
+        discountPercent: 49,
+        savings: '₹49,000 (Mumbai) / ₹38,100 (Bengaluru) if successful',
+        whyItWorks: 'Zero-loss proposition. Drives intense April attendance. Creates social proof and leaderboard competition.',
+        targetUnits: 80,
         promoteOnAds: true,
-        marketingCollateral: '48-hour flash sale emails, countdown timer',
-        operationalSupport: 'Limited time signage, urgency messaging'
+        marketingCollateral: 'Challenge leaderboard updates, daily progress tracking posts',
+        operationalSupport: 'Leaderboard screens, finisher merch, Wall of Winners, guest passes'
       },
       {
-        title: 'Eight Is Enough (It\'s Not)',
+        title: 'The Comeback Claw Machine',
+        type: 'Lapsed',
+        description: 'Lapsed members: Pay ₹999 to grab a ball revealing your exclusive comeback package (1-6 months).',
+        pricing: 'Mystery Package',
+        priceMumbai: 35500, // Average 2-month value
+        priceBengaluru: 28000,
+        finalPriceMumbai: 20999, // Average redemption price + entry fee
+        finalPriceBengaluru: 20999,
+        discountPercent: 41,
+        savings: '₹14,500 (Mumbai) / ₹7,000 (Bengaluru) average',
+        whyItWorks: 'Gets lapsed members physically in studio. Gamification reduces "begging back" feeling. Entry fee covers cost.',
+        targetUnits: 200,
+        targetUnitsMumbai: 120,
+        targetUnitsBengaluru: 80,
+        promoteOnAds: false,
+        marketingCollateral: 'Personalized lapsed member emails/SMS, Instagram claw machine stories',
+        operationalSupport: 'Physical claw machine setup, prize balls refreshed weekly'
+      },
+      {
+        title: 'Lucky Dip Class Packs',
         type: 'New',
-        description: '8 Classes for ₹8,888. Valid 8 Weeks.',
-        pricing: '₹8,888',
-        priceMumbai: 14704, // 8 x Studio Single Class (8 x 1,838)
-        priceBengaluru: 11344, // 8 x Studio Single Class (8 x 1,418)
-        finalPriceMumbai: 8888,
-        finalPriceBengaluru: 8888,
-        discountPercent: 40, // Mumbai: (14,704-8,888)/14,704 = 40%, Bengaluru: (11,344-8,888)/11,344 = 22%
-        savings: '₹5,816 (Mumbai) / ₹2,456 (Bengaluru)',
-        whyItWorks: 'Self-aware humor acknowledging fitness is never "done." Honest and funny',
-        targetUnits: 40,
+        description: 'Pick a sealed envelope for ₹12,000. Get 10-15 classes + potential retail credits or privates.',
+        pricing: '₹12,000',
+        priceMumbai: 15000, // Average 12-class pack value
+        priceBengaluru: 15000,
+        finalPriceMumbai: 12000,
+        finalPriceBengaluru: 12000,
+        discountPercent: 20,
+        savings: '₹3,000-6,000 value depending on envelope',
+        whyItWorks: 'Entry-level commitment attracts new members. Mystery element drives social shares. Daily envelope rotation creates FOMO.',
+        targetUnits: 250,
         promoteOnAds: true,
-        marketingCollateral: 'Anniversary intro offer campaign',
-        operationalSupport: 'Lucky number 8 themed welcome pack'
+        marketingCollateral: 'Daily envelope reveal posts, user-generated content campaign',
+        operationalSupport: 'Sealed envelope display at desk, daily rotation tracking'
+      },
+      {
+        title: 'The 8-Hour Flash Sale',
+        type: 'Flash',
+        description: '50% OFF everything! April 8, 8 AM-4 PM. First 88 purchases. Annual, 6-month, 3-month, 20-class packs.',
+        pricing: '50% Off All Packages',
+        priceMumbai: 96250, // Annual at 50% off
+        priceBengaluru: 74400,
+        finalPriceMumbai: 48125, // Average sale price
+        finalPriceBengaluru: 37200,
+        discountPercent: 50,
+        savings: '50% off all standard packages',
+        whyItWorks: 'Massive urgency (8 hours, 88 people). Forces immediate decision. Creates social media frenzy. Limited quantity prevents margin destruction.',
+        targetUnits: 88,
+        promoteOnAds: true,
+        marketingCollateral: '48-hour warning email, real-time countdown, live social updates',
+        operationalSupport: 'Online checkout optimization, real-time counter, staff on deck'
       }
     ],
     operations: [
-      { week: 'All Month', focus: 'Golden Ticket Hunt', details: 'Hide 8 tickets in retail/studio. Win 1 Month Free.' },
-      { week: 'Week 1', focus: 'Mystery Box Launch', details: 'Sell sealed boxes for ₹8,000 containing ₹12k+ value.' },
-      { week: 'Week 2', focus: 'Throwback Sale', details: '48-hour flash sale on Apr 8th & 9th.' },
-      { week: 'Week 4', focus: 'Grand Gala', details: 'Barre, Bubbly & Bling event on April 25th.' }
+      { week: 'Pre-Launch (Mar 25-31)', focus: 'Setup & Teasers', details: 'Build wheel & claw machine. Social media teasers. Email list warm-up.' },
+      { week: 'Week 1 (Apr 1-8)', focus: 'Grand Launch + Flash Sale', details: 'All offers go live Apr 1. Flash sale Apr 8 (8 AM-4 PM). Instagram countdown.' },
+      { week: 'Week 2 (Apr 10-15)', focus: 'Challenge Begins + Wheel Opens', details: 'Double or Nothing starts Apr 10. Jackpot Wheel spinning begins Apr 15.' },
+      { week: 'Week 3-4 (Apr 16-30)', focus: 'Daily Activations + Grand Finale', details: 'Daily winner posts. Challenge ends Apr 25. Grand finale party Apr 30.' }
     ]
   },
   {
@@ -351,38 +457,38 @@ export const MONTHS_DATA: MonthData[] = [
     ],
     offers: [
       {
-        title: 'Broke But Buff',
+        title: 'The Earned Unlimited',
         type: 'Student',
-        description: '6-Week Unlimited + 1 "Bring-a-Friend" Permanent Guest Pass.',
-        pricing: '₹18,000 (MUM)',
-        priceMumbai: 31500, // Summer Bootcamp - Studio 6 Week Unlimited (after tax)
-        priceBengaluru: 23100, // Summer Bootcamp - Studio 6 Week Unlimited (after tax)
-        finalPriceMumbai: 18000,
-        finalPriceBengaluru: 16000,
-        discountPercent: 43, // Mumbai: (31,500-18,000)/31,500 = 43%, Bengaluru: (23,100-16,000)/23,100 = 31%
-        savings: '₹13,500 (Mumbai) / ₹7,100 (Bengaluru)',
-        whyItWorks: 'Rhymes + acknowledges student budget reality with humor. Relatable and non-patronizing',
+        description: '2-Month Unlimited at 10% off. Earn 1 bonus class for every 2 classes completed (unlocks after 30+ total).',
+        pricing: '2-Month Unlimited',
+        priceMumbai: 37276, // 2-Month Studio Unlimited (after tax)
+        priceBengaluru: 29190, // 2-Month Studio Unlimited (after tax)
+        finalPriceMumbai: 33548, // 10% off
+        finalPriceBengaluru: 26271, // 10% off
+        discountPercent: 10,
+        savings: '₹3,728 (Mumbai) / ₹2,919 (Bengaluru) + bonus classes earned',
+        whyItWorks: 'Unlimited isn\'t given. It\'s earned. Reframes bonuses as merit-based. Appeals to high-effort students. Discourages casual sign-ups.',
         targetUnits: 90,
         promoteOnAds: true,
-        marketingCollateral: 'Student influencer campaign, college ambassador program',
-        operationalSupport: 'Student ID verification, bring-a-friend passes'
+        marketingCollateral: 'Student merit-based campaign, earned unlimited messaging, progress tracking',
+        operationalSupport: 'Class completion tracking, bonus class unlock system, student ID verification'
       },
       {
-        title: 'Hot Girl Summer Prep',
+        title: 'Your Ex Is Looking Good',
         type: 'Hero',
-        description: '6-Week Intensive + ₹3,000 Retail Voucher + 2 Nutrition Deep Dives.',
-        pricing: '₹32,000 (MUM)',
-        priceMumbai: 37500, // 6 Week (31,500) + ₹3k voucher + ₹3k nutrition estimate
-        priceBengaluru: 29100, // 6 Week (23,100) + ₹3k voucher + ₹3k nutrition estimate
-        finalPriceMumbai: 32000,
-        finalPriceBengaluru: 29000,
-        discountPercent: 15, // Mumbai: (37,500-32,000)/37,500 = 15%, Bengaluru: (29,100-29,000)/29,100 = 0%
-        savings: '₹5,500 (Mumbai) / ₹100 (Bengaluru) + Includes ₹6k extras',
-        whyItWorks: 'Megan Thee Stallion reference. Culturally relevant and confidence-focused',
+        description: '6-Week Studio Unlimited. Complete 18 classes in 42 days (3x/week) to earn ₹10,000 credit + 2 Nutrition Deep Dives.',
+        pricing: 'Full Price',
+        priceMumbai: 37500, // 6 Week Studio Unlimited
+        priceBengaluru: 27500, // 6 Week Studio Unlimited
+        finalPriceMumbai: 37500,
+        finalPriceBengaluru: 27500,
+        discountPercent: 0,
+        savings: 'Earn ₹10,000 credit + ₹6,000 nutrition value (if 18 classes completed)',
+        whyItWorks: 'Taps into petty revenge motivation. No upfront discount = higher revenue. Earned benefit ensures LTV and frequency commitment. Mission-based psychology.',
         targetUnits: 55,
         promoteOnAds: true,
-        marketingCollateral: 'Hot Girl Summer social campaign, transformation stories',
-        operationalSupport: 'Retail voucher system, nutrition consultant scheduling'
+        marketingCollateral: 'Savage accountability campaign, revenge body transformation stories, class completion tracker',
+        operationalSupport: 'Class tracking system, ₹10K credit vouchers, nutrition consultant scheduling'
       },
       {
         title: 'Lunch Break, Make Bank',
@@ -484,14 +590,48 @@ export const MONTHS_DATA: MonthData[] = [
     id: 'jul',
     name: 'July',
     theme: 'The Storm Breaker',
-    summary: 'Focus on "Logistical Relief" and "Social Proof" during peak monsoon. Removing travel barriers.',
-    revenueTargetTotal: '₹77,20,000',
+    summary: 'Focus on weather-based gamification and attendance challenges during peak monsoon. High-engagement offers with cash prizes and weather-triggered bonuses.',
+    revenueTargetTotal: '₹1,61,35,000',
     financialTargets: [
-      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'High', revenueTarget: '₹36.0 L', logic: 'Uber Credit Bundles' },
-      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'High', revenueTarget: '₹28.5 L', logic: 'Referral Density' },
-      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 122, estTicketSize: 'Med', revenueTarget: '₹12.7 L', logic: 'Volume Retention' }
+      { location: 'MUM: Kwality House', category: 'Total', targetUnits: 117, estTicketSize: 'High', revenueTarget: '₹74.9 L', logic: 'Weather roulette + streak challenge activation' },
+      { location: 'MUM: Supreme HQ', category: 'Total', targetUnits: 110, estTicketSize: 'High', revenueTarget: '₹62.8 L', logic: 'Cash prize streak competition focus' },
+      { location: 'BLR: Kenkere House', category: 'Total', targetUnits: 122, estTicketSize: 'Med', revenueTarget: '₹23.6 L', logic: 'Weather-based purchase urgency' }
     ],
     offers: [
+      {
+        title: 'Rain or Shine Roulette',
+        type: 'Event',
+        description: '4-Month Unlimited + 3 Privates. Rainfall on purchase day determines bonus tier (spin digital wheel in studio).',
+        pricing: '₹65,000 (MUM) / ₹52,000 (BLR)',
+        priceMumbai: 92888, // 3-Month (53,288) + 1-Month (18,638) + 3 Privates (15,750) + avg bonus value (5,212)
+        priceBengaluru: 72573, // 3-Month (42,210) + 1-Month (14,595) + 3 Privates (12,363) + avg bonus value (3,405)
+        finalPriceMumbai: 65000,
+        finalPriceBengaluru: 52000,
+        discountPercent: 30,
+        savings: '₹27,888 (Mumbai) / ₹20,573 (Bengaluru) + weather bonus',
+        whyItWorks: 'Gamification tied to actual weather. Creates daily checking ("Is it raining enough?"). Heavy rain day = better odds. Transparent, verifiable.',
+        targetUnits: 70,
+        promoteOnAds: true,
+        marketingCollateral: 'Weather tracker posts, daily rainfall updates, wheel spinning videos',
+        operationalSupport: 'Digital wheel setup, rainfall data API integration, tier tracking system'
+      },
+      {
+        title: 'The Monsoon Survivors Club',
+        type: 'Flash',
+        description: '3-Month Unlimited + 1 Private. Attendance streak challenge July 10-Aug 10. TOP 2 win cash prizes (₹20K + ₹10K).',
+        pricing: '₹48,000 (MUM) / ₹38,000 (BLR)',
+        priceMumbai: 58538, // 3-Month (53,288) + 1 Private (5,250)
+        priceBengaluru: 46331, // 3-Month (42,210) + 1 Private (4,121)
+        finalPriceMumbai: 48000,
+        finalPriceBengaluru: 38000,
+        discountPercent: 18,
+        savings: '₹10,538 (Mumbai) / ₹8,331 (Bengaluru) + chance at ₹20K/₹10K cash',
+        whyItWorks: 'Streak mechanic = daily commitment. Only 2 winners from 90 = exclusive. Creates daily studio attendance in monsoon. Dramatic element.',
+        targetUnits: 90,
+        promoteOnAds: true,
+        marketingCollateral: 'Daily leaderboard updates, streak survivor stories, countdown posts',
+        operationalSupport: 'Attendance tracking app, daily leaderboard screens, ₹30K prize pool'
+      },
       {
         title: 'Lucky 7',
         type: 'Hero',
