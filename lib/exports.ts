@@ -43,7 +43,15 @@ export async function exportToPDF(data: MonthData[], scope: 'current' | 'all', c
               </div>
               <p style="color: #6b7280; font-size: 12px; margin: 5px 0;">${offer.description}</p>
               <p style="color: #c026d3; font-weight: bold; font-size: 13px; margin: 5px 0;">${offer.pricing}</p>
+              <div style="margin: 8px 0; padding: 8px; background: #fff; border-radius: 4px; font-size: 11px;">
+                <p style="margin: 2px 0; color: #374151;"><strong>Mumbai:</strong> ₹${offer.priceMumbai?.toLocaleString('en-IN') || 'N/A'} → <strong>₹${offer.finalPriceMumbai?.toLocaleString('en-IN') || 'N/A'}</strong></p>
+                <p style="margin: 2px 0; color: #374151;"><strong>Bengaluru:</strong> ₹${offer.priceBengaluru?.toLocaleString('en-IN') || 'N/A'} → <strong>₹${offer.finalPriceBengaluru?.toLocaleString('en-IN') || 'N/A'}</strong></p>
+                <p style="margin: 2px 0; color: #059669;"><strong>Discount:</strong> ${offer.discountPercent}% | <strong>Savings:</strong> ${offer.savings}</p>
+                <p style="margin: 2px 0; color: #6366f1;"><strong>Target:</strong> ${offer.targetUnits} units | <strong>Promoted:</strong> ${offer.promoteOnAds ? 'Yes' : 'No'}</p>
+              </div>
               <p style="color: #4b5563; font-size: 11px; font-style: italic; margin: 5px 0;">Strategy: ${offer.whyItWorks}</p>
+              ${offer.marketingCollateral ? `<p style="color: #7c3aed; font-size: 10px; margin: 3px 0;">📣 Marketing: ${offer.marketingCollateral}</p>` : ''}
+              ${offer.operationalSupport ? `<p style="color: #059669; font-size: 10px; margin: 3px 0;">⚙️ Operations: ${offer.operationalSupport}</p>` : ''}
             </div>
           `).join('')}
         </div>
@@ -199,13 +207,66 @@ export async function exportToWord(data: MonthData[], scope: 'current' | 'all', 
         new Paragraph({
           children: [
             new TextRun({
+              text: `Mumbai: ₹${offer.priceMumbai?.toLocaleString('en-IN') || 'N/A'} → ₹${offer.finalPriceMumbai?.toLocaleString('en-IN') || 'N/A'} | `,
+              size: 20
+            }),
+            new TextRun({
+              text: `Bengaluru: ₹${offer.priceBengaluru?.toLocaleString('en-IN') || 'N/A'} → ₹${offer.finalPriceBengaluru?.toLocaleString('en-IN') || 'N/A'}`,
+              size: 20
+            })
+          ],
+          spacing: { after: 50 }
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `Discount: ${offer.discountPercent}% | Savings: ${offer.savings} | Target: ${offer.targetUnits} units`,
+              size: 20,
+              color: "059669"
+            })
+          ],
+          spacing: { after: 100 }
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({
               text: `Strategy: ${offer.whyItWorks}`,
               italics: true
             })
           ],
-          spacing: { after: 200 }
+          spacing: { after: 100 }
         })
       );
+      
+      if (offer.marketingCollateral) {
+        children.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `Marketing: ${offer.marketingCollateral}`,
+                size: 18,
+                color: "7c3aed"
+              })
+            ],
+            spacing: { after: 50 }
+          })
+        );
+      }
+      
+      if (offer.operationalSupport) {
+        children.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `Operations: ${offer.operationalSupport}`,
+                size: 18,
+                color: "059669"
+              })
+            ],
+            spacing: { after: 200 }
+          })
+        );
+      }
     });
     
     // Financial Targets
@@ -381,7 +442,15 @@ export function generateEmailBody(data: MonthData[], scope: 'current' | 'all', c
                 </div>
                 <p style="color: #6b7280; font-size: 13px; margin: 8px 0; line-height: 1.5;">${offer.description}</p>
                 <p style="color: #c026d3; font-weight: bold; font-size: 14px; margin: 8px 0;">${offer.pricing}</p>
-                <p style="color: #4b5563; font-size: 12px; font-style: italic; margin: 0;">Strategy: ${offer.whyItWorks}</p>
+                <div style="margin: 10px 0; padding: 10px; background-color: #ffffff; border-radius: 4px; font-size: 12px;">
+                  <p style="margin: 3px 0; color: #374151;"><strong>Mumbai:</strong> ₹${offer.priceMumbai?.toLocaleString('en-IN') || 'N/A'} → <strong>₹${offer.finalPriceMumbai?.toLocaleString('en-IN') || 'N/A'}</strong></p>
+                  <p style="margin: 3px 0; color: #374151;"><strong>Bengaluru:</strong> ₹${offer.priceBengaluru?.toLocaleString('en-IN') || 'N/A'} → <strong>₹${offer.finalPriceBengaluru?.toLocaleString('en-IN') || 'N/A'}</strong></p>
+                  <p style="margin: 3px 0; color: #059669;"><strong>Discount:</strong> ${offer.discountPercent}% | <strong>Savings:</strong> ${offer.savings}</p>
+                  <p style="margin: 3px 0; color: #6366f1;"><strong>Target:</strong> ${offer.targetUnits} units | <strong>Promoted:</strong> ${offer.promoteOnAds ? 'Yes' : 'No'}</p>
+                </div>
+                <p style="color: #4b5563; font-size: 12px; font-style: italic; margin: 8px 0;">Strategy: ${offer.whyItWorks}</p>
+                ${offer.marketingCollateral ? `<p style="color: #7c3aed; font-size: 11px; margin: 5px 0;">📣 <strong>Marketing:</strong> ${offer.marketingCollateral}</p>` : ''}
+                ${offer.operationalSupport ? `<p style="color: #059669; font-size: 11px; margin: 5px 0;">⚙️ <strong>Operations:</strong> ${offer.operationalSupport}</p>` : ''}
               </div>
               `).join('')}
               

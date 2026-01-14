@@ -18,12 +18,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '1 Month Unlimited for Newcomers - Perfect entry point for New Year resolutions',
         pricing: 'Starting at ₹11,999',
-        priceMumbai: 18638, // Studio 1 Month Unlimited (after tax)
-        priceBengaluru: 14595, // Studio 1 Month Unlimited (after tax)
+        priceMumbai: 17750, // Studio 1 Month Unlimited (pre-tax)
+        priceBengaluru: 13900, // Studio 1 Month Unlimited (pre-tax)
         finalPriceMumbai: 11999, // Special offer price
         finalPriceBengaluru: 11999, // Special offer price
-        discountPercent: 36, // Mumbai: (18638-11999)/18638 = 36%, Bengaluru: (14595-11999)/14595 = 18%
-        savings: '₹6,639 (Mumbai) / ₹2,596 (Bengaluru)',
+        discountPercent: 32, // Mumbai: (17750-11999)/17750 = 32%, Bengaluru: (13900-11999)/13900 = 14%
+        savings: '₹5,751 (Mumbai) / ₹1,901 (Bengaluru)',
         whyItWorks: 'Plays on New Year\'s resolutions while removing the shame factor—inviting and liberating',
         targetUnits: 135,
         promoteOnAds: true,
@@ -35,12 +35,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: 'Buy 3 Months Unlimited, Get 4th Month FREE - Build lasting fitness habits',
         pricing: 'Pay for 3, Get 4 Months',
-        priceMumbai: 71926, // Standard: 3 months (53,288) + 1 month Studio (18,638)
-        priceBengaluru: 56805, // Standard: 3 months (42,210) + 1 month Studio (14,595)
-        finalPriceMumbai: 53288, // Pay only for 3 months
-        finalPriceBengaluru: 42210, // Pay only for 3 months
+        priceMumbai: 68500, // Standard: 3 months (50,750) + 1 month Studio (17,750)
+        priceBengaluru: 54100, // Standard: 3 months (40,200) + 1 month Studio (13,900)
+        finalPriceMumbai: 50750, // Pay only for 3 months
+        finalPriceBengaluru: 40200, // Pay only for 3 months
         discountPercent: 26, // Savings of 1 free month
-        savings: '₹18,638 (Mumbai) / ₹14,595 (Bengaluru) - 1 Month Free',
+        savings: '₹17,750 (Mumbai) / ₹13,900 (Bengaluru) - 1 Month Free',
         whyItWorks: 'Snappy, modern language that appeals to productivity culture and sounds like a life pro-tip',
         targetUnits: 45,
         promoteOnAds: true,
@@ -51,13 +51,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'All In 2026',
         type: 'Flash',
         description: '25% Flat Discount on Annual Membership (48 hours only) - Best value of the year',
-        pricing: '₹1,51,594 (Mumbai) / ₹1,17,180 (Bengaluru)',
-        priceMumbai: 202125, // Studio Annual price (after tax)
-        priceBengaluru: 156240, // Studio Annual price (after tax)
-        finalPriceMumbai: 151594, // 25% off: 202125 * 0.75
-        finalPriceBengaluru: 117180, // 25% off: 156240 * 0.75
+        pricing: '₹1,44,375 (Mumbai) / ₹1,11,600 (Bengaluru)',
+        priceMumbai: 192500, // Studio Annual price (pre-tax)
+        priceBengaluru: 148800, // Studio Annual price (pre-tax)
+        finalPriceMumbai: 144375, // 25% off: 192500 * 0.75
+        finalPriceBengaluru: 111600, // 25% off: 148800 * 0.75
         discountPercent: 25,
-        savings: '₹50,531 (Mumbai) / ₹39,060 (Bengaluru)',
+        savings: '₹48,125 (Mumbai) / ₹37,200 (Bengaluru)',
         whyItWorks: 'Limited-time urgency drives immediate action. Year commitment = confidence and commitment',
         targetUnits: 37,
         promoteOnAds: true,
@@ -143,12 +143,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: 'Buy one 1-Month Unlimited, get 2nd at 50% off for a partner.',
         pricing: 'Bundle Offer',
-        priceMumbai: 37276, // 2x Studio 1 Month (2 x 18,638)
-        priceBengaluru: 29190, // 2x Studio 1 Month (2 x 14,595)
-        finalPriceMumbai: 27957, // 18,638 + (18,638 x 0.5)
-        finalPriceBengaluru: 21893, // 14,595 + (14,595 x 0.5)
+        priceMumbai: 35500, // 2x Studio 1 Month (2 x 17,750)
+        priceBengaluru: 27800, // 2x Studio 1 Month (2 x 13,900)
+        finalPriceMumbai: 26625, // 17,750 + (17,750 x 0.5)
+        finalPriceBengaluru: 20850, // 13,900 + (13,900 x 0.5)
         discountPercent: 25,
-        savings: '₹9,319 (Mumbai) / ₹7,297 (Bengaluru)',
+        savings: '₹8,875 (Mumbai) / ₹6,950 (Bengaluru)',
         whyItWorks: 'Playful spin on "partner in crime"—instantly conveys duo workout + getting dirty/sweaty',
         targetUnits: 35,
         promoteOnAds: true,
@@ -160,12 +160,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '3 Classes for the price of 1 + Free Grip Socks.',
         pricing: 'Intro Offer',
-        priceMumbai: 5514, // 3x Studio Single Class (3 x 1,838)
-        priceBengaluru: 4254, // 3x Studio Single Class (3 x 1,418)
-        finalPriceMumbai: 1838, // Pay for 1, get 2 free
-        finalPriceBengaluru: 1418, // Pay for 1, get 2 free
+        priceMumbai: 5250, // 3x Studio Single Class (3 x 1,750)
+        priceBengaluru: 4050, // 3x Studio Single Class (3 x 1,350)
+        finalPriceMumbai: 1750, // Pay for 1, get 2 free
+        finalPriceBengaluru: 1350, // Pay for 1, get 2 free
         discountPercent: 67,
-        savings: '₹3,676 (Mumbai) / ₹2,836 (Bengaluru)',
+        savings: '₹3,500 (Mumbai) / ₹2,700 (Bengaluru)',
         whyItWorks: 'Romantic pun perfect for Valentine\'s season. Suggests instant connection with the studio',
         targetUnits: 80,
         promoteOnAds: true,
@@ -193,12 +193,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Flash',
         description: '6-Week Unlimited (42 days) + 2 Private Sessions + "Revenge Body" tank.',
         pricing: '6 Weeks',
-        priceMumbai: 24957, // ~1.5 Month value (18,638 × 1.5) + 2 Privates (2 × 5,250)
-        priceBengaluru: 19584, // ~1.5 Month value (14,595 × 1.5) + 2 Privates (2 × 4,121)
+        priceMumbai: 36625, // ~1.5 Month value (17,750 × 1.5) + 2 Privates (2 × 5,000)
+        priceBengaluru: 28700, // ~1.5 Month value (13,900 × 1.5) + 2 Privates (2 × 3,925)
         finalPriceMumbai: 16999,
         finalPriceBengaluru: 16999,
-        discountPercent: 32,
-        savings: '₹7,958 (Mumbai) / ₹2,585 (Bengaluru)',
+        discountPercent: 54,
+        savings: '₹19,626 (Mumbai) / ₹11,701 (Bengaluru)',
         whyItWorks: 'Counter-programming anti-Valentine\'s. 6 weeks = habit-forming window. Savage marketing angle.',
         targetUnits: 80,
         promoteOnAds: true,
@@ -210,12 +210,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: '4-Month Unlimited + 4 Private Sessions (one per month) + ₹2,000 retail credit.',
         pricing: '4-Month Premium',
-        priceMumbai: 95552, // 3-Month (53,288) + 1-Month (18,638) + 4 Privates (21,000) + retail credit value
-        priceBengaluru: 74822, // 3-Month (42,210) + 1-Month (14,595) + 4 Privates (16,484) + retail credit value
+        priceMumbai: 90500, // 3-Month (50,750) + 1-Month (17,750) + 4 Privates (20,000) + retail credit value (2,000)
+        priceBengaluru: 69800, // 3-Month (40,200) + 1-Month (13,900) + 4 Privates (15,700) + retail credit value
         finalPriceMumbai: 44999,
         finalPriceBengaluru: 44999,
-        discountPercent: 53,
-        savings: '₹50,553 (Mumbai) / ₹29,823 (Bengaluru)',
+        discountPercent: 50,
+        savings: '₹45,501 (Mumbai) / ₹24,801 (Bengaluru)',
         whyItWorks: 'Single-person premium offer. ₹11,250/month effective rate. Takes you through summer. Appeals to "treat yourself" crowd.',
         targetUnits: 60,
         promoteOnAds: true,
@@ -247,12 +247,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Lapsed',
         description: '3-Month Unlimited + 3 Private Sessions + Strength Toolkit.',
         pricing: 'Premium Package',
-        priceMumbai: 69038, // 3 Month (53,288) + 3 Privates (3 x 5,250)
-        priceBengaluru: 54573, // 3 Month (42,210) + 3 Privates (3 x 4,121)
-        finalPriceMumbai: 55230, // 20% off
-        finalPriceBengaluru: 43658, // 20% off
+        priceMumbai: 65750, // 3 Month (50,750) + 3 Privates (3 x 5,000)
+        priceBengaluru: 51975, // 3 Month (40,200) + 3 Privates (3 x 3,925)
+        finalPriceMumbai: 52600, // 20% off
+        finalPriceBengaluru: 41580, // 20% off
         discountPercent: 20,
-        savings: '₹13,808 (Mumbai) / ₹10,915 (Bengaluru)',
+        savings: '₹13,150 (Mumbai) / ₹10,395 (Bengaluru)',
         whyItWorks: 'Double meaning: serious about fitness + Women\'s Month empowerment. Confident and assertive',
         targetUnits: 10,
         promoteOnAds: true,
@@ -264,12 +264,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: 'Buy 12-Class Pack, get 3 additional classes free.',
         pricing: '12-Class Pack',
-        priceMumbai: 21270, // 15 classes value (15 x 1,418 BLR rate for comparison)
-        priceBengaluru: 21270, // 15 classes (15 x 1,418)
-        finalPriceMumbai: 15803, // 12-Class Pack price
-        finalPriceBengaluru: 13125, // 12-Class Pack price
-        discountPercent: 26, // Mumbai: (21,270-15,803)/21,270 = 26%, Bengaluru: (21,270-13,125)/21,270 = 38%
-        savings: '₹5,467 (Mumbai) / ₹8,145 (Bengaluru) - 3 Free Classes',
+        priceMumbai: 26250, // 15 classes value (15 x 1,750)
+        priceBengaluru: 20250, // 15 classes (15 x 1,350)
+        finalPriceMumbai: 21000, // 12-Class Pack price (12 x 1,750)
+        finalPriceBengaluru: 16200, // 12-Class Pack price (12 x 1,350)
+        discountPercent: 20, // 3 free classes = 20% discount
+        savings: '₹5,250 (Mumbai) / ₹4,050 (Bengaluru) - 3 Free Classes',
         whyItWorks: 'Social media language that makes fitness social and achievement-oriented',
         targetUnits: 25,
         promoteOnAds: true,
@@ -281,12 +281,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Corporate',
         description: '20% off Annual Membership for women in partner firms.',
         pricing: 'Corporate Annual',
-        priceMumbai: 202125, // Studio Annual price (after tax)
-        priceBengaluru: 156240, // Studio Annual price (after tax)
-        finalPriceMumbai: 161700, // 20% off
-        finalPriceBengaluru: 124992, // 20% off
+        priceMumbai: 192500, // Studio Annual price (pre-tax)
+        priceBengaluru: 148800, // Studio Annual price (pre-tax)
+        finalPriceMumbai: 154000, // 20% off
+        finalPriceBengaluru: 119040, // 20% off
         discountPercent: 20,
-        savings: '₹40,425 (Mumbai) / ₹31,248 (Bengaluru)',
+        savings: '₹38,500 (Mumbai) / ₹29,760 (Bengaluru)',
         whyItWorks: 'Alliterative and links career success with physical strength. Aspirational',
         targetUnits: 5,
         promoteOnAds: false,
@@ -298,12 +298,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Flash',
         description: '15% off all memberships + ₹1,000 gift voucher',
         pricing: 'All Memberships',
-        priceMumbai: 53288, // 3 Month Unlimited as base
-        priceBengaluru: 42210, // 3 Month Unlimited as base
-        finalPriceMumbai: 44295, // 15% off + ₹1,000 voucher value
-        finalPriceBengaluru: 34879, // 15% off + ₹1,000 voucher value
+        priceMumbai: 50750, // 3 Month Unlimited as base
+        priceBengaluru: 40200, // 3 Month Unlimited as base
+        finalPriceMumbai: 42138, // 15% off + ₹1,000 voucher value
+        finalPriceBengaluru: 33170, // 15% off + ₹1,000 voucher value
         discountPercent: 15,
-        savings: '₹7,993 (Mumbai) / ₹6,331 (Bengaluru) + ₹1,000 voucher',
+        savings: '₹7,612 (Mumbai) / ₹6,030 (Bengaluru) + ₹1,000 voucher',
         whyItWorks: 'Because confidence deserves perks.',
         targetUnits: 30,
         promoteOnAds: true,
@@ -315,12 +315,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Flash',
         description: '8-Class Pack (valid 45 days) + 1 Private Session + Free grip socks. MARCH 8 ONLY (Women\'s Day).',
         pricing: '₹8,888',
-        priceMumbai: 20054, // 8-Class estimate (₹15,750 for 10-pack prorated) + 1 Private (5,250)
-        priceBengaluru: 15539, // 8-Class estimate (₹12,600 for 10-pack prorated) + 1 Private (4,121)
+        priceMumbai: 19000, // 8-Class estimate (8 x 1,750) + 1 Private (5,000)
+        priceBengaluru: 14725, // 8-Class estimate (8 x 1,350) + 1 Private (3,925)
         finalPriceMumbai: 8888,
         finalPriceBengaluru: 8888,
-        discountPercent: 56,
-        savings: '₹11,166 (Mumbai) / ₹6,651 (Bengaluru)',
+        discountPercent: 53,
+        savings: '₹10,112 (Mumbai) / ₹5,837 (Bengaluru)',
         whyItWorks: 'Entry-level commitment gets new members in door. One-day flash creates urgency. High volume play (150 units). Gateway to longer memberships.',
         targetUnits: 150,
         promoteOnAds: true,
@@ -352,12 +352,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Event',
         description: 'Spin the wheel (April 15-30) for 8-12 months unlimited + privates + prizes. Active clients get 1 FREE spin!',
         pricing: '₹88,000 (New) | FREE (Active)',
-        priceMumbai: 120000, // Average value: 10-Month + 8 Privates + prizes
-        priceBengaluru: 95000,
+        priceMumbai: 114000, // Average value: 10-Month + 8 Privates + prizes
+        priceBengaluru: 90000,
         finalPriceMumbai: 88000,
         finalPriceBengaluru: 88000,
-        discountPercent: 27,
-        savings: '₹32,000+ value (everyone wins!) Active members: FREE spin worth ₹88K+',
+        discountPercent: 23,
+        savings: '₹26,000+ value (everyone wins!) Active members: FREE spin worth ₹88K+',
         whyItWorks: 'Higher price = higher revenue. Active member free spin = retention tool. Extended packages (8-12 months) = better LTV. Creates FOMO and viral social content.',
         targetUnits: 150,
         targetUnitsMumbai: '100 paid + 50 active free spins',
@@ -388,12 +388,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Lapsed',
         description: 'Lapsed members: Pay ₹999 to grab a ball revealing your exclusive comeback package (1-6 months).',
         pricing: 'Mystery Package',
-        priceMumbai: 35500, // Average 2-month value
-        priceBengaluru: 28000,
+        priceMumbai: 35500, // Average 2-month value (2 x 17,750)
+        priceBengaluru: 27800, // Average 2-month value (2 x 13,900)
         finalPriceMumbai: 20999, // Average redemption price + entry fee
         finalPriceBengaluru: 20999,
         discountPercent: 41,
-        savings: '₹14,500 (Mumbai) / ₹7,000 (Bengaluru) average',
+        savings: '₹14,501 (Mumbai) / ₹6,801 (Bengaluru) average',
         whyItWorks: 'Gets lapsed members physically in studio. Gamification reduces "begging back" feeling. Entry fee covers cost.',
         targetUnits: 200,
         targetUnitsMumbai: 120,
@@ -407,12 +407,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: 'Pick a sealed envelope for ₹12,000. Get 10-15 classes + potential retail credits or privates.',
         pricing: '₹12,000',
-        priceMumbai: 15000, // Average 12-class pack value
-        priceBengaluru: 15000,
+        priceMumbai: 17500, // Average 10-class pack value (10 x 1,750)
+        priceBengaluru: 13500, // Average 10-class pack value (10 x 1,350)
         finalPriceMumbai: 12000,
         finalPriceBengaluru: 12000,
-        discountPercent: 20,
-        savings: '₹3,000-6,000 value depending on envelope',
+        discountPercent: 31,
+        savings: '₹5,500 (Mumbai) / ₹1,500 (Bengaluru) average value',
         whyItWorks: 'Entry-level commitment attracts new members. Mystery element drives social shares. Daily envelope rotation creates FOMO.',
         targetUnits: 250,
         promoteOnAds: true,
@@ -424,10 +424,10 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Flash',
         description: '50% OFF everything! April 8, 8 AM-4 PM. First 88 purchases. Annual, 6-month, 3-month, 20-class packs.',
         pricing: '50% Off All Packages',
-        priceMumbai: 96250, // Annual at 50% off
-        priceBengaluru: 74400,
-        finalPriceMumbai: 48125, // Average sale price
-        finalPriceBengaluru: 37200,
+        priceMumbai: 192500, // Annual at full price
+        priceBengaluru: 148800,
+        finalPriceMumbai: 96250, // Annual at 50% off
+        finalPriceBengaluru: 74400,
         discountPercent: 50,
         savings: '50% off all standard packages',
         whyItWorks: 'Massive urgency (8 hours, 88 people). Forces immediate decision. Creates social media frenzy. Limited quantity prevents margin destruction.',
@@ -461,12 +461,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Student',
         description: '2-Month Unlimited at 10% off. Earn 1 bonus class for every 2 classes completed (unlocks after 30+ total).',
         pricing: '2-Month Unlimited',
-        priceMumbai: 37276, // 2-Month Studio Unlimited (after tax)
-        priceBengaluru: 29190, // 2-Month Studio Unlimited (after tax)
-        finalPriceMumbai: 33548, // 10% off
-        finalPriceBengaluru: 26271, // 10% off
+        priceMumbai: 35500, // 2-Month Studio Unlimited (pre-tax: 2 x 17,750)
+        priceBengaluru: 27800, // 2-Month Studio Unlimited (pre-tax: 2 x 13,900)
+        finalPriceMumbai: 31950, // 10% off
+        finalPriceBengaluru: 25020, // 10% off
         discountPercent: 10,
-        savings: '₹3,728 (Mumbai) / ₹2,919 (Bengaluru) + bonus classes earned',
+        savings: '₹3,550 (Mumbai) / ₹2,780 (Bengaluru) + bonus classes earned',
         whyItWorks: 'Unlimited isn\'t given. It\'s earned. Reframes bonuses as merit-based. Appeals to high-effort students. Discourages casual sign-ups.',
         targetUnits: 90,
         promoteOnAds: true,
@@ -495,12 +495,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Retention',
         description: '5 Private Sessions (12-4 PM) + 1 Month Studio Unlimited included.',
         pricing: '₹25,000 (MUM)',
-        priceMumbai: 44888, // 5 privates (26,250) + 1 month Studio (18,638)
-        priceBengaluru: 35200, // 5 privates (20,605) + 1 month Studio (14,595)
+        priceMumbai: 42750, // 5 privates (25,000) + 1 month Studio (17,750)
+        priceBengaluru: 33525, // 5 privates (19,625) + 1 month Studio (13,900)
         finalPriceMumbai: 25000,
         finalPriceBengaluru: 22000,
-        discountPercent: 44, // Mumbai: (44,888-25,000)/44,888 = 44%, Bengaluru: (35,200-22,000)/35,200 = 38%
-        savings: '₹19,888 (Mumbai) / ₹13,200 (Bengaluru)',
+        discountPercent: 42, // Mumbai: (42,750-25,000)/42,750 = 42%, Bengaluru: (33,525-22,000)/33,525 = 34%
+        savings: '₹17,750 (Mumbai) / ₹11,525 (Bengaluru)',
         whyItWorks: 'Double meaning: banking classes + getting value. Perfect for daytime slots',
         targetUnits: 40,
         promoteOnAds: false,
@@ -532,10 +532,10 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: 'Attend 20 classes in 30 days. Reward: ₹2,000 Credit + Finisher Socks.',
         pricing: 'Attendance Challenge',
-        priceMumbai: 18638, // Studio 1 Month Unlimited
-        priceBengaluru: 14595, // Studio 1 Month Unlimited
-        finalPriceMumbai: 18638, // No discount, earns ₹2k credit back (net = 16,638)
-        finalPriceBengaluru: 14595, // No discount, earns ₹2k credit back (net = 12,595)
+        priceMumbai: 17750, // Studio 1 Month Unlimited
+        priceBengaluru: 13900, // Studio 1 Month Unlimited
+        finalPriceMumbai: 17750, // No discount, earns ₹2k credit back (net = 15,750)
+        finalPriceBengaluru: 13900, // No discount, earns ₹2k credit back (net = 11,900)
         discountPercent: 0,
         savings: 'Earn ₹2,000 Credit + Socks (effective 11% reward)',
         whyItWorks: 'Flips the excuse phrase on its head. Empowering and defiant',
@@ -549,12 +549,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Lapsed',
         description: '5 Classes for fixed price. Valid 30 days. No extensions.',
         pricing: '₹5,500 (MUM)',
-        priceMumbai: 9190, // 5 x Studio Single Class (5 x 1,838)
-        priceBengaluru: 7090, // 5 x Studio Single Class (5 x 1,418)
+        priceMumbai: 8750, // 5 x Studio Single Class (5 x 1,750)
+        priceBengaluru: 6750, // 5 x Studio Single Class (5 x 1,350)
         finalPriceMumbai: 5500,
         finalPriceBengaluru: 5000,
-        discountPercent: 40, // Mumbai: (9,190-5,500)/9,190 = 40%, Bengaluru: (7,090-5,000)/7,090 = 29%
-        savings: '₹3,690 (Mumbai) / ₹2,090 (Bengaluru)',
+        discountPercent: 37, // Mumbai: (8,750-5,500)/8,750 = 37%, Bengaluru: (6,750-5,000)/6,750 = 26%
+        savings: '₹3,250 (Mumbai) / ₹1,750 (Bengaluru)',
         whyItWorks: 'One word that perfectly captures coming back. Simple and visual',
         targetUnits: 70,
         promoteOnAds: false,
@@ -565,13 +565,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'Virtual Reality Check',
         type: 'New',
         description: '1-Month Unlimited + Free 30-min Virtual Private Session.',
-        pricing: '₹18,638 (MUM)',
-        priceMumbai: 23363, // 1 Month Studio (18,638) + Virtual Private (4,725)
-        priceBengaluru: 19320, // 1 Month Studio (14,595) + Virtual Private (4,725)
-        finalPriceMumbai: 18638,
-        finalPriceBengaluru: 14595,
-        discountPercent: 20, // Mumbai: (23,363-18,638)/23,363 = 20%, Bengaluru: (19,320-14,595)/19,320 = 24%
-        savings: '₹4,725 Virtual Private Free',
+        pricing: '₹17,750 (MUM)',
+        priceMumbai: 22250, // 1 Month Studio (17,750) + Virtual Private (4,500)
+        priceBengaluru: 18400, // 1 Month Studio (13,900) + Virtual Private (4,500)
+        finalPriceMumbai: 17750,
+        finalPriceBengaluru: 13900,
+        discountPercent: 20, // Mumbai: (22,250-17,750)/22,250 = 20%, Bengaluru: (18,400-13,900)/18,400 = 24%
+        savings: '₹4,500 Virtual Private Free',
         whyItWorks: 'Puns on VR + the reality of hybrid fitness. Tech-forward and clever',
         targetUnits: 45,
         promoteOnAds: true,
@@ -603,12 +603,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Event',
         description: '4-Month Unlimited + 3 Privates. Rainfall on purchase day determines bonus tier (spin digital wheel in studio).',
         pricing: '₹65,000 (MUM) / ₹52,000 (BLR)',
-        priceMumbai: 92888, // 3-Month (53,288) + 1-Month (18,638) + 3 Privates (15,750) + avg bonus value (5,212)
-        priceBengaluru: 72573, // 3-Month (42,210) + 1-Month (14,595) + 3 Privates (12,363) + avg bonus value (3,405)
+        priceMumbai: 83750, // 3-Month (50,750) + 1-Month (17,750) + 3 Privates (15,000) + avg bonus value
+        priceBengaluru: 65875, // 3-Month (40,200) + 1-Month (13,900) + 3 Privates (11,775) + avg bonus value
         finalPriceMumbai: 65000,
         finalPriceBengaluru: 52000,
-        discountPercent: 30,
-        savings: '₹27,888 (Mumbai) / ₹20,573 (Bengaluru) + weather bonus',
+        discountPercent: 22,
+        savings: '₹18,750 (Mumbai) / ₹13,875 (Bengaluru) + weather bonus',
         whyItWorks: 'Gamification tied to actual weather. Creates daily checking ("Is it raining enough?"). Heavy rain day = better odds. Transparent, verifiable.',
         targetUnits: 70,
         promoteOnAds: true,
@@ -620,12 +620,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Flash',
         description: '3-Month Unlimited + 1 Private. Attendance streak challenge July 10-Aug 10. TOP 2 win cash prizes (₹20K + ₹10K).',
         pricing: '₹48,000 (MUM) / ₹38,000 (BLR)',
-        priceMumbai: 58538, // 3-Month (53,288) + 1 Private (5,250)
-        priceBengaluru: 46331, // 3-Month (42,210) + 1 Private (4,121)
+        priceMumbai: 55750, // 3-Month (50,750) + 1 Private (5,000)
+        priceBengaluru: 44125, // 3-Month (40,200) + 1 Private (3,925)
         finalPriceMumbai: 48000,
         finalPriceBengaluru: 38000,
-        discountPercent: 18,
-        savings: '₹10,538 (Mumbai) / ₹8,331 (Bengaluru) + chance at ₹20K/₹10K cash',
+        discountPercent: 14,
+        savings: '₹7,750 (Mumbai) / ₹6,125 (Bengaluru) + chance at ₹20K/₹10K cash',
         whyItWorks: 'Streak mechanic = daily commitment. Only 2 winners from 90 = exclusive. Creates daily studio attendance in monsoon. Dramatic element.',
         targetUnits: 90,
         promoteOnAds: true,
@@ -636,13 +636,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'Lucky 7',
         type: 'Hero',
         description: 'Buy 6-Month Unlimited, Get 1 Month Free (7-for-6).',
-        pricing: '₹1,04,738 (MUM)',
-        priceMumbai: 123376, // 6 Month (104,738) + 1 Month Studio (18,638)
-        priceBengaluru: 96810, // 6 Month (82,215) + 1 Month Studio (14,595)
-        finalPriceMumbai: 104738,
-        finalPriceBengaluru: 82215,
+        pricing: '₹99,750 (MUM)',
+        priceMumbai: 117500, // 6 Month (99,750) + 1 Month Studio (17,750)
+        priceBengaluru: 92200, // 6 Month (78,300) + 1 Month Studio (13,900)
+        finalPriceMumbai: 99750,
+        finalPriceBengaluru: 78300,
         discountPercent: 15, // Savings of 1 free month
-        savings: '₹18,638 (Mumbai) / ₹14,595 (Bengaluru) - 1 Month Free',
+        savings: '₹17,750 (Mumbai) / ₹13,900 (Bengaluru) - 1 Month Free',
         whyItWorks: 'Seven months for six is actually lucky. Gambling/luck reference feels special',
         targetUnits: 20,
         promoteOnAds: true,
@@ -654,12 +654,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '3-Month Unlimited + ₹1,000 Transport Credit discount.',
         pricing: '₹42,500 (MUM)',
-        priceMumbai: 53288, // 3 Month Unlimited
-        priceBengaluru: 42210, // 3 Month Unlimited
+        priceMumbai: 50750, // 3 Month Unlimited
+        priceBengaluru: 40200, // 3 Month Unlimited
         finalPriceMumbai: 42500,
         finalPriceBengaluru: 39000,
-        discountPercent: 20, // Mumbai: (53,288-42,500)/53,288 = 20%, Bengaluru: (42,210-39,000)/42,210 = 8%
-        savings: '₹10,788 (Mumbai) / ₹3,210 (Bengaluru) + Transport Credit',
+        discountPercent: 16, // Mumbai: (50,750-42,500)/50,750 = 16%, Bengaluru: (40,200-39,000)/40,200 = 3%
+        savings: '₹8,250 (Mumbai) / ₹1,200 (Bengaluru) + Transport Credit',
         whyItWorks: 'Directly addresses "too hard to get a cab" objection.',
         targetUnits: 85,
         promoteOnAds: true,
@@ -671,10 +671,10 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Retention',
         description: 'Buy 12-Class Pack, receive 2 "Late Cancel" Waivers.',
         pricing: 'Standard Pack Rate',
-        priceMumbai: 15803, // 12-Class Pack
-        priceBengaluru: 13125, // 12-Class Pack
-        finalPriceMumbai: 15803,
-        finalPriceBengaluru: 13125,
+        priceMumbai: 21000, // 12-Class Pack (12 x 1,750)
+        priceBengaluru: 16200, // 12-Class Pack (12 x 1,350)
+        finalPriceMumbai: 21000,
+        finalPriceBengaluru: 16200,
         discountPercent: 0,
         savings: '2 Late Cancel Waivers (Peace of Mind)',
         whyItWorks: 'Monopoly reference everyone knows. Removes guilt and anxiety perfectly',
@@ -708,12 +708,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: '12 Months Unlimited + 1 "Bestie Month" to gift + 2 Extra Freezes.',
         pricing: '₹1,35,000 (MUM Net)',
-        priceMumbai: 220763, // Annual (202,125) + 1 Month gift Studio (18,638)
-        priceBengaluru: 170835, // Annual (156,240) + 1 Month gift Studio (14,595)
+        priceMumbai: 210250, // Annual (192,500) + 1 Month gift Studio (17,750)
+        priceBengaluru: 162700, // Annual (148,800) + 1 Month gift Studio (13,900)
         finalPriceMumbai: 135000,
         finalPriceBengaluru: 125000,
-        discountPercent: 39, // Mumbai: (220,763-135,000)/220,763 = 39%, Bengaluru: (170,835-125,000)/170,835 = 27%
-        savings: '₹85,763 (Mumbai) / ₹45,835 (Bengaluru)',
+        discountPercent: 36, // Mumbai: (210,250-135,000)/210,250 = 36%, Bengaluru: (162,700-125,000)/162,700 = 23%
+        savings: '₹75,250 (Mumbai) / ₹37,700 (Bengaluru)',
         whyItWorks: 'Suggests never-ending commitment with superhero gravitas',
         targetUnits: 11,
         promoteOnAds: true,
@@ -725,12 +725,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: 'Buy 3-class trial, get a second 3-class pass to gift a friend.',
         pricing: '₹4,500 (MUM Net)',
-        priceMumbai: 5514, // 3 x Studio Single Class (3 x 1,838)
-        priceBengaluru: 4254, // 3 x Studio Single Class (3 x 1,418)
+        priceMumbai: 5250, // 3 x Studio Single Class (3 x 1,750)
+        priceBengaluru: 4050, // 3 x Studio Single Class (3 x 1,350)
         finalPriceMumbai: 4500,
         finalPriceBengaluru: 4000,
-        discountPercent: 18, // Mumbai: (5,514-4,500)/5,514 = 18%, Bengaluru: (4,254-4,000)/4,254 = 6%
-        savings: '₹1,014 (Mumbai) / ₹254 (Bengaluru) + Friend Pass Free',
+        discountPercent: 14, // Mumbai: (5,250-4,500)/5,250 = 14%, Bengaluru: (4,050-4,000)/4,050 = 1%
+        savings: '₹750 (Mumbai) / ₹50 (Bengaluru) + Friend Pass Free',
         whyItWorks: '"Two can play at that game" twist. Competitive and fun friendship energy',
         targetUnits: 140,
         promoteOnAds: true,
@@ -741,13 +741,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'Ride or Die (Literally)',
         type: 'Flash',
         description: '20% off Class Packs (10/20) when bought as a pair. Aug 1-3.',
-        pricing: '₹25,200 for 20-Pack (MUM)',
-        priceMumbai: 31500, // 20 x Pack rate (20 x 1,575 equivalent)
-        priceBengaluru: 25200, // 20 x Pack rate (20 x 1,260 equivalent)
-        finalPriceMumbai: 25200, // 20% off
-        finalPriceBengaluru: 20160, // 20% off
+        pricing: '₹28,000 for 20-Pack (MUM)',
+        priceMumbai: 35000, // 20 x Single class (20 x 1,750)
+        priceBengaluru: 27000, // 20 x Single class (20 x 1,350)
+        finalPriceMumbai: 28000, // 20% off
+        finalPriceBengaluru: 21600, // 20% off
         discountPercent: 20,
-        savings: '₹6,300 (Mumbai) / ₹5,040 (Bengaluru)',
+        savings: '₹7,000 (Mumbai) / ₹5,400 (Bengaluru)',
         whyItWorks: 'Hip-hop loyalty phrase + literal cycling class. Perfect double meaning',
         targetUnits: 45,
         promoteOnAds: true,
@@ -779,12 +779,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: '3 Months Unlimited + 2 Form Correction Privates + 4 Travel Freezes.',
         pricing: '₹46,000 (MUM Net)',
-        priceMumbai: 63788, // 3 Month (53,288) + 2 Privates (10,500)
-        priceBengaluru: 50452, // 3 Month (42,210) + 2 Privates (8,242)
+        priceMumbai: 60750, // 3 Month (50,750) + 2 Privates (10,000)
+        priceBengaluru: 48050, // 3 Month (40,200) + 2 Privates (7,850)
         finalPriceMumbai: 46000,
         finalPriceBengaluru: 42000,
-        discountPercent: 28, // Mumbai: (63,788-46,000)/63,788 = 28%, Bengaluru: (50,452-42,000)/50,452 = 17%
-        savings: '₹17,788 (Mumbai) / ₹8,452 (Bengaluru)',
+        discountPercent: 24, // Mumbai: (60,750-46,000)/60,750 = 24%, Bengaluru: (48,050-42,000)/48,050 = 13%
+        savings: '₹14,750 (Mumbai) / ₹6,050 (Bengaluru)',
         whyItWorks: 'Travel luxury metaphor for premium fitness. Aspirational and status-oriented',
         targetUnits: 37,
         promoteOnAds: true,
@@ -795,13 +795,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'The Insider Deal',
         type: 'New',
         description: 'Trainer unique code gives friend 20% off. Member gets Masterclass credit.',
-        pricing: '₹12,600 for 10-Pack (MUM)',
-        priceMumbai: 15750, // 10-Class Pack
-        priceBengaluru: 12600, // 10-Class Pack
-        finalPriceMumbai: 12600,
-        finalPriceBengaluru: 10080,
+        pricing: '₹14,000 for 10-Pack (MUM)',
+        priceMumbai: 17500, // 10-Class Pack (10 x 1,750)
+        priceBengaluru: 13500, // 10-Class Pack (10 x 1,350)
+        finalPriceMumbai: 14000,
+        finalPriceBengaluru: 10800,
         discountPercent: 20,
-        savings: '₹3,150 (Mumbai) / ₹2,520 (Bengaluru)',
+        savings: '₹3,500 (Mumbai) / ₹2,700 (Bengaluru)',
         whyItWorks: 'Makes members feel like VIPs with secret access. Exclusive and special',
         targetUnits: 170,
         promoteOnAds: true,
@@ -813,12 +813,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '4 Classes + 1 "Anatomy & Alignment" Workshop.',
         pricing: '₹4,725 (MUM Net)',
-        priceMumbai: 7352, // 4 x Studio Single Class (4 x 1,838)
-        priceBengaluru: 5672, // 4 x Studio Single Class (4 x 1,418)
+        priceMumbai: 7000, // 4 x Studio Single Class (4 x 1,750)
+        priceBengaluru: 5400, // 4 x Studio Single Class (4 x 1,350)
         finalPriceMumbai: 4725,
         finalPriceBengaluru: 4250,
-        discountPercent: 36, // Mumbai: (7,352-4,725)/7,352 = 36%, Bengaluru: (5,672-4,250)/5,672 = 25%
-        savings: '₹2,627 (Mumbai) / ₹1,422 (Bengaluru)',
+        discountPercent: 33, // Mumbai: (7,000-4,725)/7,000 = 33%, Bengaluru: (5,400-4,250)/5,400 = 21%
+        savings: '₹2,275 (Mumbai) / ₹1,150 (Bengaluru)',
         whyItWorks: 'Rhymes + shows that fundamentals lead to advanced results',
         targetUnits: 100,
         promoteOnAds: false,
@@ -850,12 +850,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Hero',
         description: '12 Months Unlimited + 2 Privates + Gold Socks.',
         pricing: '₹1,45,000 (MUM Net)',
-        priceMumbai: 212625, // Annual (202,125) + 2 Privates (10,500)
-        priceBengaluru: 164482, // Annual (156,240) + 2 Privates (8,242)
+        priceMumbai: 202500, // Annual (192,500) + 2 Privates (10,000)
+        priceBengaluru: 156650, // Annual (148,800) + 2 Privates (7,850)
         finalPriceMumbai: 145000,
         finalPriceBengaluru: 135000,
-        discountPercent: 32, // Mumbai: (212,625-145,000)/212,625 = 32%, Bengaluru: (164,482-135,000)/164,482 = 18%
-        savings: '₹67,625 (Mumbai) / ₹29,482 (Bengaluru)',
+        discountPercent: 28, // Mumbai: (202,500-145,000)/202,500 = 28%, Bengaluru: (156,650-135,000)/156,650 = 14%
+        savings: '₹57,500 (Mumbai) / ₹21,650 (Bengaluru)',
         whyItWorks: 'Chocolate factory reference = rare, magical, exclusive. Fun premium positioning',
         targetUnits: 15,
         promoteOnAds: true,
@@ -867,12 +867,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '4-Week Unlimited Sprint + Style Guide + 2 Guest Passes for final week.',
         pricing: '₹13,900 (MUM Net)',
-        priceMumbai: 18638, // Studio 1 Month Unlimited
-        priceBengaluru: 14595, // Studio 1 Month Unlimited
+        priceMumbai: 17750, // Studio 1 Month Unlimited
+        priceBengaluru: 13900, // Studio 1 Month Unlimited
         finalPriceMumbai: 13900,
         finalPriceBengaluru: 12500,
-        discountPercent: 25, // Mumbai: (18,638-13,900)/18,638 = 25%, Bengaluru: (14,595-12,500)/14,595 = 14%
-        savings: '₹4,738 (Mumbai) / ₹2,095 (Bengaluru)',
+        discountPercent: 22, // Mumbai: (17,750-13,900)/17,750 = 22%, Bengaluru: (13,900-12,500)/13,900 = 10%
+        savings: '₹3,850 (Mumbai) / ₹1,400 (Bengaluru)',
         whyItWorks: 'Little Black Dress + project transformation = aspirational and specific',
         targetUnits: 85,
         promoteOnAds: true,
@@ -884,12 +884,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'New',
         description: '5-Class Taster (14 Day Validity).',
         pricing: '₹6,000 (MUM Net)',
-        priceMumbai: 9190, // 5 x Studio Single Class (5 x 1,838)
-        priceBengaluru: 7090, // 5 x Studio Single Class (5 x 1,418)
+        priceMumbai: 8750, // 5 x Studio Single Class (5 x 1,750)
+        priceBengaluru: 6750, // 5 x Studio Single Class (5 x 1,350)
         finalPriceMumbai: 6000,
         finalPriceBengaluru: 5500,
-        discountPercent: 35, // Mumbai: (9,190-6,000)/9,190 = 35%, Bengaluru: (7,090-5,500)/7,090 = 22%
-        savings: '₹3,190 (Mumbai) / ₹1,590 (Bengaluru)',
+        discountPercent: 31, // Mumbai: (8,750-6,000)/8,750 = 31%, Bengaluru: (6,750-5,500)/6,750 = 19%
+        savings: '₹2,750 (Mumbai) / ₹1,250 (Bengaluru)',
         whyItWorks: 'Dating metaphor for trying fitness fast. Low commitment, high energy',
         targetUnits: 120,
         promoteOnAds: true,
@@ -920,13 +920,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'The Doomsday Prep',
         type: 'Hero',
         description: '50 Class Pack with 24-Month Validity. Nov 24-30 Only.',
-        pricing: '₹59,063 (MUM)',
-        priceMumbai: 78750, // 30-Class Pack (47,250) + 20 more classes estimate (31,500)
-        priceBengaluru: 63000, // 30-Class Pack (37,800) + 20 more classes estimate (25,200)
-        finalPriceMumbai: 59063,
-        finalPriceBengaluru: 47250,
-        discountPercent: 25,
-        savings: '₹19,687 (Mumbai) / ₹15,750 (Bengaluru)',
+        pricing: '₹62,500 (MUM)',
+        priceMumbai: 87500, // 50 classes (50 x 1,750)
+        priceBengaluru: 67500, // 50 classes (50 x 1,350)
+        finalPriceMumbai: 62500,
+        finalPriceBengaluru: 50625,
+        discountPercent: 29,
+        savings: '₹25,000 (Mumbai) / ₹16,875 (Bengaluru)',
         whyItWorks: 'Survivalist humor about stocking up. Makes bulk buying feel strategic',
         targetUnits: 25,
         promoteOnAds: true,
@@ -937,11 +937,11 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'The Morning After Plan',
         type: 'New',
         description: '2 Weeks Unlimited for price of 1 week.',
-        pricing: '₹7,560 (BLR)',
-        priceMumbai: 10412, // Studio 2 Week Unlimited
-        priceBengaluru: 7560, // Studio 2 Week Unlimited
-        finalPriceMumbai: 10412,
-        finalPriceBengaluru: 7560,
+        pricing: '₹8,875 (MUM)',
+        priceMumbai: 8875, // Studio 1 Week Unlimited (half of 1-month)
+        priceBengaluru: 6950, // Studio 1 Week Unlimited (half of 1-month)
+        finalPriceMumbai: 8875,
+        finalPriceBengaluru: 6950,
         discountPercent: 0,
         savings: 'Already priced as 2-for-1 value',
         whyItWorks: 'Hangover reference for post-Diwali guilt. Honest and relatable',
@@ -955,12 +955,12 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Lapsed',
         description: '1 Week Unlimited + Nutrition Detox Consult.',
         pricing: '₹3,500 (MUM)',
-        priceMumbai: 10412, // Studio 2 Week Unlimited (approximating 1 week at half)
-        priceBengaluru: 7560, // Studio 2 Week Unlimited (approximating 1 week at half)
+        priceMumbai: 8875, // Studio 1 Week Unlimited (half of 1-month: 17,750/2)
+        priceBengaluru: 6950, // Studio 1 Week Unlimited (half of 1-month: 13,900/2)
         finalPriceMumbai: 3500,
         finalPriceBengaluru: 3000,
-        discountPercent: 66, // Mumbai: (5,206-3,500)/5,206 = 33% (using half of 2-week price), Bengaluru similar
-        savings: '₹1,706+ (Mumbai) / ₹780+ (Bengaluru)',
+        discountPercent: 61, // Mumbai: (8,875-3,500)/8,875 = 61%, Bengaluru: (6,950-3,000)/6,950 = 57%
+        savings: '₹5,375 (Mumbai) / ₹3,950 (Bengaluru)',
         whyItWorks: 'Double meaning: revenge on sweets + sweet-tasting revenge on guilt. BRILLIANT pun',
         targetUnits: 50,
         promoteOnAds: false,
@@ -991,13 +991,13 @@ export const MONTHS_DATA: MonthData[] = [
         title: 'Price Lock & Load',
         type: 'Hero',
         description: 'Lock in Annual Membership at 2025 prices + 10% Early Bird.',
-        pricing: '₹1,81,913 (MUM)',
-        priceMumbai: 202125, // Studio Annual price (after tax)
-        priceBengaluru: 156240, // Studio Annual price (after tax)
-        finalPriceMumbai: 181913, // 10% off
-        finalPriceBengaluru: 140616, // 10% off
+        pricing: '₹1,73,250 (MUM)',
+        priceMumbai: 192500, // Studio Annual price (pre-tax)
+        priceBengaluru: 148800, // Studio Annual price (pre-tax)
+        finalPriceMumbai: 173250, // 10% off
+        finalPriceBengaluru: 133920, // 10% off
         discountPercent: 10,
-        savings: '₹20,212 (Mumbai) / ₹15,624 (Bengaluru)',
+        savings: '₹19,250 (Mumbai) / ₹14,880 (Bengaluru)',
         whyItWorks: 'Gun-loading phrase + price locking. Urgent and action-oriented',
         targetUnits: 15,
         promoteOnAds: true,
@@ -1009,10 +1009,10 @@ export const MONTHS_DATA: MonthData[] = [
         type: 'Retention',
         description: 'Buy 10/20 Pack, get Double Validity + 2 Extra Freezes.',
         pricing: 'Standard Rack',
-        priceMumbai: 15750, // 10-Class Pack
-        priceBengaluru: 12600, // 10-Class Pack
-        finalPriceMumbai: 15750,
-        finalPriceBengaluru: 12600,
+        priceMumbai: 17500, // 10-Class Pack (10 x 1,750)
+        priceBengaluru: 13500, // 10-Class Pack (10 x 1,350)
+        finalPriceMumbai: 17500,
+        finalPriceBengaluru: 13500,
         discountPercent: 0,
         savings: 'Double Validity + 2 Freezes (Flexibility)',
         whyItWorks: 'Insurance metaphor = protection against travel disruption. Smart and practical',
@@ -1031,7 +1031,7 @@ export const MONTHS_DATA: MonthData[] = [
         finalPriceMumbai: 10000,
         finalPriceBengaluru: 10000,
         discountPercent: 0,
-        savings: '2 Free Classes (₹3,676 Mumbai / ₹2,836 Bengaluru)',
+        savings: '2 Free Classes (₹3,500 Mumbai / ₹2,700 Bengaluru)',
         whyItWorks: 'Acknowledges the giver deserves rewards too. Fair exchange principle',
         targetUnits: 30,
         promoteOnAds: true,

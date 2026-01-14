@@ -6,7 +6,8 @@ import { AdminProvider } from './context/AdminContext';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { AdminStatusBar } from './components/AdminStatusBar';
 import { 
-  ChevronRight, 
+  ChevronRight,
+  ChevronLeft,
   Download, 
   RefreshCcw, 
   FileJson, 
@@ -87,18 +88,52 @@ const ExportModal: React.FC<{
         document.body.removeChild(link);
         setTimeout(() => onClose(), 500);
       } else if (format === 'csv') {
-         const headers = ['Month', 'Offer Title', 'Type', 'Pricing', 'Target Units', 'Status', 'Description', 'Strategy'];
+         const headers = [
+           'Month', 'Offer Title', 'Type', 'Description', 'Pricing Display',
+           'Price Mumbai (Base)', 'Price Bengaluru (Base)', 
+           'Final Price Mumbai', 'Final Price Bengaluru',
+           'Discount Amount Mumbai', 'Discount Amount Bengaluru',
+           'Discount Percentage', 
+           'Savings Full Text',
+           'Target Units Total',
+           'Target Units Mumbai', 'Target Units Bengaluru',
+           'Promote on Ads', 'Status',
+           'Why It Works', 'Marketing Collateral', 'Operational Support'
+         ];
          const rows = exportData.flatMap(month => 
-          month.offers.map(offer => [
-            month.name,
-            `"${offer.title.replace(/"/g, '""')}"`,
-            offer.type,
-            `"${offer.pricing}"`,
-            offer.targetUnits || '',
-            offer.cancelled ? 'Cancelled' : 'Active',
-            `"${offer.description.replace(/"/g, '""')}"`,
-            `"${offer.whyItWorks.replace(/"/g, '""')}"`
-          ])
+          month.offers.map(offer => {
+            // Calculate discount amounts
+            const discountMumbai = (offer.priceMumbai && offer.finalPriceMumbai) 
+              ? offer.priceMumbai - offer.finalPriceMumbai 
+              : '';
+            const discountBengaluru = (offer.priceBengaluru && offer.finalPriceBengaluru) 
+              ? offer.priceBengaluru - offer.finalPriceBengaluru 
+              : '';
+            
+            return [
+              month.name,
+              `"${offer.title.replace(/"/g, '""')}"`,
+              offer.type,
+              `"${offer.description.replace(/"/g, '""')}"`,
+              `"${offer.pricing}"`,
+              offer.priceMumbai || '',
+              offer.priceBengaluru || '',
+              offer.finalPriceMumbai || '',
+              offer.finalPriceBengaluru || '',
+              discountMumbai,
+              discountBengaluru,
+              offer.discountPercent || '',
+              `"${offer.savings || ''}"`,
+              offer.targetUnits || '',
+              offer.targetUnitsMumbai || '',
+              offer.targetUnitsBengaluru || '',
+              offer.promoteOnAds ? 'Yes' : 'No',
+              offer.cancelled ? 'Cancelled' : 'Active',
+              `"${offer.whyItWorks.replace(/"/g, '""')}"`,
+              `"${offer.marketingCollateral?.replace(/"/g, '""') || ''}"`,
+              `"${offer.operationalSupport?.replace(/"/g, '""') || ''}"`
+            ];
+          })
         );
         const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -269,6 +304,23 @@ const DashboardContent: React.FC = () => {
   const [hideCancelled, setHideCancelled] = useState(false);
   
   const selectedMonth = data.find(m => m.id === selectedMonthId) || data[0];
+  
+  // Navigation helpers
+  const currentMonthIndex = data.findIndex(m => m.id === selectedMonthId);
+  const hasPrevious = currentMonthIndex > 0;
+  const hasNext = currentMonthIndex < data.length - 1;
+  
+  const goToPreviousMonth = () => {
+    if (hasPrevious) {
+      setSelectedMonthId(data[currentMonthIndex - 1].id);
+    }
+  };
+  
+  const goToNextMonth = () => {
+    if (hasNext) {
+      setSelectedMonthId(data[currentMonthIndex + 1].id);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -357,6 +409,38 @@ const DashboardContent: React.FC = () => {
             </div>
           )}
         </nav>
+        
+        {/* Month Navigation Buttons */}
+        {activeTab === 'monthly' && (
+          <div className="px-3 pb-3 border-t border-gray-100">
+            <div className="pt-3 grid grid-cols-2 gap-2">
+              <button
+                onClick={goToPreviousMonth}
+                disabled={!hasPrevious}
+                className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                  hasPrevious
+                    ? 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 shadow-sm'
+                    : 'bg-gray-100 border border-gray-200 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Previous
+              </button>
+              <button
+                onClick={goToNextMonth}
+                disabled={!hasNext}
+                className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                  hasNext
+                    ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-sm'
+                    : 'bg-gray-100 border border-gray-200 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="p-4 border-t border-gray-100 space-y-3 bg-gray-50/50">
           <button 
