@@ -84,6 +84,14 @@ export interface CRMTimeline {
   adsEndDate?: string;
 }
 
+export interface Note {
+  id: string;
+  monthId: string;
+  content: string;
+  userName: string;
+  createdAt: string; // ISO timestamp
+}
+
 export interface MonthData {
   id: string;
   name: string;
@@ -97,5 +105,6 @@ export interface MonthData {
   engagement?: { name: string; type: string; description: string }[];
   marketingCollateral?: MarketingCollateral[];
   crmTimeline?: CRMTimeline[];
+  notes?: Note[];
   customSections?: { [key: string]: any[] }; // Support for custom sections
 }

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Offer } from '../types';
 import { Tag, TrendingUp, Users, Zap, Award, Briefcase, GraduationCap, History, MoreVertical, Edit2, Trash2, Ban, Megaphone } from 'lucide-react';
 import { useSalesData } from '../context/SalesContext';
+import { useAdmin } from '../context/AdminContext';
 import { OfferForm } from './OfferForm';
+import { OfferDetailModal } from './OfferDetailModal';
 
 interface OfferCardProps {
   offer: Offer;
@@ -11,8 +13,10 @@ interface OfferCardProps {
 
 export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
   const { updateOffer, deleteOffer, toggleCancelled } = useSalesData();
+  const { isAdmin } = useAdmin();
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [activeLocationTab, setActiveLocationTab] = useState<'mumbai' | 'bengaluru'>('mumbai');
   const [showCollateralSection, setShowCollateralSection] = useState(false);
 
@@ -55,35 +59,51 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
 
   return (
     <>
-      <div className={`bg-white rounded-xl p-6 shadow-sm border transition-all duration-300 flex flex-col h-full relative group
+      <div 
+        onClick={() => setShowDetailModal(true)}
+        className={`bg-white rounded-xl p-6 shadow-sm border transition-all duration-300 flex flex-col h-full relative group cursor-pointer
         ${offer.cancelled ? 'border-gray-200 bg-gray-50' : 'border-gray-100 hover:shadow-md'}`}
       >
-        {/* Actions Menu */}
-        <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-           <div className="flex bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
-             <button 
-               onClick={() => setIsEditing(true)}
-               className="p-2 hover:bg-gray-50 text-gray-600 border-r border-gray-100" 
-               title="Edit"
-             >
-               <Edit2 className="w-4 h-4" />
-             </button>
-             <button 
-               onClick={() => offer.id && toggleCancelled(monthId, offer.id)}
-               className={`p-2 hover:bg-gray-50 border-r border-gray-100 ${offer.cancelled ? 'text-green-600' : 'text-orange-600'}`}
-               title={offer.cancelled ? "Activate" : "Cancel"}
-             >
-               <Ban className="w-4 h-4" />
-             </button>
-             <button 
-               onClick={() => offer.id && deleteOffer(monthId, offer.id)}
-               className="p-2 hover:bg-red-50 text-red-600" 
-               title="Delete"
-             >
-               <Trash2 className="w-4 h-4" />
-             </button>
-           </div>
-        </div>
+        {/* Actions Menu - Admin Only */}
+        {isAdmin && (
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+             <div className="flex bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+               <button 
+                 onClick={(e) => {
+                   e.stopPropagation();
+                   setIsEditing(true);
+                 }}
+                 className="p-2 hover:bg-gray-50 text-gray-600 border-r border-gray-100" 
+                 title="Edit"
+               >
+                 <Edit2 className="w-4 h-4" />
+               </button>
+               <button 
+                 onClick={(e) => {
+                   e.stopPropagation();
+                   offer.id && toggleCancelled(monthId, offer.id);
+                 }}
+                 className={`p-2 hover:bg-gray-50 border-r border-gray-100 ${offer.cancelled ? 'text-green-600' : 'text-orange-600'}`}
+                 title={offer.cancelled ? "Activate" : "Cancel"}
+               >
+                 <Ban className="w-4 h-4" />
+               </button>
+               <button 
+                 onClick={(e) => {
+                   e.stopPropagation();
+                   offer.id && deleteOffer(monthId, offer.id);
+                 }}
+                 className="p-2 hover:bg-red-50 text-red-600" 
+                 title="Delete"
+               >
+                 <Trash2 className="w-4 h-4" />
+               </button>
+             </div>
+          </div>
+        )}
 
         <div className="flex justify-between items-start mb-4">
           <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border flex items-center gap-2 ${getTypeStyles()}`}>
@@ -97,9 +117,12 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
           )}
         </div>
 
-        {/* Collateral Selection Section */}
-        {!offer.cancelled && (
-          <div className="bg-blue-50 rounded-lg p-4 mb-4">
+        {/* Collateral Selection Section - Admin Only */}
+        {!offer.cancelled && isAdmin && (
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-blue-50 rounded-lg p-4 mb-4"
+          >
             <div 
               className="flex items-center justify-between cursor-pointer"
               onClick={() => setShowCollateralSection(!showCollateralSection)}
@@ -368,6 +391,12 @@ export const OfferCard: React.FC<OfferCardProps> = ({ offer, monthId }) => {
         onSave={handleUpdate}
         title="Edit Offer"
         initialData={offer}
+      />
+
+      <OfferDetailModal
+        offer={offer}
+        isOpen={showDetailModal}
+        onClose={() => setShowDetailModal(false)}
       />
     </>
   );

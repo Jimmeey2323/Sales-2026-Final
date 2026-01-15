@@ -1149,16 +1149,21 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
             <div className="flex items-center gap-3">
               {marketingCollateral.length > 0 && (
                 <button
-                  onClick={() => deleteAllMarketingCollateral(month.id)}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                  title="Clear all requirements"
+                  onClick={() => requireAdmin(() => deleteAllMarketingCollateral(month.id))}
+                  disabled={!isAdmin}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
+                    isAdmin
+                      ? 'bg-red-500 text-white hover:bg-red-600 cursor-pointer'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                  }`}
+                  title={isAdmin ? 'Clear all requirements' : 'Admin access required'}
                 >
                   <Trash2 className="w-4 h-4" />
                   Clear All
                 </button>
               )}
               <button
-                onClick={() => {
+                onClick={() => requireAdmin(() => {
                   setShowNewMarketing(true);
                   setNewMarketing({
                     offer: activeOffers[0]?.title || '',
@@ -1169,8 +1174,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                     messaging: '',
                     notes: ''
                   });
-                }}
-                className="flex items-center gap-2 px-6 py-3 bg-pink-600 text-white rounded-xl hover:bg-pink-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium"
+                })}
+                disabled={!isAdmin}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium ${
+                  isAdmin
+                    ? 'bg-pink-600 text-white hover:bg-pink-700 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                }`}
+                title={isAdmin ? 'Add creative asset' : 'Admin access required'}
               >
                 <Plus className="w-5 h-5" />
                 Add Asset
@@ -1469,9 +1480,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
             </button>
             
             <button
-              onClick={() => setShowOfferGenerator(true)}
-              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl transition-all font-semibold hover:shadow-lg group"
-              title="Generate Custom Offers"
+              onClick={() => requireAdmin(() => setShowOfferGenerator(true))}
+              disabled={!isAdmin}
+              className={`px-6 py-3 rounded-xl transition-all font-semibold hover:shadow-lg group ${
+                isAdmin
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white cursor-pointer'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+              }`}
+              title={isAdmin ? 'Generate Custom Offers' : 'Admin access required'}
             >
               <span className="flex items-center gap-2">
                 <Wand2 className="w-4 h-4 group-hover:rotate-12 transition-transform" />
@@ -1501,17 +1517,27 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
               {crmTimeline.length > 0 && (
                 <>
                   <button
-                    onClick={() => removeDuplicateCRMEvents(month.id)}
-                    className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                    title="Clean duplicates"
+                    onClick={() => requireAdmin(() => removeDuplicateCRMEvents(month.id))}
+                    disabled={!isAdmin}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
+                      isAdmin
+                        ? 'bg-amber-500 text-white hover:bg-amber-600 cursor-pointer'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                    }`}
+                    title={isAdmin ? 'Clean duplicates' : 'Admin access required'}
                   >
                     <Target className="w-4 h-4" />
                     Clean Up
                   </button>
                   <button
-                    onClick={() => deleteAllCRMTimeline(month.id)}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                    title="Clear timeline"
+                    onClick={() => requireAdmin(() => deleteAllCRMTimeline(month.id))}
+                    disabled={!isAdmin}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
+                      isAdmin
+                        ? 'bg-red-500 text-white hover:bg-red-600 cursor-pointer'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                    }`}
+                    title={isAdmin ? 'Clear timeline' : 'Admin access required'}
                   >
                     <Trash2 className="w-4 h-4" />
                     Clear All
@@ -1519,7 +1545,7 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                 </>
               )}
               <button
-                onClick={() => {
+                onClick={() => requireAdmin(() => {
                   setShowNewCRM(true);
                   setNewCRM({
                     offer: activeOffers[0]?.title || '',
@@ -1528,8 +1554,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                     adsStartDate: '',
                     adsEndDate: ''
                   });
-                }}
-                className="flex items-center gap-2 px-6 py-3 bg-violet-600 text-white rounded-xl hover:bg-violet-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium"
+                })}
+                disabled={!isAdmin}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium ${
+                  isAdmin
+                    ? 'bg-violet-600 text-white hover:bg-violet-700 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                }`}
+                title={isAdmin ? 'Add campaign event' : 'Admin access required'}
               >
                 <Plus className="w-5 h-5" />
                 Add Event
@@ -1614,7 +1646,7 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                         />
                       </div>
                       <button
-                        onClick={() => {
+                        onClick={() => requireAdmin(() => {
                           if (newCRM.offer && newCRM.content && newCRM.sendDate) {
                             addCRMTimeline(month.id, {
                               id: Math.random().toString(36).substr(2, 9),
@@ -1627,8 +1659,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                             setShowNewCRM(false);
                             setNewCRM({});
                           }
-                        }}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                        })}
+                        disabled={!isAdmin}
+                        className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors font-semibold ${
+                          isAdmin
+                            ? 'bg-green-600 text-white hover:bg-green-700 cursor-pointer'
+                            : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                        }`}
+                        title={isAdmin ? 'Save CRM Event' : 'Admin access required'}
                       >
                         <Save className="w-4 h-4" />
                         Save CRM Event
@@ -1648,17 +1686,23 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                     <div className="bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-indigo-300 hover:shadow-md transition-all relative ml-16">
                       <div className="absolute top-3 right-3 flex gap-2 z-10">
                         <button
-                          onClick={() => {
+                          onClick={() => requireAdmin(() => {
                             if (item.id && confirm('Delete this CRM timeline event?')) {
                               deleteCRMTimeline(month.id, item.id);
                             }
-                          }}
-                          className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                          })}
+                          disabled={!isAdmin}
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            isAdmin
+                              ? 'hover:bg-red-50 cursor-pointer'
+                              : 'cursor-not-allowed opacity-50'
+                          }`}
+                          title={isAdmin ? 'Delete event' : 'Admin access required'}
                         >
                           <Trash2 className="w-4 h-4 text-red-600" />
                         </button>
                         <button
-                          onClick={() => {
+                          onClick={() => requireAdmin(() => {
                             if (isEditing) {
                               if (item.id) {
                                 updateCRMTimeline(month.id, item.id, tempCRM);
@@ -1669,8 +1713,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                               setEditingCRM(item.id || null);
                               setTempCRM(item);
                             }
-                          }}
-                          className="p-1.5 hover:bg-indigo-50 rounded-lg transition-colors"
+                          })}
+                          disabled={!isAdmin}
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            isAdmin
+                              ? 'hover:bg-indigo-50 cursor-pointer'
+                              : 'cursor-not-allowed opacity-50'
+                          }`}
+                          title={isAdmin ? (isEditing ? 'Save changes' : 'Edit event') : 'Admin access required'}
                         >
                           {isEditing ? (
                             <Save className="w-4 h-4 text-green-600" />
@@ -1791,9 +1841,14 @@ export const ExecutionPlan: React.FC<ExecutionPlanProps> = ({ month }) => {
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => deleteCustomSection(month.id, sectionName)}
-                    className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
-                    title={`Delete entire ${sectionName} section`}
+                    onClick={() => requireAdmin(() => deleteCustomSection(month.id, sectionName))}
+                    disabled={!isAdmin}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm ${
+                      isAdmin
+                        ? 'bg-red-600 text-white hover:bg-red-700 cursor-pointer'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                    }`}
+                    title={isAdmin ? `Delete entire ${sectionName} section` : 'Admin access required'}
                   >
                     <Trash2 className="w-4 h-4" />
                     Delete Section

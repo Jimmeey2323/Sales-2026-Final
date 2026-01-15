@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { MonthDetail } from './components/MonthDetail';
 import { YearOverview } from './components/YearOverview';
 import { SalesProvider, useSalesData } from './context/SalesContext';
-import { AdminProvider } from './context/AdminContext';
+import { AdminProvider, useAdmin } from './context/AdminContext';
 import { AdminLoginModal } from './components/AdminLoginModal';
-import { AdminStatusBar } from './components/AdminStatusBar';
 import { 
   ChevronRight,
   ChevronLeft,
@@ -21,7 +20,10 @@ import {
   CalendarDays,
   FileText,
   Image,
-  Mail
+  Mail,
+  Shield,
+  Eye,
+  Menu
 } from 'lucide-react';
 import { MonthData } from './types';
 import { exportToPDF, exportToWord, exportToImage, copyEmailToClipboard } from './lib/exports';
@@ -298,10 +300,12 @@ const ExportModal: React.FC<{
 
 const DashboardContent: React.FC = () => {
   const { data, resetData, isLoading } = useSalesData();
+  const { isAdmin, logout, setShowLoginModal } = useAdmin();
   const [selectedMonthId, setSelectedMonthId] = useState<string>('jan');
   const [showExportModal, setShowExportModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'monthly' | 'yearly'>('monthly');
-  const [hideCancelled, setHideCancelled] = useState(false);
+  const [hideCancelled, setHideCancelled] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
   const selectedMonth = data.find(m => m.id === selectedMonthId) || data[0];
   
@@ -337,20 +341,69 @@ const DashboardContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row font-sans text-slate-900">
       
-      {/* Sidebar Navigation */}
-      <aside className="w-full md:w-72 bg-white border-r border-gray-200 md:h-screen md:sticky md:top-0 z-20 flex-shrink-0 flex flex-col shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]">
+      {/* Collapsible Sidebar Navigation */}
+      <aside 
+        className={`bg-white border-r border-gray-200 md:h-screen md:sticky md:top-0 z-20 flex-shrink-0 flex flex-col shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)] transition-all duration-300 ${
+          sidebarCollapsed ? 'md:w-20' : 'md:w-72'
+        } w-full`}
+        onMouseEnter={() => setSidebarCollapsed(false)}
+        onMouseLeave={() => setSidebarCollapsed(true)}
+      >
         <div className="p-6 border-b border-gray-100 bg-white">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
-              P
+          {!sidebarCollapsed ? (
+            <>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
+                  P
+                </div>
+                <span className="font-serif font-bold text-xl tracking-tight text-gray-900">Physique 57, India</span>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold pl-10">2026 Sales Plan</p>
+            </>
+          ) : (
+            <div className="flex justify-center">
+              <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white font-serif font-bold text-xl shadow-sm">
+                P
+              </div>
             </div>
-            <span className="font-serif font-bold text-xl tracking-tight text-gray-900">Physique 57</span>
+          )}
+        </div>
+
+        {/* Admin Badge in Sidebar */}
+        <div className={`px-3 pt-3 ${sidebarCollapsed ? 'hidden' : 'block'}`}>
+          <div className={`px-4 py-2 rounded-lg border flex items-center gap-2 ${
+            isAdmin 
+              ? 'bg-green-50 border-green-200 text-green-800' 
+              : 'bg-amber-50 border-amber-200 text-amber-800'
+          }`}>
+            {isAdmin ? (
+              <>
+                <Shield className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs font-medium">Admin Mode</span>
+                <button
+                  onClick={logout}
+                  className="ml-auto px-2 py-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs rounded transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Eye className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs font-medium">View Only</span>
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="ml-auto px-2 py-1 bg-amber-100 hover:bg-amber-200 text-amber-700 text-xs rounded transition-colors"
+                >
+                  Login
+                </button>
+              </>
+            )}
           </div>
-          <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold pl-10">India • 2026 Masterplan</p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-3 pt-4 pb-2">
+        <div className={`px-3 pt-4 pb-2 ${sidebarCollapsed ? 'hidden' : 'block'}`}>
           <div className="grid grid-cols-2 gap-2 bg-gray-100 p-1 rounded-lg">
             <button
               onClick={() => setActiveTab('monthly')}
@@ -373,7 +426,7 @@ const DashboardContent: React.FC = () => {
               }`}
             >
               <CalendarDays className="w-3 h-3" />
-              Year View
+              Year
             </button>
           </div>
         </div>
@@ -383,25 +436,32 @@ const DashboardContent: React.FC = () => {
             <button
               key={month.id}
               onClick={() => setSelectedMonthId(month.id)}
-              className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${
+              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'justify-between'} px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${
                 selectedMonthId === month.id
                   ? 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-200'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:pl-5'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
+              title={sidebarCollapsed ? month.name : undefined}
             >
-              <div className="flex items-center gap-3">
-                <span className={`w-2 h-2 rounded-full transition-colors ${
-                  selectedMonthId === month.id ? 'bg-brand-500' : 'bg-gray-300 group-hover:bg-gray-400'
-                }`} />
-                {month.name}
-              </div>
-              {selectedMonthId === month.id && (
-                <ChevronRight className="w-4 h-4 text-brand-400" />
+              {sidebarCollapsed ? (
+                <span className="text-xs font-bold">{month.name.substring(0, 3)}</span>
+              ) : (
+                <>
+                  <div className="flex items-center gap-3">
+                    <span className={`w-2 h-2 rounded-full transition-colors ${
+                      selectedMonthId === month.id ? 'bg-brand-500' : 'bg-gray-300 group-hover:bg-gray-400'
+                    }`} />
+                    {month.name}
+                  </div>
+                  {selectedMonthId === month.id && (
+                    <ChevronRight className="w-4 h-4 text-brand-400" />
+                  )}
+                </>
               )}
             </button>
           ))}
           
-          {activeTab === 'yearly' && (
+          {activeTab === 'yearly' && !sidebarCollapsed && (
             <div className="text-center py-8 text-sm text-gray-500">
               <CalendarDays className="w-12 h-12 mx-auto mb-2 text-gray-300" />
               <p className="font-medium">Viewing Full Year</p>
@@ -411,7 +471,7 @@ const DashboardContent: React.FC = () => {
         </nav>
         
         {/* Month Navigation Buttons */}
-        {activeTab === 'monthly' && (
+        {activeTab === 'monthly' && !sidebarCollapsed && (
           <div className="px-3 pb-3 border-t border-gray-100">
             <div className="pt-3 grid grid-cols-2 gap-2">
               <button
@@ -442,7 +502,7 @@ const DashboardContent: React.FC = () => {
           </div>
         )}
 
-        <div className="p-4 border-t border-gray-100 space-y-3 bg-gray-50/50">
+        <div className={`p-4 border-t border-gray-100 space-y-3 bg-gray-50/50 ${sidebarCollapsed ? 'hidden' : 'block'}`}>
           <button 
             onClick={() => setHideCancelled(!hideCancelled)}
             className={`w-full flex items-center justify-between gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all shadow-sm ${
@@ -528,7 +588,6 @@ const App: React.FC = () => {
   return (
     <AdminProvider>
       <SalesProvider>
-        <AdminStatusBar />
         <AdminLoginModal />
         <DashboardContent />
       </SalesProvider>

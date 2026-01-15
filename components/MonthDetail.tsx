@@ -3,7 +3,9 @@ import { MonthData } from '../types';
 import { OfferCard } from './OfferCard';
 import { OfferForm } from './OfferForm';
 import { ExecutionPlan } from './ExecutionPlan';
+import { NotesSection } from './NotesSection';
 import { useSalesData } from '../context/SalesContext';
+import { useAdmin } from '../context/AdminContext';
 import { motion } from 'framer-motion';
 import { CalendarDays, Plus, Target } from 'lucide-react';
 
@@ -13,7 +15,8 @@ interface MonthDetailProps {
 }
 
 export const MonthDetail: React.FC<MonthDetailProps> = ({ data, hideCancelled = false }) => {
-  const { addOffer } = useSalesData();
+  const { addOffer, addNote, deleteNote } = useSalesData();
+  const { isAdmin } = useAdmin();
   const [isAdding, setIsAdding] = useState(false);
   
   // Filter offers based on hideCancelled
@@ -71,35 +74,49 @@ export const MonthDetail: React.FC<MonthDetailProps> = ({ data, hideCancelled = 
               {displayOffers.length} {hideCancelled ? 'Active' : 'Total'}
             </span>
           </div>
-          <button 
-            onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors shadow-sm text-sm font-medium"
-          >
-            <Plus className="w-4 h-4" />
-            Add Offer
-          </button>
+          {isAdmin && (
+            <button 
+              onClick={() => setIsAdding(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors shadow-sm text-sm font-medium"
+            >
+              <Plus className="w-4 h-4" />
+              Add Offer
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayOffers.map((offer) => (
             <OfferCard key={offer.id} offer={offer} monthId={data.id} />
           ))}
           
-          {/* Add Button Card Placeholder */}
-          <button 
-            onClick={() => setIsAdding(true)}
-            className="group flex flex-col items-center justify-center min-h-[300px] border-2 border-dashed border-gray-200 rounded-xl hover:border-brand-300 hover:bg-brand-50/30 transition-all duration-300 gap-4"
-          >
-            <div className="w-12 h-12 rounded-full bg-gray-50 group-hover:bg-white flex items-center justify-center border border-gray-100 group-hover:border-brand-200 transition-colors">
-              <Plus className="w-6 h-6 text-gray-400 group-hover:text-brand-500" />
-            </div>
-            <span className="text-gray-500 font-medium group-hover:text-brand-600">Create New Offer</span>
-          </button>
+          {/* Add Button Card Placeholder - Admin Only */}
+          {isAdmin && (
+            <button 
+              onClick={() => setIsAdding(true)}
+              className="group flex flex-col items-center justify-center min-h-[300px] border-2 border-dashed border-gray-200 rounded-xl hover:border-brand-300 hover:bg-brand-50/30 transition-all duration-300 gap-4"
+            >
+              <div className="w-12 h-12 rounded-full bg-gray-50 group-hover:bg-white flex items-center justify-center border border-gray-100 group-hover:border-brand-200 transition-colors">
+                <Plus className="w-6 h-6 text-gray-400 group-hover:text-brand-500" />
+              </div>
+              <span className="text-gray-500 font-medium group-hover:text-brand-600">Create New Offer</span>
+            </button>
+          )}
         </div>
       </motion.section>
 
       {/* Sales Execution Plan */}
       <motion.section variants={item}>
         <ExecutionPlan month={data} />
+      </motion.section>
+
+      {/* Notes Section */}
+      <motion.section variants={item}>
+        <NotesSection
+          monthId={data.id}
+          notes={data.notes || []}
+          onAddNote={addNote}
+          onDeleteNote={deleteNote}
+        />
       </motion.section>
 
       <OfferForm 

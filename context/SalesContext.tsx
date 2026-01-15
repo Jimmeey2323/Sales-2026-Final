@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { MonthData, Offer, MarketingCollateral, CRMTimeline } from '../types';
+import { MonthData, Offer, MarketingCollateral, CRMTimeline, Note } from '../types';
 import { MONTHS_DATA } from '../constants';
 import { initializeDatabase, loadSalesData, saveSalesData } from '../lib/neon';
 
@@ -23,6 +23,8 @@ interface SalesContextType {
   updateCustomSection: (monthId: string, sectionName: string, items: any[]) => void;
   deleteCustomSection: (monthId: string, sectionName: string) => void;
   removeDuplicateCRMEvents: (monthId: string) => void;
+  addNote: (monthId: string, content: string, userName: string) => Promise<void>;
+  deleteNote: (monthId: string, noteId: string) => void;
   resetData: () => void;
   isLoading: boolean;
 }
@@ -399,6 +401,63 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     saveSalesData(newData).catch(console.error);
   };
 
+  const addNote = async (monthId: string, content: string, userName: string): Promise<void> => {
+    const note: Note = {
+      id: generateId(),
+      monthId,
+      content,
+      userName,
+      createdAt: new Date().toISOString()
+    };
+
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        notes: [...(month.notes || []), note]
+      };
+    });
+    
+    setData(newData);
+    
+    // Save to Neon
+    await saveSalesData(newData);
+
+    // Send email notification
+    try {
+      const month = newData.find(m => m.id === monthId);
+      const monthName = month?.name || monthId;
+      
+      await fetch('/api/send-note-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: 'jimmeey@physique57india.com',
+          monthName,
+          userName,
+          content,
+          timestamp: note.createdAt
+        })
+      });
+    } catch (error) {
+      console.error('Failed to send email notification:', error);
+      // Don't throw - note was saved successfully
+    }
+  };
+
+  const deleteNote = (monthId: string, noteId: string) => {
+    const newData = data.map(month => {
+      if (month.id !== monthId) return month;
+      return {
+        ...month,
+        notes: (month.notes || []).filter(note => note.id !== noteId)
+      };
+    });
+    setData(newData);
+    // Save to Neon
+    saveSalesData(newData).catch(console.error);
+  };
+
   const resetData = () => {
     if (!window.confirm("This will factory reset all data. Are you sure?")) return;
     localStorage.removeItem(STORAGE_KEY);
@@ -436,6 +495,8 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       updateCustomSection, 
       deleteCustomSection, 
       removeDuplicateCRMEvents,
+      addNote,
+      deleteNote,
       resetData, 
       isLoading 
     }}>
